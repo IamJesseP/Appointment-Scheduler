@@ -29,13 +29,34 @@ namespace C969Jesse
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
+			this.Connect = new System.Windows.Forms.Button();
+			this.SuspendLayout();
+			// 
+			// Connect
+			// 
+			this.Connect.Location = new System.Drawing.Point(313, 44);
+			this.Connect.Name = "Connect";
+			this.Connect.Size = new System.Drawing.Size(75, 23);
+			this.Connect.TabIndex = 0;
+			this.Connect.Text = "Connect";
+			this.Connect.UseVisualStyleBackColor = true;
+			this.Connect.Click += new System.EventHandler(this.Connect_Click);
+			// 
+			// Form1
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.Controls.Add(this.Connect);
+			this.Name = "Form1";
 			this.Text = "Form1";
+			this.ResumeLayout(false);
+
 		}
 
 		#endregion
+
+		private System.Windows.Forms.Button Connect;
 	}
 }
 
