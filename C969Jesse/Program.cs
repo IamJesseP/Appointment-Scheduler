@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using C969Jesse.Database;
 
 namespace C969Jesse
 {
@@ -16,7 +17,9 @@ namespace C969Jesse
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			DBconnection.startConnection();
 			Application.Run(new Form1());
+			DBconnection.closeConnection();
 		}
 	}
 }
