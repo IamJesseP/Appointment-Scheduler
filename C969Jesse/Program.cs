@@ -18,7 +18,7 @@ namespace C969Jesse
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			DBconnection.startConnection();
-			Application.Run(new Form1());
+			Application.Run(new Login());
 			DBconnection.closeConnection();
 		}
 	}
