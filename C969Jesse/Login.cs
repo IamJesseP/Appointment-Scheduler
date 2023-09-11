@@ -45,6 +45,7 @@ namespace C969Jesse
 				if (reader.HasRows)
                 {
                     LoginSuccessful();
+                    UserActivityLogger.LogUserActivity(username);
                 }
                 else
                 {
