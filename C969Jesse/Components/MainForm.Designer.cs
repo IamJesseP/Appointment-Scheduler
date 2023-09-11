@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.appointmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CustomerTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.AppointmentsTab = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainDataGridView = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
@@ -40,8 +40,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.appointmentsToolStripMenuItem,
+            this.CustomerTab,
+            this.AppointmentsTab,
             this.reportsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -49,18 +49,21 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // toolStripMenuItem1
+            // CustomerTab
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(76, 20);
-            this.toolStripMenuItem1.Text = "Customers";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.ClickCustomersTab);
+            this.CustomerTab.BackColor = System.Drawing.SystemColors.Control;
+            this.CustomerTab.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.CustomerTab.Name = "CustomerTab";
+            this.CustomerTab.Size = new System.Drawing.Size(76, 20);
+            this.CustomerTab.Text = "Customers";
+            this.CustomerTab.Click += new System.EventHandler(this.ClickCustomersTab);
             // 
-            // appointmentsToolStripMenuItem
+            // AppointmentsTab
             // 
-            this.appointmentsToolStripMenuItem.Name = "appointmentsToolStripMenuItem";
-            this.appointmentsToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
-            this.appointmentsToolStripMenuItem.Text = "Appointments";
+            this.AppointmentsTab.Name = "AppointmentsTab";
+            this.AppointmentsTab.Size = new System.Drawing.Size(95, 20);
+            this.AppointmentsTab.Text = "Appointments";
+            this.AppointmentsTab.Click += new System.EventHandler(this.ClickAppointmentsTab);
             // 
             // reportsToolStripMenuItem
             // 
@@ -99,8 +102,8 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem appointmentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CustomerTab;
+        private System.Windows.Forms.ToolStripMenuItem AppointmentsTab;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
         private System.Windows.Forms.DataGridView mainDataGridView;
     }

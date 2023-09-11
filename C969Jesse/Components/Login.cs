@@ -24,12 +24,7 @@ namespace C969Jesse
 			InitializeComponent();
 		}
 
-		private void userLogin_TextChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void btnLogin_Click(object sender, EventArgs e)
+		private void BtnLogin_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -83,7 +78,7 @@ namespace C969Jesse
             }
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void BtnExit_Click(object sender, EventArgs e)
         {
 			Application.Exit();
         }

@@ -101,7 +101,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\CustomerDataAccess.cs" />
+    <Compile Include="Database\DataAccess.cs" />
     <Compile Include="Database\DBConnection.cs" />
     <Compile Include="Components\Login.cs">
       <SubType>Form</SubType>

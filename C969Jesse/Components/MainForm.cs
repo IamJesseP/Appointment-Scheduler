@@ -1,4 +1,4 @@
-﻿using C969Jesse.DataAccess;
+﻿using C969Jesse.Database;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -15,16 +15,27 @@ namespace C969Jesse
 {
     public partial class MainForm : Form
     {
+        string customerQuery = "SELECT " +
+                                   "c.customerId, c.customerName, " +
+                                   "a.address, a.phone, " +
+                                   "ci.city, " +
+                                   "co.country " +
+                                   "FROM customer c " +
+                                   "JOIN address a ON c.addressId = a.addressId " +
+                                   "JOIN city ci ON a.cityId = ci.cityId " +
+                                   "JOIN country co ON ci.countryId = co.countryId";
+ 
+
         public MainForm()
         {
             InitializeComponent();
             this.Controls.Add(mainDataGridView);
 
-            // Default to customer data
-            var customerData = new CustomerDataAccess();
+            // Defaultm to customerData
+            var customerData = new DataAccess();
+            mainDataGridView.DataSource = customerData.GetData(customerQuery);
 
             //edit props
-            mainDataGridView.DataSource = customerData.GetData();
             mainDataGridView.ReadOnly = true;
             mainDataGridView.MultiSelect = false;
             mainDataGridView.AllowUserToAddRows = false;
@@ -36,13 +47,22 @@ namespace C969Jesse
 
         private void ClickCustomersTab(object sender, EventArgs e)
         {
-            var customerData = new CustomerDataAccess();
-            mainDataGridView.DataSource = customerData.GetData();
+            var customerData = new DataAccess();
+            mainDataGridView.DataSource = customerData.GetData(customerQuery);
             SetupCustomerDGV();
+            CustomerTab.ForeColor = Color.DarkGoldenrod;
+        }
+
+        private void ClickAppointmentsTab(object sender, EventArgs e)
+        {
+           
         }
 
         private void SetupCustomerDGV()
         {
+            // Tab color
+            CustomerTab.ForeColor = Color.DarkGoldenrod;
+
             // Setting column titles
             mainDataGridView.Columns["customerId"].HeaderText = "Customer ID";
             mainDataGridView.Columns["customerName"].HeaderText = "Customer Name";

@@ -43,7 +43,7 @@ namespace C969Jesse
             this.txtUserLogin.Name = "txtUserLogin";
             this.txtUserLogin.Size = new System.Drawing.Size(188, 20);
             this.txtUserLogin.TabIndex = 0;
-            this.txtUserLogin.TextChanged += new System.EventHandler(this.userLogin_TextChanged);
+            
             // 
             // txtUserPassword
             // 
@@ -79,7 +79,7 @@ namespace C969Jesse
             this.btnLogin.TabIndex = 4;
             this.btnLogin.Text = "Log In";
             this.btnLogin.UseVisualStyleBackColor = false;
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // btnExit
             // 
@@ -90,7 +90,7 @@ namespace C969Jesse
             this.btnExit.TabIndex = 6;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // Login
             // 
