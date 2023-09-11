@@ -21,14 +21,13 @@ namespace C969Jesse.DataAccess
                     DBConnection.StartConnection();
                     string query = "SELECT " +
                                    "c.customerId, c.customerName, " +
-                                   "a.addressId, a.address, a.phone, " +
-                                   "ci.cityId AS city_cityId, ci.city, " +
-                                   "co.countryId AS country_countryId, co.country " +
+                                   "a.address, a.phone, " +
+                                   "ci.city, " +
+                                   "co.country " +
                                    "FROM customer c " +
                                    "JOIN address a ON c.addressId = a.addressId " +
                                    "JOIN city ci ON a.cityId = ci.cityId " +
                                    "JOIN country co ON ci.countryId = co.countryId";
-
                     using (MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn))
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                     {
