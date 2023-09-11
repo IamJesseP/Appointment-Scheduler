@@ -33,19 +33,18 @@ namespace C969Jesse
 		{
 			try
 			{
-				var conn = new MySqlConnection();
-				conn.ConnectionString = ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
-				conn.Open();
-
+                DBConnection.StartConnection();
 				string username = txtUserLogin.Text;
 				string password = txtUserPassword.Text;
 				string query = $"SELECT * FROM user WHERE userName='{username}' AND password='{password}'";
-				var command = new MySqlCommand(query, conn);
+				var command = new MySqlCommand(query, DBConnection.conn);
 				var reader = command.ExecuteReader();
 				if (reader.HasRows)
                 {
                     LoginSuccessful();
                     UserActivityLogger.LogUserActivity(username);
+                    MainForm mainForm = new MainForm();
+                    mainForm.Show();
                 }
                 else
                 {

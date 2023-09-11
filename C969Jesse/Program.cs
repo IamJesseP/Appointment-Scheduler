@@ -17,9 +17,18 @@ namespace C969Jesse
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			DBconnection.startConnection();
-			Application.Run(new Login());
-			DBconnection.closeConnection();
+			try
+			{
+				DBConnection.StartConnection();
+				MessageBox.Show("Connection open");
+			}
+			catch (Exception ex)
+			{
+                MessageBox.Show(ex.Message);
+			}
+
+            Application.Run(new Login());
+			DBConnection.CloseConnection();
 		}
 	}
 }

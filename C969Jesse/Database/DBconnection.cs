@@ -9,20 +9,18 @@ using MySql.Data.MySqlClient;
 
 namespace C969Jesse.Database
 {
-	public class DBconnection
+	public class DBConnection
 	{
 		public static MySqlConnection conn { get; set; }
 
-		public static void startConnection()
+		public static void StartConnection()
 		{
 			string conStr = ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
 			//make connection
-			MySqlConnection conn = null;
 			try
 			{
 				conn = new MySqlConnection(conStr);
 				conn.Open();
-				MessageBox.Show("Connection is open");
 			}
 			catch (MySqlException ex)
 			{
@@ -30,7 +28,7 @@ namespace C969Jesse.Database
 			}
 		}
 
-		public static void closeConnection()
+		public static void CloseConnection()
 		{
 			try
 			{
