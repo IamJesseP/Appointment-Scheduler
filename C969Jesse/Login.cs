@@ -12,6 +12,9 @@ using System.Windows.Forms;
 using C969Jesse.Database;
 using MySql.Data.MySqlClient;
 
+// TODO: ADD LOGING FILES, CODE ALERTS WITHIN 15MINS OF APPT,
+
+
 namespace C969Jesse
 {
 	public partial class Login : Form
@@ -40,28 +43,14 @@ namespace C969Jesse
 				var command = new MySqlCommand(query, conn);
 				var reader = command.ExecuteReader();
 				if (reader.HasRows)
-				{
-					if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "en")
-					{
-						MessageBox.Show("Login succcessful!");
-					}
-					else if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "es")
-					{
-						MessageBox.Show("Inicio de sesion con exito");
-					}
-				}
-				else
-				{
-					if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "en")
-					{
-						MessageBox.Show("Username or Password is incorrect");
-					}
-					else if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "es")
-					{
-						MessageBox.Show("El nombre de usuario o la contrasena son incorrectos");
-					}
-				}
-			}
+                {
+                    LoginSuccessful();
+                }
+                else
+                {
+                    LoginFail();
+                }
+            }
 			catch (MySqlException)
 			{
 				MessageBox.Show("Server connection error");
@@ -69,5 +58,34 @@ namespace C969Jesse
 
 
 		}
-	}
+
+        private static void LoginFail()
+        {
+            if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "en")
+            {
+                MessageBox.Show("Username or Password is incorrect");
+            }
+            else if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "es")
+            {
+                MessageBox.Show("El nombre de usuario o la contrasena son incorrectos");
+            }
+        }
+
+        private static void LoginSuccessful()
+        {
+            if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "en")
+            {
+                MessageBox.Show("Login successful!");
+            }
+            else if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "es")
+            {
+                MessageBox.Show("Inicio de sesion con exito");
+            }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+			Application.Exit();
+        }
+    }
 }
