@@ -40,6 +40,7 @@ namespace C969Jesse
                     UserActivityLogger.LogUserActivity(username);
                     MainForm mainForm = new MainForm();
                     mainForm.Show();
+                    this.Hide();
                 }
                 else
                 {
@@ -50,8 +51,6 @@ namespace C969Jesse
 			{
 				MessageBox.Show("Server connection error");
 			}
-
-
 		}
 
         private static void LoginFail()

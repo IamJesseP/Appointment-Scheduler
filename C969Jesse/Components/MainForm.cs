@@ -35,6 +35,7 @@ namespace C969Jesse
                    "JOIN address a ON c.addressId = a.addressId " +
                    "JOIN user u ON ap.userId = u.userId " +
                    "ORDER BY ap.start";
+
         string bttnState = "Customers";
 
         public MainForm()
