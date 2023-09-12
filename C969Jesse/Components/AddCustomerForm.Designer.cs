@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.SaveBttn = new System.Windows.Forms.Button();
             this.CancelBttn = new System.Windows.Forms.Button();
             this.txtCustomerAddCountry = new System.Windows.Forms.TextBox();
@@ -41,6 +42,8 @@
             this.txtAddCustomerAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // SaveBttn
@@ -159,6 +162,10 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "Add New Customer";
             // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            // 
             // AddCustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -179,6 +186,7 @@
             this.Controls.Add(this.SaveBttn);
             this.Name = "AddCustomerForm";
             this.Text = "Add Customer";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,5 +207,6 @@
         private System.Windows.Forms.TextBox txtAddCustomerAddress;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

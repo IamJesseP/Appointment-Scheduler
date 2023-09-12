@@ -20,22 +20,14 @@ namespace C969Jesse.Components
 
         private void SaveBttn_Click(object sender, EventArgs e)
         {
-            if (!(Validation.ValidateTextBox(txtAddCustomerName, "string") 
-                && Validation.ValidateTextBox(txtAddCustomerAddress, "string")
-                && Validation.ValidateTextBox(txtAddCustomerCity, "string")
-                && Validation.ValidateTextBox(txtCustomerAddCountry, "string")
-                && Validation.ValidateTextBox(txtAddCustomerPhone, "int")))
+            if (!AreAllFieldsValid())
             {
-                SaveBttn.Enabled = false;
-                MessageBox.Show("Please fill out all form fields");
+                MessageBox.Show("Please fill out all form fields correctly");
+                return;
             }
-            else
-            {
+            
                 this.Hide();
 
-            }
-            // MainForm mainForm = new MainForm();
-            // mainForm.Show();
         }
 
         private void CancelBttn_Click(object sender, EventArgs e)
@@ -43,30 +35,39 @@ namespace C969Jesse.Components
             this.Close();
         }
 
+        private bool AreAllFieldsValid()
+        {
+            return Validation.ValidateTextBox(txtAddCustomerName, "string", errorProvider)
+                && Validation.ValidateTextBox(txtAddCustomerAddress, "string", errorProvider)
+                && Validation.ValidateTextBox(txtAddCustomerCity, "string", errorProvider)
+                && Validation.ValidateTextBox(txtCustomerAddCountry, "string", errorProvider)
+                && Validation.ValidateTextBox(txtAddCustomerPhone, "phone", errorProvider);
+        }
+
         #region TextChanged Validation
         private void txtAddCustomerName_TextChanged(object sender, EventArgs e)
         {
-            SaveBttn.Enabled = Validation.ValidateTextBox(txtAddCustomerName, "string");
+            SaveBttn.Enabled = Validation.ValidateTextBox(txtAddCustomerName, "string", errorProvider);
         }
 
         private void txtAddCustomerAddress_TextChanged(object sender, EventArgs e)
         {
-            SaveBttn.Enabled = Validation.ValidateTextBox(txtAddCustomerAddress, "string");
+            SaveBttn.Enabled = Validation.ValidateTextBox(txtAddCustomerAddress, "string", errorProvider);
         }
 
         private void txtAddCustomerCity_TextChanged(object sender, EventArgs e)
         {
-            SaveBttn.Enabled = Validation.ValidateTextBox(txtAddCustomerCity, "string");
+            SaveBttn.Enabled = Validation.ValidateTextBox(txtAddCustomerCity, "string", errorProvider);
         }
 
         private void txtCustomerAddCountry_TextChanged(object sender, EventArgs e)
         {
-             SaveBttn.Enabled = Validation.ValidateTextBox(txtCustomerAddCountry, "string");
+             SaveBttn.Enabled = Validation.ValidateTextBox(txtCustomerAddCountry, "string", errorProvider);
         }
 
         private void txtAddCustomerPhone_TextChanged(object sender, EventArgs e)
         {
-            SaveBttn.Enabled = Validation.ValidateTextBox(txtAddCustomerPhone, "int");
+            SaveBttn.Enabled = Validation.ValidateTextBox(txtAddCustomerPhone, "string", errorProvider);
         }
         #endregion
     }
