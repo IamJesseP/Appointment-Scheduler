@@ -15,6 +15,8 @@ namespace C969Jesse.Components
     public partial class AddCustomerForm : Form
     {
         DbManager dbManager = new DbManager();
+        public MainForm MainFormInstance { get; set; }
+
         public AddCustomerForm()
         {
             InitializeComponent();
@@ -37,9 +39,8 @@ namespace C969Jesse.Components
                 { "CustomerPostal", txtPostal.Text },
             };
             dbManager.SaveData(customerData);
-            
+            MainFormInstance?.RefreshTable("Customers");
             this.Hide();
-
         }
 
         private void CancelBttn_Click(object sender, EventArgs e)

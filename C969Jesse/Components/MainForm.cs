@@ -16,9 +16,7 @@ namespace C969Jesse
 {
     public partial class MainForm : Form
     {
-        // TODO: Move to static class ?
-
-
+        DbManager tableData = new DbManager();
         string bttnState = "Customers";
 
         public MainForm()
@@ -27,10 +25,9 @@ namespace C969Jesse
             this.Controls.Add(mainDataGridView);
 
             // Default to customerData
-            var customerData = new DbManager();
-            mainDataGridView.DataSource = customerData.GetData(Queries.CustomerQuery);
-            SetupCustomerDGV();
+            RefreshTable("Customers");
             UpdateButtons("Customers");
+            SetupCustomerDGV();
 
             //edit props
             mainDataGridView.ReadOnly = true;
@@ -40,22 +37,19 @@ namespace C969Jesse
 
         }
 
-
-        private void ClickCustomersTab(object sender, EventArgs e)
+        #region Helper methods
+        public void RefreshTable(string table)
         {
-            var customerData = new DbManager();
-            mainDataGridView.DataSource = customerData.GetData(Queries.CustomerQuery);
-            bttnState = "Customers";
-            UpdateButtons(bttnState);
-            SetupCustomerDGV();
-        }
-        private void ClickAppointmentsTab(object sender, EventArgs e)
-        {
-            var appointmentsData = new DbManager();
-            mainDataGridView.DataSource = appointmentsData.GetData(Queries.AppointmentQuery);
-            bttnState = "Appointments";
-            UpdateButtons(bttnState);
-            SetupAppointmentDGV();
+            if (table == "Appointments")
+            {
+                mainDataGridView.DataSource = tableData.GetData(Queries.AppointmentQuery);
+                bttnState = "Appointments";
+            }
+            else if (table == "Customers")
+            {
+                mainDataGridView.DataSource = tableData.GetData(Queries.CustomerQuery);
+                bttnState = "Customers";
+            }
         }
 
         private void UpdateButtons(string state)
@@ -129,8 +123,21 @@ namespace C969Jesse
             mainDataGridView.AutoResizeColumns();
             mainDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+        #endregion
 
-
+        #region Event Handlers
+        private void ClickCustomersTab(object sender, EventArgs e)
+        {
+            RefreshTable("Customers");
+            UpdateButtons(bttnState);
+            SetupCustomerDGV();
+        }
+        private void ClickAppointmentsTab(object sender, EventArgs e)
+        {
+            RefreshTable("Appointments");
+            UpdateButtons(bttnState);
+            SetupAppointmentDGV();
+        }
         private void mainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int indexSelected = e.RowIndex;
@@ -144,6 +151,7 @@ namespace C969Jesse
             if (bttnState == "Customers")
             {
                 var addCustomerForm = new AddCustomerForm();
+                addCustomerForm.MainFormInstance = this; // Dependency injection!
                 addCustomerForm.Show();
             }
             else if (bttnState == "Appointments")
@@ -152,6 +160,6 @@ namespace C969Jesse
                 // addAppointmentForm.ShowDialog();
             }
         }
-
+        #endregion
     }
 }
