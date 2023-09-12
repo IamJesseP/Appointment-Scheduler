@@ -15,6 +15,7 @@ namespace C969Jesse
 {
     public partial class MainForm : Form
     {
+        // TODO: Move to static class ?
         readonly string customerQuery = "SELECT " +
                 "c.customerId, c.customerName, " +
                 "a.address, a.phone, " +
@@ -33,7 +34,6 @@ namespace C969Jesse
                    "JOIN address a ON c.addressId = a.addressId " +
                    "JOIN user u ON ap.userId = u.userId " +
                    "ORDER BY ap.start";
-
         string bttnState = "Customer";
 
         public MainForm()
@@ -60,8 +60,17 @@ namespace C969Jesse
         {
             var customerData = new DataAccess();
             mainDataGridView.DataSource = customerData.GetData(customerQuery);
-            UpdateButtons("Customers");
+            bttnState = "Customers";
+            UpdateButtons(bttnState);
             SetupCustomerDGV();
+        }
+        private void ClickAppointmentsTab(object sender, EventArgs e)
+        {
+            var appointmentsData = new DataAccess();
+            mainDataGridView.DataSource = appointmentsData.GetData(appointmentQuery);
+            bttnState = "Appointments";
+            UpdateButtons(bttnState);
+            SetupAppointmentDGV();
         }
 
         private void UpdateButtons(string state)
@@ -95,13 +104,6 @@ namespace C969Jesse
             }
         }
 
-        private void ClickAppointmentsTab(object sender, EventArgs e)
-        {
-            var appointmentsData = new DataAccess();
-            mainDataGridView.DataSource = appointmentsData.GetData(appointmentQuery);
-            UpdateButtons("Appointments");
-            SetupAppointmentDGV();
-        }
         private void SetupCustomerDGV()
         {
             // Tab color
@@ -154,7 +156,16 @@ namespace C969Jesse
 
         private void AddBttn_Click(object sender, EventArgs e)
         {
-
+            if (bttnState == "Customers")
+            {
+                var addCustomerForm = new AddCustomerForm();
+                addCustomerForm.ShowDialog();
+            }
+            else if (bttnState == "Appointments")
+            {
+                var addAppointmentForm = new AddAppointmentForm();
+                addAppointmentForm.ShowDialog();
+            }
         }
     }
 }

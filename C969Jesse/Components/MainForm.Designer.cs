@@ -86,7 +86,7 @@
             this.mainDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainDataGridView.Location = new System.Drawing.Point(45, 27);
             this.mainDataGridView.Name = "mainDataGridView";
-            this.mainDataGridView.Size = new System.Drawing.Size(1165, 436);
+            this.mainDataGridView.Size = new System.Drawing.Size(926, 436);
             this.mainDataGridView.TabIndex = 1;
             this.mainDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mainDataGridView_CellClick);
             // 
@@ -136,7 +136,7 @@
             // ViewBttn
             // 
             this.ViewBttn.BackColor = System.Drawing.SystemColors.Control;
-            this.ViewBttn.Location = new System.Drawing.Point(45, 500);
+            this.ViewBttn.Location = new System.Drawing.Point(867, 500);
             this.ViewBttn.Name = "ViewBttn";
             this.ViewBttn.Size = new System.Drawing.Size(104, 39);
             this.ViewBttn.TabIndex = 5;
