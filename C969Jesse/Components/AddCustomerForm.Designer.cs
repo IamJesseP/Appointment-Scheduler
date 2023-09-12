@@ -43,6 +43,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.txtPostal = new System.Windows.Forms.TextBox();
+            this.lblPostal = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -166,11 +168,30 @@
             // 
             this.errorProvider.ContainerControl = this;
             // 
+            // txtPostal
+            // 
+            this.txtPostal.Location = new System.Drawing.Point(250, 189);
+            this.txtPostal.Name = "txtPostal";
+            this.txtPostal.Size = new System.Drawing.Size(103, 20);
+            this.txtPostal.TabIndex = 13;
+            this.txtPostal.TextChanged += new System.EventHandler(this.txtPostal_TextChanged);
+            // 
+            // lblPostal
+            // 
+            this.lblPostal.AutoSize = true;
+            this.lblPostal.Location = new System.Drawing.Point(251, 173);
+            this.lblPostal.Name = "lblPostal";
+            this.lblPostal.Size = new System.Drawing.Size(36, 13);
+            this.lblPostal.TabIndex = 14;
+            this.lblPostal.Text = "Postal";
+            // 
             // AddCustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(493, 450);
+            this.Controls.Add(this.lblPostal);
+            this.Controls.Add(this.txtPostal);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtCustomerAddCountry);
@@ -208,5 +229,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.Label lblPostal;
+        private System.Windows.Forms.TextBox txtPostal;
     }
 }

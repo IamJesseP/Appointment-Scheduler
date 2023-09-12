@@ -1,4 +1,5 @@
-﻿using C969Jesse.Utils;
+﻿using C969Jesse.Database;
+using C969Jesse.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ namespace C969Jesse.Components
 {
     public partial class AddCustomerForm : Form
     {
+        DbManager dbManager = new DbManager();
         public AddCustomerForm()
         {
             InitializeComponent();
@@ -25,6 +27,16 @@ namespace C969Jesse.Components
                 MessageBox.Show("Please fill out all form fields correctly");
                 return;
             }
+            var customerData = new Dictionary<string, string>
+            {
+                { "CustomerName", txtAddCustomerName.Text },
+                { "CustomerAddress", txtAddCustomerAddress.Text },
+                { "CustomerCity", txtAddCustomerCity.Text },
+                { "CustomerCountry", txtCustomerAddCountry.Text },
+                { "CustomerPhone", txtAddCustomerPhone.Text },
+                { "CustomerPostal", txtPostal.Text },
+            };
+            dbManager.SaveCustomerData(customerData);
             // Save fields to DB
             this.Hide();
 
@@ -41,7 +53,8 @@ namespace C969Jesse.Components
                 && Validation.ValidateTextBox(txtAddCustomerAddress, "string", errorProvider)
                 && Validation.ValidateTextBox(txtAddCustomerCity, "string", errorProvider)
                 && Validation.ValidateTextBox(txtCustomerAddCountry, "string", errorProvider)
-                && Validation.ValidateTextBox(txtAddCustomerPhone, "phone", errorProvider);
+                && Validation.ValidateTextBox(txtAddCustomerPhone, "phone", errorProvider)
+                && Validation.ValidateTextBox(txtPostal, "string", errorProvider);
         }
 
         #region TextChanged Validation
@@ -69,7 +82,12 @@ namespace C969Jesse.Components
         {
             SaveBttn.Enabled = Validation.ValidateTextBox(txtAddCustomerPhone, "string", errorProvider);
         }
+        private void txtPostal_TextChanged(object sender, EventArgs e)
+        {
+            SaveBttn.Enabled = Validation.ValidateTextBox(txtPostal, "string", errorProvider);
+        }
         #endregion
+
     }
 
 

@@ -26,6 +26,39 @@ namespace C969Jesse.Database
                  "JOIN address a ON c.addressId = a.addressId " +
                  "JOIN user u ON ap.userId = u.userId " +
                  "ORDER BY ap.start";
+
+        public static string CountryIdxQuery => "SELECT " + 
+                 "countryId FROM country " + 
+                 "ORDER BY countryId DESC LIMIT 1";
+
+        public static string CountryInsertQuery => "INSERT INTO country " + 
+                 "(countryId, country, createDate, createdBy, lastUpdate, lastUpdateBy) " + 
+                 "VALUES (@CountryId, @Country, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
+
+        public static string CityIdxQuery => "SELECT " +
+             "cityId FROM city " +
+             "ORDER BY cityId DESC LIMIT 1";
+
+        public static string CityInsertQuery => "INSERT INTO city " +
+                     "(cityId, city, countryId, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+                     "VALUES (@CityId, @City, @CountryId, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
+
+        public static string AddressIdxQuery => "SELECT " +
+             "addressId FROM address " +
+             "ORDER BY addressId DESC LIMIT 1";
+
+        public static string AddressInsertQuery => "INSERT INTO address " +
+                     "(addressId, address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+                     "VALUES (@AddressId, @Address, '', @CityId, @PostalCode, @PhoneNumber, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
+
+        public static string CustomerIdxQuery => "SELECT " +
+             "customerId FROM customer " +
+             "ORDER BY customerId DESC LIMIT 1";
+
+        public static string CustomerInsertQuery => "INSERT INTO customer " +
+                     "(customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+                     "VALUES (@CustomerId, @CustomerName, @AddressId, @Active, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
+
     }
 }
 
