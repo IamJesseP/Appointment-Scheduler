@@ -1,6 +1,6 @@
 ﻿namespace C969Jesse.Components
 {
-    partial class AddCustomer
+    partial class AddCustomerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -116,7 +116,6 @@
             this.label3.Size = new System.Drawing.Size(78, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "Phone Number";
-           
             // 
             // label2
             // 
@@ -142,7 +141,6 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Name";
-            
             // 
             // label6
             // 
@@ -153,9 +151,8 @@
             this.label6.Size = new System.Drawing.Size(144, 16);
             this.label6.TabIndex = 12;
             this.label6.Text = "Add New Customer";
-            
             // 
-            // AddCustomer
+            // AddCustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -173,8 +170,8 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.CancelBttn);
             this.Controls.Add(this.SaveBttn);
-            this.Name = "AddCustomer";
-            this.Text = "AddCustomer";
+            this.Name = "AddCustomerForm";
+            this.Text = "Add Customer";
             this.ResumeLayout(false);
             this.PerformLayout();
 

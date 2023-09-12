@@ -32,13 +32,14 @@
             this.CustomerTab = new System.Windows.Forms.ToolStripMenuItem();
             this.AppointmentsTab = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainDataGridView = new System.Windows.Forms.DataGridView();
             this.appointmentTypesPerMonthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultantSchedulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainDataGridView = new System.Windows.Forms.DataGridView();
             this.AddBttn = new System.Windows.Forms.Button();
             this.UpdateBttn = new System.Windows.Forms.Button();
             this.DeleteBttn = new System.Windows.Forms.Button();
             this.ViewBttn = new System.Windows.Forms.Button();
+            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -80,16 +81,6 @@
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.reportsToolStripMenuItem.Text = "Reports";
             // 
-            // mainDataGridView
-            // 
-            this.mainDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.mainDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.mainDataGridView.Location = new System.Drawing.Point(45, 27);
-            this.mainDataGridView.Name = "mainDataGridView";
-            this.mainDataGridView.Size = new System.Drawing.Size(926, 436);
-            this.mainDataGridView.TabIndex = 1;
-            this.mainDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mainDataGridView_CellClick);
-            // 
             // appointmentTypesPerMonthToolStripMenuItem
             // 
             this.appointmentTypesPerMonthToolStripMenuItem.Name = "appointmentTypesPerMonthToolStripMenuItem";
@@ -101,6 +92,16 @@
             this.consultantSchedulesToolStripMenuItem.Name = "consultantSchedulesToolStripMenuItem";
             this.consultantSchedulesToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.consultantSchedulesToolStripMenuItem.Text = "Consultant Schedules";
+            // 
+            // mainDataGridView
+            // 
+            this.mainDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.mainDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.mainDataGridView.Location = new System.Drawing.Point(45, 44);
+            this.mainDataGridView.Name = "mainDataGridView";
+            this.mainDataGridView.Size = new System.Drawing.Size(926, 436);
+            this.mainDataGridView.TabIndex = 1;
+            this.mainDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mainDataGridView_CellClick);
             // 
             // AddBttn
             // 
@@ -143,11 +144,18 @@
             this.ViewBttn.Text = "View Report";
             this.ViewBttn.UseVisualStyleBackColor = false;
             // 
+            // monthCalendar1
+            // 
+            this.monthCalendar1.Location = new System.Drawing.Point(1015, 44);
+            this.monthCalendar1.Name = "monthCalendar1";
+            this.monthCalendar1.TabIndex = 6;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1260, 567);
+            this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.ViewBttn);
             this.Controls.Add(this.DeleteBttn);
             this.Controls.Add(this.UpdateBttn);
@@ -178,5 +186,6 @@
         private System.Windows.Forms.Button UpdateBttn;
         private System.Windows.Forms.Button DeleteBttn;
         private System.Windows.Forms.Button ViewBttn;
+        private System.Windows.Forms.MonthCalendar monthCalendar1;
     }
 }

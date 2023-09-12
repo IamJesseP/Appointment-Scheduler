@@ -1,4 +1,5 @@
-﻿using C969Jesse.Database;
+﻿using C969Jesse.Components;
+using C969Jesse.Database;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace C969Jesse
                    "JOIN address a ON c.addressId = a.addressId " +
                    "JOIN user u ON ap.userId = u.userId " +
                    "ORDER BY ap.start";
-        string bttnState = "Customer";
+        string bttnState = "Customers";
 
         public MainForm()
         {
@@ -159,13 +160,14 @@ namespace C969Jesse
             if (bttnState == "Customers")
             {
                 var addCustomerForm = new AddCustomerForm();
-                addCustomerForm.ShowDialog();
+                addCustomerForm.Show();
             }
             else if (bttnState == "Appointments")
             {
-                var addAppointmentForm = new AddAppointmentForm();
-                addAppointmentForm.ShowDialog();
+                // var addAppointmentForm = new AddAppointmentForm();
+                // addAppointmentForm.ShowDialog();
             }
         }
+
     }
 }
