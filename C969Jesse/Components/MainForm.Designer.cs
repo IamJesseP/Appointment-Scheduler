@@ -33,6 +33,12 @@
             this.AppointmentsTab = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainDataGridView = new System.Windows.Forms.DataGridView();
+            this.appointmentTypesPerMonthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultantSchedulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddBttn = new System.Windows.Forms.Button();
+            this.UpdateBttn = new System.Windows.Forms.Button();
+            this.DeleteBttn = new System.Windows.Forms.Button();
+            this.ViewBttn = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -67,6 +73,9 @@
             // 
             // reportsToolStripMenuItem
             // 
+            this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.appointmentTypesPerMonthToolStripMenuItem,
+            this.consultantSchedulesToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.reportsToolStripMenuItem.Text = "Reports";
@@ -81,11 +90,68 @@
             this.mainDataGridView.TabIndex = 1;
             this.mainDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mainDataGridView_CellClick);
             // 
+            // appointmentTypesPerMonthToolStripMenuItem
+            // 
+            this.appointmentTypesPerMonthToolStripMenuItem.Name = "appointmentTypesPerMonthToolStripMenuItem";
+            this.appointmentTypesPerMonthToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
+            this.appointmentTypesPerMonthToolStripMenuItem.Text = "Appointment Types Per Month";
+            // 
+            // consultantSchedulesToolStripMenuItem
+            // 
+            this.consultantSchedulesToolStripMenuItem.Name = "consultantSchedulesToolStripMenuItem";
+            this.consultantSchedulesToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
+            this.consultantSchedulesToolStripMenuItem.Text = "Consultant Schedules";
+            // 
+            // AddBttn
+            // 
+            this.AddBttn.BackColor = System.Drawing.SystemColors.Control;
+            this.AddBttn.Location = new System.Drawing.Point(45, 500);
+            this.AddBttn.Name = "AddBttn";
+            this.AddBttn.Size = new System.Drawing.Size(104, 39);
+            this.AddBttn.TabIndex = 2;
+            this.AddBttn.Text = "Add";
+            this.AddBttn.UseVisualStyleBackColor = false;
+            this.AddBttn.Click += new System.EventHandler(this.AddBttn_Click);
+            // 
+            // UpdateBttn
+            // 
+            this.UpdateBttn.BackColor = System.Drawing.SystemColors.Control;
+            this.UpdateBttn.Location = new System.Drawing.Point(169, 500);
+            this.UpdateBttn.Name = "UpdateBttn";
+            this.UpdateBttn.Size = new System.Drawing.Size(104, 39);
+            this.UpdateBttn.TabIndex = 3;
+            this.UpdateBttn.Text = "Update";
+            this.UpdateBttn.UseVisualStyleBackColor = false;
+            // 
+            // DeleteBttn
+            // 
+            this.DeleteBttn.BackColor = System.Drawing.SystemColors.Control;
+            this.DeleteBttn.Location = new System.Drawing.Point(297, 500);
+            this.DeleteBttn.Name = "DeleteBttn";
+            this.DeleteBttn.Size = new System.Drawing.Size(104, 39);
+            this.DeleteBttn.TabIndex = 4;
+            this.DeleteBttn.Text = "Delete";
+            this.DeleteBttn.UseVisualStyleBackColor = false;
+            // 
+            // ViewBttn
+            // 
+            this.ViewBttn.BackColor = System.Drawing.SystemColors.Control;
+            this.ViewBttn.Location = new System.Drawing.Point(45, 500);
+            this.ViewBttn.Name = "ViewBttn";
+            this.ViewBttn.Size = new System.Drawing.Size(104, 39);
+            this.ViewBttn.TabIndex = 5;
+            this.ViewBttn.Text = "View Report";
+            this.ViewBttn.UseVisualStyleBackColor = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1260, 567);
+            this.Controls.Add(this.ViewBttn);
+            this.Controls.Add(this.DeleteBttn);
+            this.Controls.Add(this.UpdateBttn);
+            this.Controls.Add(this.AddBttn);
             this.Controls.Add(this.mainDataGridView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -106,5 +172,11 @@
         private System.Windows.Forms.ToolStripMenuItem AppointmentsTab;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
         private System.Windows.Forms.DataGridView mainDataGridView;
+        private System.Windows.Forms.ToolStripMenuItem appointmentTypesPerMonthToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultantSchedulesToolStripMenuItem;
+        private System.Windows.Forms.Button AddBttn;
+        private System.Windows.Forms.Button UpdateBttn;
+        private System.Windows.Forms.Button DeleteBttn;
+        private System.Windows.Forms.Button ViewBttn;
     }
 }

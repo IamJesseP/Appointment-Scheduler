@@ -34,6 +34,7 @@ namespace C969Jesse
                    "JOIN user u ON ap.userId = u.userId " +
                    "ORDER BY ap.start";
 
+        string bttnState = "Customer";
 
         public MainForm()
         {
@@ -43,6 +44,8 @@ namespace C969Jesse
             // Default to customerData
             var customerData = new DataAccess();
             mainDataGridView.DataSource = customerData.GetData(customerQuery);
+            SetupCustomerDGV();
+            UpdateButtons("Customers");
 
             //edit props
             mainDataGridView.ReadOnly = true;
@@ -50,7 +53,6 @@ namespace C969Jesse
             mainDataGridView.AllowUserToAddRows = false;
             mainDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            SetupCustomerDGV();
         }
 
 
@@ -58,13 +60,46 @@ namespace C969Jesse
         {
             var customerData = new DataAccess();
             mainDataGridView.DataSource = customerData.GetData(customerQuery);
+            UpdateButtons("Customers");
             SetupCustomerDGV();
+        }
+
+        private void UpdateButtons(string state)
+        {
+            if (state == "Customers")
+            {
+                AddBttn.Show();
+                UpdateBttn.Show();
+                DeleteBttn.Show();
+                ViewBttn.Hide();
+                AddBttn.Text = "Add Customer";
+                UpdateBttn.Text = "Update Customer";
+                DeleteBttn.Text = "Delete Customer";
+            }
+            else if (state == "Appointments")
+            {
+                AddBttn.Show();
+                UpdateBttn.Show();
+                DeleteBttn.Show();
+                ViewBttn.Hide();
+                AddBttn.Text = "Add \nAppointment";
+                UpdateBttn.Text = "Update Appointment";
+                DeleteBttn.Text = "Delete Appointment";
+            }
+            else
+            {
+                AddBttn.Hide();
+                UpdateBttn.Hide();
+                DeleteBttn.Hide();
+                ViewBttn.Show();
+            }
         }
 
         private void ClickAppointmentsTab(object sender, EventArgs e)
         {
             var appointmentsData = new DataAccess();
             mainDataGridView.DataSource = appointmentsData.GetData(appointmentQuery);
+            UpdateButtons("Appointments");
             SetupAppointmentDGV();
         }
         private void SetupCustomerDGV()
@@ -114,6 +149,11 @@ namespace C969Jesse
             int indexSelected = e.RowIndex;
             if (indexSelected < 0) { return; }//Error handler for clicking header row
             MessageBox.Show($"Clicked {indexSelected}");
+
+        }
+
+        private void AddBttn_Click(object sender, EventArgs e)
+        {
 
         }
     }
