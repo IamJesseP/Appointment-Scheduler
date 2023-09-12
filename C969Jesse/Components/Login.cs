@@ -28,11 +28,11 @@ namespace C969Jesse
 		{
 			try
 			{
-                DBConnection.StartConnection();
+                DbConnection.StartConnection();
 				string username = txtUserLogin.Text;
 				string password = txtUserPassword.Text;
 				string query = $"SELECT * FROM user WHERE userName='{username}' AND password='{password}'";
-				var command = new MySqlCommand(query, DBConnection.conn);
+				var command = new MySqlCommand(query, DbConnection.conn);
 				var reader = command.ExecuteReader();
 				if (reader.HasRows)
                 {

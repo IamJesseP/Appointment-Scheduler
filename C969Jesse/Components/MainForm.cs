@@ -17,24 +17,7 @@ namespace C969Jesse
     public partial class MainForm : Form
     {
         // TODO: Move to static class ?
-        readonly string customerQuery = "SELECT " +
-                "c.customerId, c.customerName, " +
-                "a.address, a.phone, " +
-                "ci.city, " +
-                "co.country " +
-                "FROM customer c " +
-                "JOIN address a ON c.addressId = a.addressId " +
-                "JOIN city ci ON a.cityId = ci.cityId " +
-                "JOIN country co ON ci.countryId = co.countryId";
 
-        readonly string appointmentQuery = "SELECT " +
-                   "ap.appointmentId, ap.title, ap.description, ap.start, ap.end, ap.type, " +
-                   "c.customerName, c.customerId, a.phone AS customerPhone " +
-                   "FROM appointment ap " +
-                   "JOIN customer c ON ap.customerId = c.customerId " +
-                   "JOIN address a ON c.addressId = a.addressId " +
-                   "JOIN user u ON ap.userId = u.userId " +
-                   "ORDER BY ap.start";
 
         string bttnState = "Customers";
 
@@ -44,8 +27,8 @@ namespace C969Jesse
             this.Controls.Add(mainDataGridView);
 
             // Default to customerData
-            var customerData = new DataAccess();
-            mainDataGridView.DataSource = customerData.GetData(customerQuery);
+            var customerData = new DbManager();
+            mainDataGridView.DataSource = customerData.GetData(Queries.CustomerQuery);
             SetupCustomerDGV();
             UpdateButtons("Customers");
 
@@ -60,16 +43,16 @@ namespace C969Jesse
 
         private void ClickCustomersTab(object sender, EventArgs e)
         {
-            var customerData = new DataAccess();
-            mainDataGridView.DataSource = customerData.GetData(customerQuery);
+            var customerData = new DbManager();
+            mainDataGridView.DataSource = customerData.GetData(Queries.CustomerQuery);
             bttnState = "Customers";
             UpdateButtons(bttnState);
             SetupCustomerDGV();
         }
         private void ClickAppointmentsTab(object sender, EventArgs e)
         {
-            var appointmentsData = new DataAccess();
-            mainDataGridView.DataSource = appointmentsData.GetData(appointmentQuery);
+            var appointmentsData = new DbManager();
+            mainDataGridView.DataSource = appointmentsData.GetData(Queries.AppointmentQuery);
             bttnState = "Appointments";
             UpdateButtons(bttnState);
             SetupAppointmentDGV();

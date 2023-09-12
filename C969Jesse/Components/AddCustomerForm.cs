@@ -26,7 +26,7 @@ namespace C969Jesse.Components
                 return;
             }
             
-                this.Hide();
+            this.Hide();
 
         }
 

@@ -9,7 +9,7 @@ using System.Data.Common;
 
 namespace C969Jesse.Database
 {
-    public class DataAccess
+    public class DbManager
     {
         public DataTable GetData(string query)
         {
@@ -17,9 +17,9 @@ namespace C969Jesse.Database
 
             try
             {
-                DBConnection.StartConnection();
+                DbConnection.StartConnection();
 
-                using (MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(query, DbConnection.conn))
                 using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                 {
                     adapter.Fill(dataTable);
@@ -31,7 +31,7 @@ namespace C969Jesse.Database
             }
             finally
             {
-                DBConnection.CloseConnection();
+                DbConnection.CloseConnection();
             }
 
             return dataTable;

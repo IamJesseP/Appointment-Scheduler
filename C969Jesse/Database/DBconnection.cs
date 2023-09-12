@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 
 namespace C969Jesse.Database
 {
-	public class DBConnection
+	public class DbConnection
 	{
 		public static MySqlConnection conn { get; set; }
 

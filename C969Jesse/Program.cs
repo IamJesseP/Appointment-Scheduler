@@ -19,7 +19,7 @@ namespace C969Jesse
 			Application.SetCompatibleTextRenderingDefault(false);
 			try
 			{
-				DBConnection.StartConnection();
+				DbConnection.StartConnection();
 				MessageBox.Show("Connection open");
 			}
 			catch (Exception ex)
@@ -28,7 +28,7 @@ namespace C969Jesse
 			}
 
             Application.Run(new Login());
-			DBConnection.CloseConnection();
+			DbConnection.CloseConnection();
 		}
 	}
 }
