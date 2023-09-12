@@ -25,7 +25,7 @@ namespace C969Jesse.Components
                 MessageBox.Show("Please fill out all form fields correctly");
                 return;
             }
-            
+            // Save fields to DB
             this.Hide();
 
         }

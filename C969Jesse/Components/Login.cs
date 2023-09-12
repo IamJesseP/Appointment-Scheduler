@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using C969Jesse.Database;
+using C969Jesse.Utils;
 using MySql.Data.MySqlClient;
 
 // TODO: ADD LOGING FILES, CODE ALERTS WITHIN 15MINS OF APPT,
@@ -31,13 +32,17 @@ namespace C969Jesse
                 DbConnection.StartConnection();
 				string username = txtUserLogin.Text;
 				string password = txtUserPassword.Text;
-				string query = $"SELECT * FROM user WHERE userName='{username}' AND password='{password}'";
-				var command = new MySqlCommand(query, DbConnection.conn);
-				var reader = command.ExecuteReader();
+                string query = "SELECT * FROM user WHERE userName=@username AND password=@password";
+                var command = new MySqlCommand(query, DbConnection.conn);
+                command.Parameters.AddWithValue("@username", username);
+                command.Parameters.AddWithValue("@password", password);
+                var reader = command.ExecuteReader();
+
 				if (reader.HasRows)
                 {
                     LoginSuccessful();
-                    UserActivityLogger.LogUserActivity(username);
+                    UserActivityLogger.LogUserActivity(username); // Logging user info
+                    UserSession.CurrentUserName = username; // Setting username for logging in other classes
                     MainForm mainForm = new MainForm();
                     mainForm.Show();
                     this.Hide();

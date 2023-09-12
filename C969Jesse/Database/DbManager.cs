@@ -36,5 +36,22 @@ namespace C969Jesse.Database
 
             return dataTable;
         }
+
+        public void SaveData(string query)
+        {
+            try
+            {
+                DbConnection.StartConnection();
+                using (MySqlCommand cmd = new MySqlCommand(query, DbConnection.conn)) ;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+        }
     }
 }
