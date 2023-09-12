@@ -36,8 +36,8 @@ namespace C969Jesse.Components
                 { "CustomerPhone", txtAddCustomerPhone.Text },
                 { "CustomerPostal", txtPostal.Text },
             };
-            dbManager.SaveCustomerData(customerData);
-            // Save fields to DB
+            dbManager.SaveData(customerData);
+            
             this.Hide();
 
         }

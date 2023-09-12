@@ -44,16 +44,24 @@ namespace C969Jesse.Database
             try
             {
                 DbConnection.StartConnection();
-
                 var conn = DbConnection.conn;
-                var currentUser = UserSession.CurrentUserName;
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        int countryId = SaveCountryData(customerData, conn);
+                        int cityId = SaveCityData(customerData, conn, countryId);
+                        int addressId = SaveAddressData(customerData, conn, cityId);
+                        SaveCustomerData(customerData, conn, addressId);
 
-
-                int countryId = SaveCountryData(customerData, conn);
-                int cityId = SaveCityData(customerData, conn, countryId);
-                int addressId = SaveAddressData(customerData, conn, cityId);
-                SaveCustomerData(customerData, conn, addressId);
-                
+                        transaction.Commit(); // Success? Commit
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
 
             }
             catch (Exception ex)
