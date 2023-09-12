@@ -38,7 +38,7 @@ namespace C969Jesse.Components
                 { "CustomerPhone", txtAddCustomerPhone.Text },
                 { "CustomerPostal", txtPostal.Text },
             };
-            dbManager.SaveData(customerData);
+            dbManager.SaveData(customerData, false);
             MainFormInstance?.RefreshTable("Customers");
             this.Hide();
         }

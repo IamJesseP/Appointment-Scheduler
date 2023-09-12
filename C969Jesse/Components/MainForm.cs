@@ -16,8 +16,11 @@ namespace C969Jesse
 {
     public partial class MainForm : Form
     {
-        DbManager tableData = new DbManager();
-        string bttnState = "Customers";
+        private DbManager tableData = new DbManager();
+
+        private DataGridViewRow selectedRow = null;
+
+        private string bttnState = "Customers";
 
         public MainForm()
         {
@@ -44,12 +47,19 @@ namespace C969Jesse
             {
                 mainDataGridView.DataSource = tableData.GetData(Queries.AppointmentQuery);
                 bttnState = "Appointments";
+
+                mainDataGridView.Columns["appointmentId"].Visible = false;
             }
             else if (table == "Customers")
             {
                 mainDataGridView.DataSource = tableData.GetData(Queries.CustomerQuery);
                 bttnState = "Customers";
             }
+
+            mainDataGridView.Columns["customerId"].Visible = false;
+            mainDataGridView.Columns["addressId"].Visible = false;
+            mainDataGridView.Columns["cityId"].Visible = false;
+            mainDataGridView.Columns["countryId"].Visible = false;
         }
 
         private void UpdateButtons(string state)
@@ -126,6 +136,13 @@ namespace C969Jesse
         #endregion
 
         #region Event Handlers
+        private void mainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int indexSelected = e.RowIndex;
+            if (indexSelected < 0) { return; }//Error handler for clicking header row
+            MessageBox.Show($"Clicked {indexSelected}");
+            selectedRow = mainDataGridView.Rows[indexSelected];
+        }
         private void ClickCustomersTab(object sender, EventArgs e)
         {
             RefreshTable("Customers");
@@ -138,14 +155,6 @@ namespace C969Jesse
             UpdateButtons(bttnState);
             SetupAppointmentDGV();
         }
-        private void mainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int indexSelected = e.RowIndex;
-            if (indexSelected < 0) { return; }//Error handler for clicking header row
-            MessageBox.Show($"Clicked {indexSelected}");
-
-        }
-
         private void AddBttn_Click(object sender, EventArgs e)
         {
             if (bttnState == "Customers")
@@ -160,6 +169,21 @@ namespace C969Jesse
                 // addAppointmentForm.ShowDialog();
             }
         }
+        private void UpdateBttn_Click(object sender, EventArgs e)
+        {
+            if (selectedRow != null)
+            {
+                UpdateCustomerForm updateCustomerForm = new UpdateCustomerForm();
+                // updateCustomerForm.PopulateFields(selectedRow);
+                updateCustomerForm.MainFormInstance = this;
+                updateCustomerForm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please select a row first.");
+            }
+        }
         #endregion
+
     }
 }

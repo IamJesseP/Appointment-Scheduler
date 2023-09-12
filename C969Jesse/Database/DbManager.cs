@@ -39,7 +39,7 @@ namespace C969Jesse.Database
             return dataTable;
         }
 
-        public void SaveData(Dictionary<string, string> customerData)
+        public void SaveData(Dictionary<string, string> customerData, bool isUpdate)
         {
             try
             {
@@ -49,8 +49,8 @@ namespace C969Jesse.Database
                 {
                     try
                     {
-                        int countryId = SaveCountryData(customerData, conn);
-                        int cityId = SaveCityData(customerData, conn, countryId);
+                        int countryId = SaveCountryData(customerData, conn, isUpdate);
+                        int cityId = SaveCityData(customerData, conn, countryId, isUpdate);
                         int addressId = SaveAddressData(customerData, conn, cityId);
                         SaveCustomerData(customerData, conn, addressId);
 
@@ -74,16 +74,28 @@ namespace C969Jesse.Database
             }
         }
 
-        private int SaveCountryData(Dictionary<string, string> customerData, MySqlConnection conn)
+        private int SaveCountryData(Dictionary<string, string> customerData, MySqlConnection conn, bool isUpdate)
         {
-            int latestCountryId;
-            using (var countryIndexCmd = new MySqlCommand(Queries.CountryIdxQuery, conn))
-            {
-                latestCountryId = Convert.ToInt32(countryIndexCmd.ExecuteScalar()) + 1;
+            int countryId;
+            string query;
+
+            if (isUpdate) 
+            { 
+                countryId = int.Parse(customerData["CountryId"]);
+                query = Queries.CountryUpdateQuery;
             }
-            using (var countryInsertCMD = new MySqlCommand(Queries.CountryInsertQuery, conn))
+            else 
+            { 
+                using (var countryIndexCmd = new MySqlCommand(Queries.CountryIdxQuery, conn))
+                {
+                    countryId = Convert.ToInt32(countryIndexCmd.ExecuteScalar()) + 1;
+                    query = Queries.CountryInsertQuery;
+                }
+            }
+
+            using (var countryInsertCMD = new MySqlCommand(query, conn))
             {
-                countryInsertCMD.Parameters.AddWithValue("@CountryId", latestCountryId);
+                countryInsertCMD.Parameters.AddWithValue("@CountryId", countryId);
                 countryInsertCMD.Parameters.AddWithValue("@Country", customerData["CustomerCountry"]);
                 countryInsertCMD.Parameters.AddWithValue("@CreatedBy", UserSession.CurrentUserName);
                 countryInsertCMD.Parameters.AddWithValue("@LastUpdateBy", UserSession.CurrentUserName);
@@ -92,18 +104,32 @@ namespace C969Jesse.Database
                 countryInsertCMD.ExecuteNonQuery();
             }
 
-            return latestCountryId;
+            return countryId;
         }
-        private int SaveCityData(Dictionary<string, string> customerData, MySqlConnection conn, int latestCountryId)
+        private int SaveCityData(Dictionary<string, string> customerData, MySqlConnection conn, int latestCountryId, bool isUpdate)
         {
-            int latestCityId;
-            using (var cityIndexCmd = new MySqlCommand(Queries.CityIdxQuery, conn))
+            int cityId;
+            string query;
+
+            if (isUpdate)
             {
-                latestCityId = Convert.ToInt32(cityIndexCmd.ExecuteScalar()) + 1;
+                cityId = int.Parse(customerData["CityId"]);
+                query = Queries.CountryUpdateQuery;
             }
+            else
+            {
+                using (var cityIndexCmd = new MySqlCommand(Queries.CityIdxQuery, conn))
+                {
+                    cityId = Convert.ToInt32(cityIndexCmd.ExecuteScalar()) + 1;
+                }
+            }
+
+
+
+
             using (var cityInsertCMD = new MySqlCommand(Queries.CityInsertQuery, conn))
             {
-                cityInsertCMD.Parameters.AddWithValue("@CityId", latestCityId);
+                cityInsertCMD.Parameters.AddWithValue("@CityId", cityId);
                 cityInsertCMD.Parameters.AddWithValue("@City", customerData["CustomerCity"]);
                 cityInsertCMD.Parameters.AddWithValue("@CountryId", latestCountryId);
                 cityInsertCMD.Parameters.AddWithValue("@CreatedBy", UserSession.CurrentUserName);
@@ -113,7 +139,7 @@ namespace C969Jesse.Database
                 cityInsertCMD.ExecuteNonQuery();
             }
 
-            return latestCityId;
+            return cityId;
         }
         private int SaveAddressData(Dictionary<string, string> customerData, MySqlConnection conn, int latestCityId)
         {

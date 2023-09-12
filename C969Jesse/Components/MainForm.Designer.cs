@@ -123,6 +123,7 @@
             this.UpdateBttn.TabIndex = 3;
             this.UpdateBttn.Text = "Update";
             this.UpdateBttn.UseVisualStyleBackColor = false;
+            this.UpdateBttn.Click += new System.EventHandler(this.UpdateBttn_Click);
             // 
             // DeleteBttn
             // 
