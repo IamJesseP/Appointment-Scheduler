@@ -13,6 +13,8 @@ namespace C969Jesse.Database
 {
     public class DbManager
     {
+        // lambda expression to simplify for readability
+        private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
         public DataTable GetData(string query)
         {
             DataTable dataTable = new DataTable();
@@ -87,7 +89,7 @@ namespace C969Jesse.Database
             { 
                 using (var countryIndexCmd = new MySqlCommand(Queries.CountryIdxQuery, conn))
                 {
-                    countryId = Convert.ToInt32(countryIndexCmd.ExecuteScalar()) + 1;
+                    countryId = GetNewId(Queries.CountryIdxQuery, conn);
                     query = Queries.CountryInsertQuery;
                 }
             }
@@ -119,7 +121,7 @@ namespace C969Jesse.Database
             {
                 using (var cityIndexCmd = new MySqlCommand(Queries.CityIdxQuery, conn))
                 {
-                    cityId = Convert.ToInt32(cityIndexCmd.ExecuteScalar()) + 1;
+                    cityId = GetNewId(Queries.CityIdxQuery, conn);
                     query = Queries.CityInsertQuery;
                 }
             }
@@ -152,7 +154,7 @@ namespace C969Jesse.Database
             {
                 using (var addressIndexCmd = new MySqlCommand(Queries.AddressIdxQuery, conn))
                 {
-                    addressId = Convert.ToInt32(addressIndexCmd.ExecuteScalar()) + 1;
+                    addressId = GetNewId(Queries.AddressIdxQuery, conn);
                     query = Queries.AddressInsertQuery;
                 }
             }
@@ -186,7 +188,7 @@ namespace C969Jesse.Database
             {
                 using (var customerIndexCmd = new MySqlCommand(Queries.CustomerIdxQuery, conn))
                 {
-                    customerId = Convert.ToInt32(customerIndexCmd.ExecuteScalar()) + 1;
+                    customerId = GetNewId(Queries.CountryIdxQuery, conn);
                     query = Queries.CustomerInsertQuery;
                 }
             }
