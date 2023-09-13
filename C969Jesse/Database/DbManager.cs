@@ -123,10 +123,7 @@ namespace C969Jesse.Database
                     cityId = Convert.ToInt32(cityIndexCmd.ExecuteScalar()) + 1;
                 }
             }
-
-
-
-
+            // TODO: Populate fields method, access all Ids', refactor rest of dbmanager
             using (var cityInsertCMD = new MySqlCommand(Queries.CityInsertQuery, conn))
             {
                 cityInsertCMD.Parameters.AddWithValue("@CityId", cityId);

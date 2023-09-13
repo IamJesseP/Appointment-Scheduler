@@ -174,7 +174,7 @@ namespace C969Jesse
             if (selectedRow != null)
             {
                 UpdateCustomerForm updateCustomerForm = new UpdateCustomerForm();
-                // updateCustomerForm.PopulateFields(selectedRow);
+                updateCustomerForm.PopulateFields(selectedRow);
                 updateCustomerForm.MainFormInstance = this;
                 updateCustomerForm.Show();
             }

@@ -10,7 +10,7 @@ namespace C969Jesse.Database
     {
         public static string CustomerQuery => "SELECT " +
                     "c.customerId, c.customerName, " +
-                    "a.address, a.addressId, a.phone, " +
+                    "a.address, a.addressId, a.postalCode, a.phone, " +
                     "ci.city, ci.cityId, " +
                     "co.country, co.countryId " +
                     "FROM customer c " +

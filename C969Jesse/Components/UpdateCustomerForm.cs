@@ -56,6 +56,16 @@ namespace C969Jesse.Components
                 && Validation.ValidateTextBox(txtUpdateCustomerPhone, "phone", errorProvider)
                 && Validation.ValidateTextBox(txtPostal, "string", errorProvider);
         }
+        public void PopulateFields(DataGridViewRow row)
+        {
+            txtUpdateCustomerName.Text = row.Cells[1].Value.ToString();
+            txtUpdateCustomerAddress.Text = row.Cells[2].Value.ToString();
+            txtUpdateCustomerCity.Text = row.Cells[6].Value.ToString();
+            txtUpdateCustomerCountry.Text = row.Cells[8].Value.ToString();
+            txtUpdateCustomerPhone.Text = row.Cells[5].Value.ToString();
+            txtPostal.Text = row.Cells[4].Value.ToString();
+        }
+
 
         #region TextChanged Validation
         private void txtUpdateCustomerName_TextChanged(object sender, EventArgs e)
