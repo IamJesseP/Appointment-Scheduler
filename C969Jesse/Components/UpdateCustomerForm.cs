@@ -16,6 +16,13 @@ namespace C969Jesse.Components
     {
         DbManager dbManager = new DbManager();
         public MainForm MainFormInstance { get; set; }
+
+        private string addressId;
+        private string customerId;
+        private string cityId;
+        private string countryId;
+
+
         public UpdateCustomerForm()
         {
             InitializeComponent();
@@ -36,9 +43,15 @@ namespace C969Jesse.Components
                 { "CustomerCountry", txtUpdateCustomerCountry.Text },
                 { "CustomerPhone", txtUpdateCustomerPhone.Text },
                 { "CustomerPostal", txtPostal.Text },
+                { "AddressId", addressId },
+                { "CustomerId", customerId },
+                { "CityId" , cityId },
+                { "CountryId" , countryId },
+
             };
             dbManager.SaveData(customerData, true);
             MainFormInstance?.RefreshTable("Customers");
+            MainFormInstance?.RefreshTableSettings();
             this.Hide();
         }
 
@@ -63,7 +76,13 @@ namespace C969Jesse.Components
             txtUpdateCustomerCity.Text = row.Cells[6].Value.ToString();
             txtUpdateCustomerCountry.Text = row.Cells[8].Value.ToString();
             txtUpdateCustomerPhone.Text = row.Cells[5].Value.ToString();
+            
+            //Set IDs
             txtPostal.Text = row.Cells[4].Value.ToString();
+            addressId = row.Cells[3].Value.ToString();
+            customerId = row.Cells[0].Value.ToString();
+            cityId = row.Cells[7].Value.ToString();
+            countryId = row.Cells[9].Value.ToString();
         }
 
 

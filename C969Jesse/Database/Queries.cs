@@ -8,7 +8,8 @@ namespace C969Jesse.Database
 {
     public static class Queries
     {
-        public static string CustomerQuery => "SELECT " +
+        #region Get Table Queries
+        public static string GetCustomersQuery => "SELECT " +
                     "c.customerId, c.customerName, " +
                     "a.address, a.addressId, a.postalCode, a.phone, " +
                     "ci.city, ci.cityId, " +
@@ -19,7 +20,7 @@ namespace C969Jesse.Database
                     "JOIN country co ON ci.countryId = co.countryId";
 
 
-        public static string AppointmentQuery => "SELECT " +
+        public static string GetAppointmentsQuery => "SELECT " +
                     "ap.appointmentId, ap.title, ap.description, ap.start, ap.end, ap.type, " +
                     "c.customerName, c.customerId, c.addressId, " +
                     "a.phone AS customerPhone, a.cityId, " +
@@ -31,45 +32,71 @@ namespace C969Jesse.Database
                     "JOIN country co ON ci.countryId = co.countryId " +
                     "JOIN user u ON ap.userId = u.userId " +
                     "ORDER BY ap.start";
+        #endregion
 
+        #region Country Queries
         public static string CountryIdxQuery => "SELECT " + 
                  "countryId FROM country " + 
                  "ORDER BY countryId DESC LIMIT 1";
-
         public static string CountryInsertQuery => "INSERT INTO country " + 
                  "(countryId, country, createDate, createdBy, lastUpdate, lastUpdateBy) " + 
                  "VALUES (@CountryId, @Country, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
-
-        public static string CityIdxQuery => "SELECT " +
-                 "cityId FROM city " +
-                 "ORDER BY cityId DESC LIMIT 1";
-
-        public static string CityInsertQuery => "INSERT INTO city " +
-                 "(cityId, city, countryId, createDate, createdBy, lastUpdate, lastUpdateBy) " +
-                 "VALUES (@CityId, @City, @CountryId, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
-
-        public static string AddressIdxQuery => "SELECT " +
-                 "addressId FROM address " +
-                 "ORDER BY addressId DESC LIMIT 1";
-
-        public static string AddressInsertQuery => "INSERT INTO address " +
-                 "(addressId, address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) " +
-                 "VALUES (@AddressId, @Address, '', @CityId, @PostalCode, @PhoneNumber, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
-
-        public static string CustomerIdxQuery => "SELECT " +
-                 "customerId FROM customer " +
-                 "ORDER BY customerId DESC LIMIT 1";
-
-        public static string CustomerInsertQuery => "INSERT INTO customer " +
-                 "(customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) " +
-                 "VALUES (@CustomerId, @CustomerName, @AddressId, @Active, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
-
         public static string CountryUpdateQuery => "UPDATE country SET " +
                  "country = @Country, " +
                  "lastUpdate = NOW(), " +
                  "lastUpdateBy = @LastUpdateBy " +
                  "WHERE countryId = @CountryId";
+        #endregion
 
+        #region City Queries
+        public static string CityIdxQuery => "SELECT " +
+                 "cityId FROM city " +
+                 "ORDER BY cityId DESC LIMIT 1";
+        public static string CityInsertQuery => "INSERT INTO city " +
+                 "(cityId, city, countryId, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+                 "VALUES (@CityId, @City, @CountryId, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
+        public static string CityUpdateQuery => "UPDATE city SET " +
+                "city = @City, " +
+                "countryId = @CountryId, " +
+                "lastUpdate = NOW(), " +
+                "lastUpdateBy = @LastUpdateBy " +
+                "WHERE cityId = @CityId";
+
+        #endregion
+
+        #region Address Queries
+        public static string AddressIdxQuery => "SELECT " +
+                "addressId FROM address " +
+                "ORDER BY addressId DESC LIMIT 1";
+        public static string AddressInsertQuery => "INSERT INTO address " +
+                "(addressId, address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+                "VALUES (@AddressId, @Address, '', @CityId, @PostalCode, @PhoneNumber, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
+        public static string AddressUpdateQuery => "UPDATE address SET " +
+                "address = @Address, " +
+                "address2 = '', " +
+                "cityId = @CityId, " +
+                "postalCode = @PostalCode, " +
+                "phone = @PhoneNumber, " +
+                "lastUpdate = NOW(), " +
+                "lastUpdateBy = @LastUpdateBy " +
+                "WHERE addressId = @AddressId";
+        #endregion
+
+        #region Customer Queries
+        public static string CustomerIdxQuery => "SELECT " +
+                 "customerId FROM customer " +
+                 "ORDER BY customerId DESC LIMIT 1";
+        public static string CustomerInsertQuery => "INSERT INTO customer " +
+                 "(customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+                 "VALUES (@CustomerId, @CustomerName, @AddressId, @Active, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
+        public static string CustomerUpdateQuery => "UPDATE customer SET " +
+                "customerName = @CustomerName, " +
+                "addressId = @AddressId, " +
+                "active = @Active, " +
+                "lastUpdate = NOW(), " +
+                "lastUpdateBy = @LastUpdateBy " +
+                "WHERE customerId = @CustomerId";
+        #endregion
 
     }
 }

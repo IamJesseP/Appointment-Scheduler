@@ -28,8 +28,8 @@ namespace C969Jesse
             this.Controls.Add(mainDataGridView);
 
             // Default to customerData
-            RefreshTable("Customers");
-            UpdateButtons("Customers");
+            RefreshTable(bttnState);
+            UpdateButtons(bttnState);
             SetupCustomerDGV();
 
             //edit props
@@ -45,15 +45,13 @@ namespace C969Jesse
         {
             if (table == "Appointments")
             {
-                mainDataGridView.DataSource = tableData.GetData(Queries.AppointmentQuery);
-                bttnState = "Appointments";
+                mainDataGridView.DataSource = tableData.GetData(Queries.GetAppointmentsQuery);
 
                 mainDataGridView.Columns["appointmentId"].Visible = false;
             }
             else if (table == "Customers")
             {
-                mainDataGridView.DataSource = tableData.GetData(Queries.CustomerQuery);
-                bttnState = "Customers";
+                mainDataGridView.DataSource = tableData.GetData(Queries.GetCustomersQuery);
             }
 
             mainDataGridView.Columns["customerId"].Visible = false;
@@ -91,14 +89,11 @@ namespace C969Jesse
                 DeleteBttn.Hide();
                 ViewBttn.Show();
             }
+            bttnState = state;
         }
 
         private void SetupCustomerDGV()
         {
-            // Tab color
-            CustomerTab.ForeColor = Color.Goldenrod;
-            AppointmentsTab.ForeColor = Color.Black;
-
             // Setting column titles
             mainDataGridView.Columns["customerId"].HeaderText = "Customer ID";
             mainDataGridView.Columns["customerName"].HeaderText = "Customer Name";
@@ -110,13 +105,11 @@ namespace C969Jesse
             // Resizing columns to fit the current view
             mainDataGridView.AutoResizeColumns();
             mainDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            RefreshTableSettings();
         }
 
         private void SetupAppointmentDGV()
         {
-            // Tab color
-            CustomerTab.ForeColor = Color.Black;
-            AppointmentsTab.ForeColor = Color.Goldenrod;
 
             // Setting column titles
             mainDataGridView.Columns["appointmentId"].HeaderText = "Appointment ID";
@@ -128,10 +121,28 @@ namespace C969Jesse
             mainDataGridView.Columns["type"].HeaderText = "Visit Type";
             mainDataGridView.Columns["customerPhone"].HeaderText = "Phone";
 
+            RefreshTableSettings();
+        }
 
+        public void RefreshTableSettings()
+        {
+            // Tab color
+            if (bttnState == "Customers")
+            {
+                CustomerTab.ForeColor = Color.Goldenrod;
+                AppointmentsTab.ForeColor = Color.Black;
+            }
+            else
+            {
+                CustomerTab.ForeColor = Color.Black;
+                AppointmentsTab.ForeColor = Color.Goldenrod;
+
+            }
             // Resizing columns to fit the current view
+            mainDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             mainDataGridView.AutoResizeColumns();
             mainDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            mainDataGridView.ClearSelection();
         }
         #endregion
 
@@ -140,19 +151,18 @@ namespace C969Jesse
         {
             int indexSelected = e.RowIndex;
             if (indexSelected < 0) { return; }//Error handler for clicking header row
-            MessageBox.Show($"Clicked {indexSelected}");
             selectedRow = mainDataGridView.Rows[indexSelected];
         }
         private void ClickCustomersTab(object sender, EventArgs e)
         {
-            RefreshTable("Customers");
-            UpdateButtons(bttnState);
+            UpdateButtons("Customers");
+            RefreshTable(bttnState);
             SetupCustomerDGV();
         }
         private void ClickAppointmentsTab(object sender, EventArgs e)
         {
-            RefreshTable("Appointments");
-            UpdateButtons(bttnState);
+            UpdateButtons("Appointments");
+            RefreshTable(bttnState);
             SetupAppointmentDGV();
         }
         private void AddBttn_Click(object sender, EventArgs e)
@@ -182,6 +192,7 @@ namespace C969Jesse
             {
                 MessageBox.Show("Please select a row first.");
             }
+            selectedRow = null;
         }
         #endregion
 

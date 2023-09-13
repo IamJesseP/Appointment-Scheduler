@@ -40,6 +40,7 @@ namespace C969Jesse.Components
             };
             dbManager.SaveData(customerData, false);
             MainFormInstance?.RefreshTable("Customers");
+            MainFormInstance?.RefreshTableSettings();
             this.Hide();
         }
 
