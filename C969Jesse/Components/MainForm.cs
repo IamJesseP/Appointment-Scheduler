@@ -43,6 +43,7 @@ namespace C969Jesse
                 mainDataGridView.DataSource = dbManager.GetData(Queries.GetAppointmentsQuery);
 
                 mainDataGridView.Columns["appointmentId"].Visible = false;
+                mainDataGridView.Columns["userId"].Visible = false;
             }
             else if (state == "Customers")
             {
@@ -101,16 +102,16 @@ namespace C969Jesse
 
         private void SetupAppointmentDGV()
         {
-
             // Setting column titles
-            mainDataGridView.Columns["appointmentId"].HeaderText = "Appointment ID";
+            mainDataGridView.Columns["userName"].HeaderText = "Consultant";
             mainDataGridView.Columns["customerName"].HeaderText = "Customer Name";
-            mainDataGridView.Columns["title"].HeaderText = "Title";
             mainDataGridView.Columns["description"].HeaderText = "Description";
+            mainDataGridView.Columns["type"].HeaderText = "Visit Type";
+            mainDataGridView.Columns["location"].HeaderText = "Location";
             mainDataGridView.Columns["start"].HeaderText = "Start";
             mainDataGridView.Columns["end"].HeaderText = "End";
-            mainDataGridView.Columns["type"].HeaderText = "Visit Type";
-            mainDataGridView.Columns["customerPhone"].HeaderText = "Phone";
+            mainDataGridView.Columns["phone"].HeaderText = "Phone";
+            mainDataGridView.Columns["url"].HeaderText = "Visit Link";
         }
 
         public void RefreshTableSettings()

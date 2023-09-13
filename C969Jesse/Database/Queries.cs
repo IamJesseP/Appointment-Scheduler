@@ -8,6 +8,7 @@ namespace C969Jesse.Database
 {
     public static class Queries
     {
+        #region Customer Queries
         #region Get Table Queries
         public static string GetCustomersQuery => "SELECT " +
                     "c.customerId, c.customerName, " +
@@ -18,26 +19,10 @@ namespace C969Jesse.Database
                     "JOIN address a ON c.addressId = a.addressId " +
                     "JOIN city ci ON a.cityId = ci.cityId " +
                     "JOIN country co ON ci.countryId = co.countryId";
-
-
-        public static string GetAppointmentsQuery => "SELECT " +
-                    "ap.appointmentId, ap.title, ap.description, ap.start, ap.end, ap.type, " +
-                    "c.customerName, c.customerId, c.addressId, " +
-                    "a.phone AS customerPhone, a.cityId, " +
-                    "ci.countryId " +
-                    "FROM appointment ap " +
-                    "JOIN customer c ON ap.customerId = c.customerId " +
-                    "JOIN address a ON c.addressId = a.addressId " +
-                    "JOIN city ci ON a.cityId = ci.cityId " +
-                    "JOIN country co ON ci.countryId = co.countryId " +
-                    "JOIN user u ON ap.userId = u.userId " +
-                    "ORDER BY ap.start";
         #endregion
-
         #region Delete Table Queries
         public static string deleteCustomerQuery => "DELETE FROM customer WHERE customerId = @CustomerId";
         #endregion
-
         #region Country Queries
         public static string CountryIdxQuery => "SELECT " + 
                  "countryId FROM country " + 
@@ -51,7 +36,6 @@ namespace C969Jesse.Database
                  "lastUpdateBy = @LastUpdateBy " +
                  "WHERE countryId = @CountryId";
         #endregion
-
         #region City Queries
         public static string CityIdxQuery => "SELECT " +
                  "cityId FROM city " +
@@ -67,7 +51,6 @@ namespace C969Jesse.Database
                 "WHERE cityId = @CityId";
 
         #endregion
-
         #region Address Queries
         public static string AddressIdxQuery => "SELECT " +
                 "addressId FROM address " +
@@ -85,7 +68,6 @@ namespace C969Jesse.Database
                 "lastUpdateBy = @LastUpdateBy " +
                 "WHERE addressId = @AddressId";
         #endregion
-
         #region Customer Queries
         public static string CustomerIdxQuery => "SELECT " +
                  "customerId FROM customer " +
@@ -101,6 +83,20 @@ namespace C969Jesse.Database
                 "lastUpdateBy = @LastUpdateBy " +
                 "WHERE customerId = @CustomerId";
         #endregion
+        #endregion
+
+        public static string GetAppointmentsQuery =>
+            "SELECT ap.appointmentId, ap.customerId, ap.userId, ap.description, ap.location, " + 
+            "ap.type, ap.url, ap.start, ap.end, u.userName, " +
+            "c.customerName, a.phone, a.addressId, a.cityId, ci.countryId " +
+            "FROM appointment ap " +
+            "JOIN customer c ON ap.customerId = c.customerId " +
+            "JOIN address a ON c.addressId = a.addressId " +
+            "JOIN city ci ON a.cityId = ci.cityId " +
+            "JOIN country co ON ci.countryId = co.countryId " +
+            "JOIN user u ON ap.userId = u.userId " +
+            "ORDER BY ap.start";
+
 
     }
 }
