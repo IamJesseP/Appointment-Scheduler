@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.CustomerTab = new System.Windows.Forms.ToolStripMenuItem();
             this.AppointmentsTab = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,8 +42,13 @@
             this.DeleteBttn = new System.Windows.Forms.Button();
             this.ViewBttn = new System.Windows.Forms.Button();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.feedbackLabel = new System.Windows.Forms.Label();
+            this.successProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.successProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -95,13 +102,19 @@
             // 
             // mainDataGridView
             // 
+            this.mainDataGridView.AllowUserToAddRows = false;
+            this.mainDataGridView.AllowUserToDeleteRows = false;
+            this.mainDataGridView.AllowUserToResizeColumns = false;
+            this.mainDataGridView.AllowUserToResizeRows = false;
             this.mainDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.mainDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainDataGridView.Location = new System.Drawing.Point(45, 44);
+            this.mainDataGridView.MultiSelect = false;
             this.mainDataGridView.Name = "mainDataGridView";
             this.mainDataGridView.Size = new System.Drawing.Size(926, 436);
             this.mainDataGridView.TabIndex = 1;
             this.mainDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mainDataGridView_CellClick);
+            this.mainDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.mainDataGridView_DataBindingComplete);
             // 
             // AddBttn
             // 
@@ -134,6 +147,7 @@
             this.DeleteBttn.TabIndex = 4;
             this.DeleteBttn.Text = "Delete";
             this.DeleteBttn.UseVisualStyleBackColor = false;
+            this.DeleteBttn.Click += new System.EventHandler(this.DeleteBttn_Click);
             // 
             // ViewBttn
             // 
@@ -151,11 +165,30 @@
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 6;
             // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            this.errorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider.Icon")));
+            // 
+            // feedbackLabel
+            // 
+            this.feedbackLabel.AutoSize = true;
+            this.feedbackLabel.Location = new System.Drawing.Point(425, 513);
+            this.feedbackLabel.Name = "feedbackLabel";
+            this.feedbackLabel.Size = new System.Drawing.Size(0, 13);
+            this.feedbackLabel.TabIndex = 7;
+            // 
+            // successProvider
+            // 
+            this.successProvider.ContainerControl = this;
+            this.successProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("successProvider.Icon")));
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1260, 567);
+            this.Controls.Add(this.feedbackLabel);
             this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.ViewBttn);
             this.Controls.Add(this.DeleteBttn);
@@ -169,6 +202,8 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.successProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -188,5 +223,8 @@
         private System.Windows.Forms.Button DeleteBttn;
         private System.Windows.Forms.Button ViewBttn;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.Label feedbackLabel;
+        private System.Windows.Forms.ErrorProvider successProvider;
     }
 }

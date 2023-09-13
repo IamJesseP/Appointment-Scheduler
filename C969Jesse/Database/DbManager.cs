@@ -39,7 +39,7 @@ namespace C969Jesse.Database
             return dataTable;
         }
 
-        public void SaveData(Dictionary<string, string> customerData, bool isUpdate)
+        public void SaveCustomerData(Dictionary<string, string> customerData, bool isUpdate)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace C969Jesse.Database
                         int countryId = SaveCountryData(customerData, conn, isUpdate);
                         int cityId = SaveCityData(customerData, conn, countryId, isUpdate);
                         int addressId = SaveAddressData(customerData, conn, cityId, isUpdate);
-                        SaveCustomerData(customerData, conn, addressId, isUpdate);
+                        SaveCustomerNameData(customerData, conn, addressId, isUpdate);
 
                         transaction.Commit(); // Success? Commit
                     }
@@ -73,7 +73,6 @@ namespace C969Jesse.Database
                 DbConnection.CloseConnection();
             }
         }
-
         private int SaveCountryData(Dictionary<string, string> customerData, MySqlConnection conn, bool isUpdate)
         {
             int countryId;
@@ -173,7 +172,7 @@ namespace C969Jesse.Database
 
             return addressId;
         }
-        private void SaveCustomerData(Dictionary<string, string> customerData, MySqlConnection conn, int latestAddressId, bool isUpdate)
+        private void SaveCustomerNameData(Dictionary<string, string> customerData, MySqlConnection conn, int latestAddressId, bool isUpdate)
         {
             int customerId;
             string query;
@@ -202,6 +201,41 @@ namespace C969Jesse.Database
 
                 customerInsertCommand.Prepare();
                 customerInsertCommand.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteCustomerData(int customerId)
+        {
+            try
+            {
+                DbConnection.StartConnection();
+                var conn = DbConnection.conn;
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (var deleteCustomerCMD = new MySqlCommand(Queries.deleteCustomerQuery, DbConnection.conn))
+                        {
+                            deleteCustomerCMD.Parameters.AddWithValue("@CustomerId", customerId);
+                            deleteCustomerCMD.Prepare();
+                            deleteCustomerCMD.ExecuteNonQuery();
+                        }
+                        transaction.Commit(); // Success? Commit
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
             }
         }
     }

@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace C969Jesse
 {
     public partial class MainForm : Form
     {
-        private DbManager tableData = new DbManager();
+        private DbManager dbManager = new DbManager();
 
         private DataGridViewRow selectedRow = null;
 
@@ -28,30 +29,24 @@ namespace C969Jesse
             this.Controls.Add(mainDataGridView);
 
             // Default to customerData
-            RefreshTable(bttnState);
             UpdateButtons(bttnState);
+            RefreshTable(bttnState);
             SetupCustomerDGV();
-
-            //edit props
-            mainDataGridView.ReadOnly = true;
-            mainDataGridView.MultiSelect = false;
-            mainDataGridView.AllowUserToAddRows = false;
-            mainDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
+            RefreshTableSettings();
         }
 
         #region Helper methods
-        public void RefreshTable(string table)
+        public void RefreshTable(string state)
         {
-            if (table == "Appointments")
+            if (state == "Appointments")
             {
-                mainDataGridView.DataSource = tableData.GetData(Queries.GetAppointmentsQuery);
+                mainDataGridView.DataSource = dbManager.GetData(Queries.GetAppointmentsQuery);
 
                 mainDataGridView.Columns["appointmentId"].Visible = false;
             }
-            else if (table == "Customers")
+            else if (state == "Customers")
             {
-                mainDataGridView.DataSource = tableData.GetData(Queries.GetCustomersQuery);
+                mainDataGridView.DataSource = dbManager.GetData(Queries.GetCustomersQuery);
             }
 
             mainDataGridView.Columns["customerId"].Visible = false;
@@ -102,10 +97,6 @@ namespace C969Jesse
             mainDataGridView.Columns["city"].HeaderText = "City";   
             mainDataGridView.Columns["country"].HeaderText = "Country";
 
-            // Resizing columns to fit the current view
-            mainDataGridView.AutoResizeColumns();
-            mainDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            RefreshTableSettings();
         }
 
         private void SetupAppointmentDGV()
@@ -120,8 +111,6 @@ namespace C969Jesse
             mainDataGridView.Columns["end"].HeaderText = "End";
             mainDataGridView.Columns["type"].HeaderText = "Visit Type";
             mainDataGridView.Columns["customerPhone"].HeaderText = "Phone";
-
-            RefreshTableSettings();
         }
 
         public void RefreshTableSettings()
@@ -139,10 +128,32 @@ namespace C969Jesse
 
             }
             // Resizing columns to fit the current view
+            mainDataGridView.ReadOnly = true;
+            mainDataGridView.MultiSelect = false;
+            mainDataGridView.AllowUserToAddRows = false;
             mainDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             mainDataGridView.AutoResizeColumns();
             mainDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             mainDataGridView.ClearSelection();
+            successProvider.Clear();
+            errorProvider.Clear();
+            feedbackLabel.Text = string.Empty;
+        }
+
+        public void GiveUserFeedBack(bool isUpdate)
+        {
+            if (!isUpdate)
+            {
+                errorProvider.Clear();
+                successProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Successfully added.";
+            }
+            else
+            {
+                errorProvider.Clear();
+                successProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Successfully updated.";
+            }
         }
         #endregion
 
@@ -157,12 +168,14 @@ namespace C969Jesse
         {
             UpdateButtons("Customers");
             RefreshTable(bttnState);
+            RefreshTableSettings();
             SetupCustomerDGV();
         }
         private void ClickAppointmentsTab(object sender, EventArgs e)
         {
             UpdateButtons("Appointments");
             RefreshTable(bttnState);
+            RefreshTableSettings();
             SetupAppointmentDGV();
         }
         private void AddBttn_Click(object sender, EventArgs e)
@@ -187,12 +200,41 @@ namespace C969Jesse
                 updateCustomerForm.PopulateFields(selectedRow);
                 updateCustomerForm.MainFormInstance = this;
                 updateCustomerForm.Show();
+
             }
             else
             {
-                MessageBox.Show("Please select a row first.");
+                successProvider.Clear();
+                errorProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Please select a row first.";
             }
             selectedRow = null;
+        }
+        private void DeleteBttn_Click(object sender, EventArgs e)
+        {
+            if (selectedRow != null)
+            {
+                var selectedRow = mainDataGridView.SelectedRows[0];
+                int customerId = Convert.ToInt32(selectedRow.Cells["customerId"].Value);
+                dbManager.DeleteCustomerData(customerId);
+                RefreshTable(bttnState);
+                RefreshTableSettings();
+
+                errorProvider.Clear();
+                successProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Successfully deleted.";
+            }
+            else
+            {
+                successProvider.Clear();
+                errorProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Please select a row first.";
+            }
+            selectedRow = null;
+        }
+        private void mainDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            mainDataGridView.ClearSelection();
         }
         #endregion
 

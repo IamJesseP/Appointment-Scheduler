@@ -34,6 +34,10 @@ namespace C969Jesse.Database
                     "ORDER BY ap.start";
         #endregion
 
+        #region Delete Table Queries
+        public static string deleteCustomerQuery => "DELETE FROM customer WHERE customerId = @CustomerId";
+        #endregion
+
         #region Country Queries
         public static string CountryIdxQuery => "SELECT " + 
                  "countryId FROM country " + 

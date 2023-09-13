@@ -17,6 +17,8 @@ namespace C969Jesse.Components
         DbManager dbManager = new DbManager();
         public MainForm MainFormInstance { get; set; }
 
+        private bool isUpdate = true;
+
         public AddCustomerForm()
         {
             InitializeComponent();
@@ -38,14 +40,16 @@ namespace C969Jesse.Components
                 { "CustomerPhone", txtAddCustomerPhone.Text },
                 { "CustomerPostal", txtPostal.Text },
             };
-            dbManager.SaveData(customerData, false);
+            dbManager.SaveCustomerData(customerData, !isUpdate);
             MainFormInstance?.RefreshTable("Customers");
             MainFormInstance?.RefreshTableSettings();
+            MainFormInstance?.GiveUserFeedBack(!isUpdate);
             this.Hide();
         }
 
         private void CancelBttn_Click(object sender, EventArgs e)
         {
+            MainFormInstance?.RefreshTableSettings();
             this.Close();
         }
 
