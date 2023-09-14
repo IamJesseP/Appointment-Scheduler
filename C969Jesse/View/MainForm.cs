@@ -189,8 +189,8 @@ namespace C969Jesse
             }
             else if (bttnState == "Appointments")
             {
-                // var addAppointmentForm = new AddAppointmentForm();
-                // addAppointmentForm.ShowDialog();
+                var addAppointmentForm = new AddAppointmentForm();
+                addAppointmentForm.Show();
             }
         }
         private void UpdateBttn_Click(object sender, EventArgs e)
