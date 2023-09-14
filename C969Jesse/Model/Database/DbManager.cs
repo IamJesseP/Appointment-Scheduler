@@ -13,8 +13,6 @@ namespace C969Jesse.Database
 {
     public class DbManager
     {
-        // lambda expression to simplify for readability
-        private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
         public DataTable GetData(string query)
         {
             DataTable dataTable = new DataTable();
@@ -40,7 +38,134 @@ namespace C969Jesse.Database
 
             return dataTable;
         }
+        public Dictionary<int, string> GetCustomerNames()
+        {
+            Dictionary<int, string> customerNames = new Dictionary<int, string>();
+            try
+            {
+                DbConnection.StartConnection();
+                using (MySqlCommand cmd = new MySqlCommand(Queries.GetCustomersQuery, DbConnection.conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            customerNames.Add(reader.GetInt32("customerId"), reader.GetString("customerName"));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+            return customerNames;
+        }
+        public Dictionary<int, string> GetUserNames()
+        {
+            Dictionary<int, string> userNames = new Dictionary<int, string>();
 
+            try
+            {
+                DbConnection.StartConnection();
+
+                using (var cmd = new MySqlCommand(Queries.GetUsersQuery, DbConnection.conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        userNames.Add(reader.GetInt32("userId"), reader.GetString("userName"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+
+            return userNames;
+        }
+        public List<Tuple<DateTime, DateTime>> GetBookedSlots(DateTime date)
+        {
+            var bookedSlots = new List<Tuple<DateTime, DateTime>>();
+
+            try
+            {
+                DbConnection.StartConnection();
+                using (var cmd = new MySqlCommand(Queries.GetAppointmentStartEndQuery, DbConnection.conn))
+                {
+                    cmd.Parameters.AddWithValue("@Date", date.Date);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var start = reader.GetDateTime("start");
+                            var end = reader.GetDateTime("end");
+                            bookedSlots.Add(new Tuple<DateTime, DateTime>(start, end));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+
+            return bookedSlots;
+        }
+
+
+        // lambda expression to simplify for readability
+        private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
+
+
+        #region Add/Update/Delete Customer
+        public void DeleteCustomerData(int customerId)
+        {
+            try
+            {
+                DbConnection.StartConnection();
+                var conn = DbConnection.conn;
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (var deleteCustomerCMD = new MySqlCommand(Queries.deleteCustomerQuery, DbConnection.conn))
+                        {
+                            deleteCustomerCMD.Parameters.AddWithValue("@CustomerId", customerId);
+                            deleteCustomerCMD.Prepare();
+                            deleteCustomerCMD.ExecuteNonQuery();
+                        }
+                        transaction.Commit(); // Success? Commit
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+        }
         public void SaveCustomerData(Dictionary<string, string> customerData, bool isUpdate)
         {
             try
@@ -205,40 +330,6 @@ namespace C969Jesse.Database
                 customerInsertCommand.ExecuteNonQuery();
             }
         }
-
-        public void DeleteCustomerData(int customerId)
-        {
-            try
-            {
-                DbConnection.StartConnection();
-                var conn = DbConnection.conn;
-                using (var transaction = conn.BeginTransaction())
-                {
-                    try
-                    {
-                        using (var deleteCustomerCMD = new MySqlCommand(Queries.deleteCustomerQuery, DbConnection.conn))
-                        {
-                            deleteCustomerCMD.Parameters.AddWithValue("@CustomerId", customerId);
-                            deleteCustomerCMD.Prepare();
-                            deleteCustomerCMD.ExecuteNonQuery();
-                        }
-                        transaction.Commit(); // Success? Commit
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                DbConnection.CloseConnection();
-            }
-        }
+        #endregion
     }
 }

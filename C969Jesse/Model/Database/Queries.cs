@@ -10,7 +10,7 @@ namespace C969Jesse.Database
     {
         #region Customer Queries
         #region Get Table Queries
-        public static string GetCustomersQuery => "SELECT " +
+        public static string GetCustomerTableQuery => "SELECT " +
                     "c.customerId, c.customerName, " +
                     "a.address, a.addressId, a.postalCode, a.phone, " +
                     "ci.city, ci.cityId, " +
@@ -85,7 +85,7 @@ namespace C969Jesse.Database
         #endregion
         #endregion
 
-        public static string GetAppointmentsQuery =>
+        public static string GetAppointmentTableQuery =>
             "SELECT ap.appointmentId, ap.customerId, ap.userId, ap.description, ap.location, " + 
             "ap.type, ap.url, ap.start, ap.end, u.userName, " +
             "c.customerName, a.phone, a.addressId, a.cityId, ci.countryId " +
@@ -96,8 +96,10 @@ namespace C969Jesse.Database
             "JOIN country co ON ci.countryId = co.countryId " +
             "JOIN user u ON ap.userId = u.userId " +
             "ORDER BY ap.start";
-
-
+        public static string GetAppointmentStartEndQuery => 
+            "SELECT start, end FROM appointment WHERE DATE(start) = @Date";
+        public static string GetUsersQuery => "SELECT userId, userName FROM user";
+        public static string GetCustomersQuery => "SELECT customerId, customerName FROM customer";
     }
 }
 

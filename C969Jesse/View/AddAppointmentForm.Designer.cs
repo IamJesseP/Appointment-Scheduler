@@ -32,7 +32,6 @@
             this.txtPostal = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtCustomerAddCountry = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -42,15 +41,16 @@
             this.CancelBttn = new System.Windows.Forms.Button();
             this.SaveBttn = new System.Windows.Forms.Button();
             this.comboBoxCustomers = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBoxUsers = new System.Windows.Forms.ComboBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.startTimeComboBox = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblPostal
             // 
             this.lblPostal.AutoSize = true;
-            this.lblPostal.Location = new System.Drawing.Point(259, 176);
+            this.lblPostal.Location = new System.Drawing.Point(259, 211);
             this.lblPostal.Name = "lblPostal";
             this.lblPostal.Size = new System.Drawing.Size(53, 13);
             this.lblPostal.TabIndex = 29;
@@ -58,7 +58,7 @@
             // 
             // txtPostal
             // 
-            this.txtPostal.Location = new System.Drawing.Point(258, 192);
+            this.txtPostal.Location = new System.Drawing.Point(258, 227);
             this.txtPostal.Name = "txtPostal";
             this.txtPostal.Size = new System.Drawing.Size(103, 20);
             this.txtPostal.TabIndex = 28;
@@ -67,7 +67,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(175, 31);
+            this.label6.Location = new System.Drawing.Point(173, 27);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(159, 16);
             this.label6.TabIndex = 27;
@@ -76,23 +76,17 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(134, 232);
+            this.label5.Location = new System.Drawing.Point(134, 302);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 13);
+            this.label5.Size = new System.Drawing.Size(92, 13);
             this.label5.TabIndex = 26;
-            this.label5.Text = "Start Time";
-            // 
-            // txtCustomerAddCountry
-            // 
-            this.txtCustomerAddCountry.Location = new System.Drawing.Point(135, 248);
-            this.txtCustomerAddCountry.Name = "txtCustomerAddCountry";
-            this.txtCustomerAddCountry.Size = new System.Drawing.Size(99, 20);
-            this.txtCustomerAddCountry.TabIndex = 25;
+            this.label5.Text = "Appointment Time";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(132, 176);
+            this.label4.Location = new System.Drawing.Point(132, 211);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 13);
             this.label4.TabIndex = 24;
@@ -101,7 +95,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(134, 290);
+            this.label3.Location = new System.Drawing.Point(134, 118);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 13);
             this.label3.TabIndex = 23;
@@ -110,7 +104,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(132, 128);
+            this.label2.Location = new System.Drawing.Point(132, 163);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(60, 13);
             this.label2.TabIndex = 22;
@@ -128,14 +122,14 @@
             // 
             // txtAddCustomerCity
             // 
-            this.txtAddCustomerCity.Location = new System.Drawing.Point(135, 192);
+            this.txtAddCustomerCity.Location = new System.Drawing.Point(135, 227);
             this.txtAddCustomerCity.Name = "txtAddCustomerCity";
             this.txtAddCustomerCity.Size = new System.Drawing.Size(99, 20);
             this.txtAddCustomerCity.TabIndex = 19;
             // 
             // txtAddCustomerAddress
             // 
-            this.txtAddCustomerAddress.Location = new System.Drawing.Point(135, 144);
+            this.txtAddCustomerAddress.Location = new System.Drawing.Point(135, 179);
             this.txtAddCustomerAddress.Name = "txtAddCustomerAddress";
             this.txtAddCustomerAddress.Size = new System.Drawing.Size(226, 20);
             this.txtAddCustomerAddress.TabIndex = 18;
@@ -168,46 +162,55 @@
             this.comboBoxCustomers.Size = new System.Drawing.Size(226, 21);
             this.comboBoxCustomers.TabIndex = 30;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(257, 232);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(55, 13);
-            this.label7.TabIndex = 32;
-            this.label7.Text = "Start Time";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(258, 248);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(103, 20);
-            this.textBox1.TabIndex = 31;
-            // 
             // comboBoxUsers
             // 
             this.comboBoxUsers.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBoxUsers.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxUsers.FormattingEnabled = true;
-            this.comboBoxUsers.Location = new System.Drawing.Point(135, 306);
+            this.comboBoxUsers.Location = new System.Drawing.Point(135, 134);
             this.comboBoxUsers.Name = "comboBoxUsers";
             this.comboBoxUsers.Size = new System.Drawing.Size(226, 21);
             this.comboBoxUsers.TabIndex = 33;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(135, 272);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(224, 20);
+            this.dateTimePicker1.TabIndex = 34;
+            // 
+            // startTimeComboBox
+            // 
+            this.startTimeComboBox.FormattingEnabled = true;
+            this.startTimeComboBox.Location = new System.Drawing.Point(137, 318);
+            this.startTimeComboBox.Name = "startTimeComboBox";
+            this.startTimeComboBox.Size = new System.Drawing.Size(115, 21);
+            this.startTimeComboBox.TabIndex = 35;
+            this.startTimeComboBox.SelectedIndexChanged += new System.EventHandler(this.startTimeComboBox_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(134, 256);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(88, 13);
+            this.label7.TabIndex = 36;
+            this.label7.Text = "Appointment Day";
             // 
             // AddAppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(493, 450);
-            this.Controls.Add(this.comboBoxUsers);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.startTimeComboBox);
+            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.comboBoxUsers);
             this.Controls.Add(this.comboBoxCustomers);
             this.Controls.Add(this.lblPostal);
             this.Controls.Add(this.txtPostal);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtCustomerAddCountry);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -229,7 +232,6 @@
         private System.Windows.Forms.TextBox txtPostal;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtCustomerAddCountry;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -239,8 +241,9 @@
         private System.Windows.Forms.Button CancelBttn;
         private System.Windows.Forms.Button SaveBttn;
         private System.Windows.Forms.ComboBox comboBoxCustomers;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox comboBoxUsers;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.ComboBox startTimeComboBox;
+        private System.Windows.Forms.Label label7;
     }
 }

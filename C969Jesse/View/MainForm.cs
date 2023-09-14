@@ -40,14 +40,14 @@ namespace C969Jesse
         {
             if (state == "Appointments")
             {
-                mainDataGridView.DataSource = dbManager.GetData(Queries.GetAppointmentsQuery);
+                mainDataGridView.DataSource = dbManager.GetData(Queries.GetAppointmentTableQuery);
 
                 mainDataGridView.Columns["appointmentId"].Visible = false;
                 mainDataGridView.Columns["userId"].Visible = false;
             }
             else if (state == "Customers")
             {
-                mainDataGridView.DataSource = dbManager.GetData(Queries.GetCustomersQuery);
+                mainDataGridView.DataSource = dbManager.GetData(Queries.GetCustomerTableQuery);
             }
 
             mainDataGridView.Columns["customerId"].Visible = false;
