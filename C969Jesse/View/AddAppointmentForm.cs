@@ -1,5 +1,6 @@
 ﻿using C969Jesse.Controller;
 using C969Jesse.Database;
+using C969Jesse.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,7 +29,6 @@ namespace C969Jesse.Components
 
             var users = dbManager.GetUserNames();
 
-            comboBoxUsers.DataSource = new BindingSource(users, null);
             comboBoxUsers.DisplayMember = "Value";
             comboBoxUsers.ValueMember = "Key";
 
@@ -36,6 +36,10 @@ namespace C969Jesse.Components
             var availableSlots = appointmentController.GetAvailableSlots(selectedDate);
 
             startTimeComboBox.DataSource = availableSlots;
+            comboBoxUsers.DataSource = new BindingSource(users, null);
+            comboBoxLocations.DataSource = Enum.GetNames(typeof(Locations));
+            comboBoxVisitTypes.DataSource = Enum.GetNames(typeof(VisitTypes));
+
         }
 
         private void label1_Click(object sender, EventArgs e)

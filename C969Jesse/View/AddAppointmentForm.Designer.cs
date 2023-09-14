@@ -29,14 +29,12 @@
         private void InitializeComponent()
         {
             this.lblPostal = new System.Windows.Forms.Label();
-            this.txtPostal = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtAddCustomerCity = new System.Windows.Forms.TextBox();
             this.txtAddCustomerAddress = new System.Windows.Forms.TextBox();
             this.CancelBttn = new System.Windows.Forms.Button();
             this.SaveBttn = new System.Windows.Forms.Button();
@@ -45,6 +43,8 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.startTimeComboBox = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.comboBoxLocations = new System.Windows.Forms.ComboBox();
+            this.comboBoxVisitTypes = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblPostal
@@ -55,13 +55,6 @@
             this.lblPostal.Size = new System.Drawing.Size(53, 13);
             this.lblPostal.TabIndex = 29;
             this.lblPostal.Text = "Visit Type";
-            // 
-            // txtPostal
-            // 
-            this.txtPostal.Location = new System.Drawing.Point(258, 227);
-            this.txtPostal.Name = "txtPostal";
-            this.txtPostal.Size = new System.Drawing.Size(103, 20);
-            this.txtPostal.TabIndex = 28;
             // 
             // label6
             // 
@@ -119,13 +112,6 @@
             this.label1.TabIndex = 21;
             this.label1.Text = "Customer Name";
             this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // txtAddCustomerCity
-            // 
-            this.txtAddCustomerCity.Location = new System.Drawing.Point(135, 227);
-            this.txtAddCustomerCity.Name = "txtAddCustomerCity";
-            this.txtAddCustomerCity.Size = new System.Drawing.Size(99, 20);
-            this.txtAddCustomerCity.TabIndex = 19;
             // 
             // txtAddCustomerAddress
             // 
@@ -197,25 +183,41 @@
             this.label7.TabIndex = 36;
             this.label7.Text = "Appointment Day";
             // 
+            // comboBoxLocations
+            // 
+            this.comboBoxLocations.FormattingEnabled = true;
+            this.comboBoxLocations.Location = new System.Drawing.Point(137, 232);
+            this.comboBoxLocations.Name = "comboBoxLocations";
+            this.comboBoxLocations.Size = new System.Drawing.Size(97, 21);
+            this.comboBoxLocations.TabIndex = 37;
+            // 
+            // comboBoxVisitTypes
+            // 
+            this.comboBoxVisitTypes.FormattingEnabled = true;
+            this.comboBoxVisitTypes.Location = new System.Drawing.Point(262, 232);
+            this.comboBoxVisitTypes.Name = "comboBoxVisitTypes";
+            this.comboBoxVisitTypes.Size = new System.Drawing.Size(97, 21);
+            this.comboBoxVisitTypes.TabIndex = 38;
+            // 
             // AddAppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(493, 450);
+            this.Controls.Add(this.comboBoxVisitTypes);
+            this.Controls.Add(this.comboBoxLocations);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.startTimeComboBox);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.comboBoxUsers);
             this.Controls.Add(this.comboBoxCustomers);
             this.Controls.Add(this.lblPostal);
-            this.Controls.Add(this.txtPostal);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtAddCustomerCity);
             this.Controls.Add(this.txtAddCustomerAddress);
             this.Controls.Add(this.CancelBttn);
             this.Controls.Add(this.SaveBttn);
@@ -229,14 +231,12 @@
         #endregion
 
         private System.Windows.Forms.Label lblPostal;
-        private System.Windows.Forms.TextBox txtPostal;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtAddCustomerCity;
         private System.Windows.Forms.TextBox txtAddCustomerAddress;
         private System.Windows.Forms.Button CancelBttn;
         private System.Windows.Forms.Button SaveBttn;
@@ -245,5 +245,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.ComboBox startTimeComboBox;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBoxLocations;
+        private System.Windows.Forms.ComboBox comboBoxVisitTypes;
     }
 }

@@ -102,12 +102,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AppointmentController.cs" />
-    <Compile Include="Model\Address.cs" />
-    <Compile Include="Model\Appointment.cs" />
-    <Compile Include="Model\BaseClass.cs" />
-    <Compile Include="Model\City.cs" />
-    <Compile Include="Model\Country.cs" />
-    <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\Entities\Address.cs" />
+    <Compile Include="Model\Entities\Appointment.cs" />
+    <Compile Include="Model\Entities\BaseClass.cs" />
+    <Compile Include="Model\Entities\City.cs" />
+    <Compile Include="Model\Entities\Country.cs" />
+    <Compile Include="Model\Entities\Customer.cs" />
+    <Compile Include="Model\Enums\Locations.cs" />
+    <Compile Include="Model\Enums\VisitTypes.cs" />
     <Compile Include="View\AddAppointmentForm.cs">
       <SubType>Form</SubType>
     </Compile>

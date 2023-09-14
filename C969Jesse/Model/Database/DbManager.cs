@@ -13,6 +13,9 @@ namespace C969Jesse.Database
 {
     public class DbManager
     {
+        // lambda expression to simplify code for readability
+        private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
+        #region Data Getters
         public DataTable GetData(string query)
         {
             DataTable dataTable = new DataTable();
@@ -96,7 +99,6 @@ namespace C969Jesse.Database
         public List<Tuple<DateTime, DateTime>> GetBookedSlots(DateTime date)
         {
             var bookedSlots = new List<Tuple<DateTime, DateTime>>();
-
             try
             {
                 DbConnection.StartConnection();
@@ -125,12 +127,7 @@ namespace C969Jesse.Database
 
             return bookedSlots;
         }
-
-
-        // lambda expression to simplify for readability
-        private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
-
-
+        #endregion
         #region Add/Update/Delete Customer
         public void DeleteCustomerData(int customerId)
         {
