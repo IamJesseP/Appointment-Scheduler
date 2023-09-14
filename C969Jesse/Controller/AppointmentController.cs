@@ -31,24 +31,28 @@ namespace C969Jesse.Controller
             var bookedSlots = dbManager.GetBookedSlots(date);
             if (bookedSlots == null)
             {
-                bookedSlots = new List<Tuple<DateTime, DateTime>>(); // create an empty list instead of null
+                // create an empty list instead of null, if all appointment times are open
+                bookedSlots = new List<Tuple<DateTime, DateTime>>(); 
             }
-
+            // using lambda expressions here to streamline the filtering and transformation of the available slots list.
             var availableSlots = allSlots.Where(slot => !IsSlotBooked(slot, bookedSlots)).ToList();
             var availableSlotsString = ConvertSlotsToString(availableSlots);
 
             return availableSlotsString;
         }
+
+        #region Helper functions
         private bool IsSlotBooked(Tuple<DateTime, DateTime> slot, List<Tuple<DateTime, DateTime>> bookedSlots)
         {
+            // streamline the filtering 
             return bookedSlots.Any(bookedSlot => bookedSlot.Item1 < slot.Item2 && bookedSlot.Item2 > slot.Item1);
         }
-
         private List<string> ConvertSlotsToString(List<Tuple<DateTime, DateTime>> availableSlots)
         {
+            //streamline transformation
             return availableSlots.Select(slot => $"{slot.Item1:HH:mm} - {slot.Item2:HH:mm}").ToList();
         }
-
+        #endregion
 
     }
 }
