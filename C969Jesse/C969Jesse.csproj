@@ -102,6 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AppointmentController.cs" />
+    <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\Appointment.cs" />
+    <Compile Include="Model\BaseClass.cs" />
+    <Compile Include="Model\City.cs" />
+    <Compile Include="Model\Country.cs" />
+    <Compile Include="Model\Customer.cs" />
     <Compile Include="View\AddAppointmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
