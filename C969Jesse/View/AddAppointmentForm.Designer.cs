@@ -35,13 +35,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtAddCustomerAddress = new System.Windows.Forms.TextBox();
+            this.txtDescription = new System.Windows.Forms.TextBox();
             this.CancelBttn = new System.Windows.Forms.Button();
             this.SaveBttn = new System.Windows.Forms.Button();
             this.comboBoxCustomers = new System.Windows.Forms.ComboBox();
             this.comboBoxUsers = new System.Windows.Forms.ComboBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.startTimeComboBox = new System.Windows.Forms.ComboBox();
+            this.comboBoxAppointmentTime = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBoxLocations = new System.Windows.Forms.ComboBox();
             this.comboBoxVisitTypes = new System.Windows.Forms.ComboBox();
@@ -69,12 +69,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(134, 302);
+            this.label5.Location = new System.Drawing.Point(132, 312);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(92, 13);
             this.label5.TabIndex = 26;
             this.label5.Text = "Appointment Time";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label4
             // 
@@ -111,14 +110,13 @@
             this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 21;
             this.label1.Text = "Customer Name";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // txtAddCustomerAddress
+            // txtDescription
             // 
-            this.txtAddCustomerAddress.Location = new System.Drawing.Point(135, 179);
-            this.txtAddCustomerAddress.Name = "txtAddCustomerAddress";
-            this.txtAddCustomerAddress.Size = new System.Drawing.Size(226, 20);
-            this.txtAddCustomerAddress.TabIndex = 18;
+            this.txtDescription.Location = new System.Drawing.Point(135, 179);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(226, 20);
+            this.txtDescription.TabIndex = 18;
             // 
             // CancelBttn
             // 
@@ -137,6 +135,7 @@
             this.SaveBttn.TabIndex = 15;
             this.SaveBttn.Text = "Save";
             this.SaveBttn.UseVisualStyleBackColor = true;
+            this.SaveBttn.Click += new System.EventHandler(this.SaveBttn_Click);
             // 
             // comboBoxCustomers
             // 
@@ -160,24 +159,25 @@
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(135, 272);
+            this.dateTimePicker1.Location = new System.Drawing.Point(135, 279);
+            this.dateTimePicker1.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(224, 20);
             this.dateTimePicker1.TabIndex = 34;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
-            // startTimeComboBox
+            // comboBoxAppointmentTime
             // 
-            this.startTimeComboBox.FormattingEnabled = true;
-            this.startTimeComboBox.Location = new System.Drawing.Point(137, 318);
-            this.startTimeComboBox.Name = "startTimeComboBox";
-            this.startTimeComboBox.Size = new System.Drawing.Size(115, 21);
-            this.startTimeComboBox.TabIndex = 35;
-            this.startTimeComboBox.SelectedIndexChanged += new System.EventHandler(this.startTimeComboBox_SelectedIndexChanged);
+            this.comboBoxAppointmentTime.FormattingEnabled = true;
+            this.comboBoxAppointmentTime.Location = new System.Drawing.Point(135, 328);
+            this.comboBoxAppointmentTime.Name = "comboBoxAppointmentTime";
+            this.comboBoxAppointmentTime.Size = new System.Drawing.Size(115, 21);
+            this.comboBoxAppointmentTime.TabIndex = 35;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(134, 256);
+            this.label7.Location = new System.Drawing.Point(134, 263);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(88, 13);
             this.label7.TabIndex = 36;
@@ -185,6 +185,8 @@
             // 
             // comboBoxLocations
             // 
+            this.comboBoxLocations.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxLocations.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxLocations.FormattingEnabled = true;
             this.comboBoxLocations.Location = new System.Drawing.Point(137, 232);
             this.comboBoxLocations.Name = "comboBoxLocations";
@@ -193,6 +195,8 @@
             // 
             // comboBoxVisitTypes
             // 
+            this.comboBoxVisitTypes.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxVisitTypes.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxVisitTypes.FormattingEnabled = true;
             this.comboBoxVisitTypes.Location = new System.Drawing.Point(262, 232);
             this.comboBoxVisitTypes.Name = "comboBoxVisitTypes";
@@ -203,11 +207,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(493, 450);
             this.Controls.Add(this.comboBoxVisitTypes);
             this.Controls.Add(this.comboBoxLocations);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.startTimeComboBox);
+            this.Controls.Add(this.comboBoxAppointmentTime);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.comboBoxUsers);
             this.Controls.Add(this.comboBoxCustomers);
@@ -218,7 +223,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtAddCustomerAddress);
+            this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.CancelBttn);
             this.Controls.Add(this.SaveBttn);
             this.Name = "AddAppointmentForm";
@@ -237,13 +242,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtAddCustomerAddress;
+        private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Button CancelBttn;
         private System.Windows.Forms.Button SaveBttn;
         private System.Windows.Forms.ComboBox comboBoxCustomers;
         private System.Windows.Forms.ComboBox comboBoxUsers;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.ComboBox startTimeComboBox;
+        private System.Windows.Forms.ComboBox comboBoxAppointmentTime;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboBoxLocations;
         private System.Windows.Forms.ComboBox comboBoxVisitTypes;

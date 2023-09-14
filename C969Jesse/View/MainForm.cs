@@ -190,17 +190,23 @@ namespace C969Jesse
             else if (bttnState == "Appointments")
             {
                 var addAppointmentForm = new AddAppointmentForm();
+                addAppointmentForm.MainFormInstance = this; // Dependency injection!
                 addAppointmentForm.Show();
             }
         }
         private void UpdateBttn_Click(object sender, EventArgs e)
         {
+
             if (selectedRow != null)
             {
-                UpdateCustomerForm updateCustomerForm = new UpdateCustomerForm();
-                updateCustomerForm.PopulateFields(selectedRow);
-                updateCustomerForm.MainFormInstance = this;
-                updateCustomerForm.Show();
+                if (bttnState == "Customers")
+                {
+                    UpdateCustomerForm updateCustomerForm = new UpdateCustomerForm();
+                    updateCustomerForm.PopulateFields(selectedRow);
+                    updateCustomerForm.MainFormInstance = this;
+                    updateCustomerForm.Show();
+                }
+                //TODO add appointments update form
 
             }
             else
@@ -217,7 +223,7 @@ namespace C969Jesse
             {
                 var selectedRow = mainDataGridView.SelectedRows[0];
                 int customerId = Convert.ToInt32(selectedRow.Cells["customerId"].Value);
-                dbManager.DeleteCustomerData(customerId);
+                dbManager.DeleteCustomer(customerId);
                 RefreshTable(bttnState);
                 RefreshTableSettings();
 

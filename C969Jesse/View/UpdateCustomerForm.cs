@@ -51,7 +51,7 @@ namespace C969Jesse.Components
                 { "CountryId" , countryId },
 
             };
-            dbManager.SaveCustomerData(customerData, isUpdate);
+            dbManager.SaveCustomer(customerData, isUpdate);
             MainFormInstance?.RefreshTable("Customers");
             MainFormInstance?.RefreshTableSettings();
             MainFormInstance?.GiveUserFeedBack(isUpdate);

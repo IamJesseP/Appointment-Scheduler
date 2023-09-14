@@ -8,13 +8,15 @@ using System.Data.Common;
 using System.Xml.Linq;
 using C969Jesse.Utils;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace C969Jesse.Database
 {
     public class DbManager
     {
-        // lambda expression to simplify code for readability
+        // Requirement G: lambda expression to simplify code for readability
         private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
+
         #region Data Getters
         public DataTable GetData(string query)
         {
@@ -129,7 +131,7 @@ namespace C969Jesse.Database
         }
         #endregion
         #region Add/Update/Delete Customer
-        public void DeleteCustomerData(int customerId)
+        public void DeleteCustomer(int customerId)
         {
             try
             {
@@ -163,7 +165,7 @@ namespace C969Jesse.Database
                 DbConnection.CloseConnection();
             }
         }
-        public void SaveCustomerData(Dictionary<string, string> customerData, bool isUpdate)
+        public void SaveCustomer(Dictionary<string, string> customerData, bool isUpdate)
         {
             try
             {
@@ -328,5 +330,72 @@ namespace C969Jesse.Database
             }
         }
         #endregion
+        public void SaveAppointment(Dictionary<string, string> appointmentData, Dictionary<string, DateTime> startEndTime, bool isUpdate)
+        {
+            try
+            {
+                DbConnection.StartConnection();
+                var conn = DbConnection.conn;
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            int appointmentId;
+                            string query;
+                            if (isUpdate)
+                            {
+                                appointmentId = int.Parse(appointmentData["AppointmentId"]);
+                                query = Queries.appointmentInsertQuery;
+                            }
+                            else
+                            {
+                                using (var countryIndexCmd = new MySqlCommand(Queries.CountryIdxQuery, conn))
+                                {
+                                    appointmentId = GetNewId(Queries.appointmentIdxQuery, conn);
+                                    query = Queries.appointmentInsertQuery;
+                                }
+                            }
+                                SaveAppointmentData(appointmentData, startEndTime, isUpdate, conn, appointmentId, query);
+                                transaction.Commit();
+                            }
+                        catch 
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+        }
+        private static void SaveAppointmentData(Dictionary<string, string> appointmentData, Dictionary<string, DateTime> startEndTime, bool isUpdate, MySqlConnection conn, int appointmentId, string query)
+        {
+            using (var appointmentInsertCMD = new MySqlCommand(query, conn))
+            {
+                appointmentInsertCMD.Parameters.AddWithValue("@AppointmentId", appointmentId);
+                appointmentInsertCMD.Parameters.AddWithValue("@CustomerId", appointmentData["CustomerId"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@UserId", appointmentData["UserId"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@Title", "not needed");
+                appointmentInsertCMD.Parameters.AddWithValue("@Description", appointmentData["Description"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@Location", appointmentData["Location"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@Contact", appointmentData["ConsultantName"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@Type", appointmentData["VisitType"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@URL", "not needed");
+                appointmentInsertCMD.Parameters.AddWithValue("@Start", startEndTime["StartTime"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@End", startEndTime["EndTime"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@LastUpdateBy", UserSession.CurrentUserName);
+
+                if (!isUpdate) { appointmentInsertCMD.Parameters.AddWithValue("@CreatedBy", UserSession.CurrentUserName); }
+
+                appointmentInsertCMD.Prepare();
+                appointmentInsertCMD.ExecuteNonQuery();
+            }
+        }
     }
 }

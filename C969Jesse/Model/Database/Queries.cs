@@ -30,6 +30,12 @@ namespace C969Jesse.Database
         public static string CountryInsertQuery => "INSERT INTO country " + 
                  "(countryId, country, createDate, createdBy, lastUpdate, lastUpdateBy) " + 
                  "VALUES (@CountryId, @Country, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
+
+        public static string appointmentInsertQuery = "INSERT INTO appointment " + "" +
+            "(appointmentId, customerId, userId, title, description, location, contact, type, url, " +
+            "start, end, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+            "VALUES (@AppointmentId, @CustomerId, @UserId, @Title, @Description, @Location, @Contact, " +
+            "@Type, @URL, @Start, @End, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
         public static string CountryUpdateQuery => "UPDATE country SET " +
                  "country = @Country, " +
                  "lastUpdate = NOW(), " +
@@ -98,6 +104,10 @@ namespace C969Jesse.Database
             "ORDER BY ap.start";
         public static string GetAppointmentStartEndQuery => 
             "SELECT start, end FROM appointment WHERE DATE(start) = @Date";
+
+        public static string appointmentIdxQuery => "SELECT appointmentId FROM appointment ORDER BY appointmentId DESC LIMIT 1";
+
+
         public static string GetUsersQuery => "SELECT userId, userName FROM user";
         public static string GetCustomersQuery => "SELECT customerId, customerName FROM customer";
     }
