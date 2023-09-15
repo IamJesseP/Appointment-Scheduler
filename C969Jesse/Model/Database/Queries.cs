@@ -31,16 +31,13 @@ namespace C969Jesse.Database
                  "(countryId, country, createDate, createdBy, lastUpdate, lastUpdateBy) " + 
                  "VALUES (@CountryId, @Country, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
 
-        public static string appointmentInsertQuery = "INSERT INTO appointment " + "" +
-            "(appointmentId, customerId, userId, title, description, location, contact, type, url, " +
-            "start, end, createDate, createdBy, lastUpdate, lastUpdateBy) " +
-            "VALUES (@AppointmentId, @CustomerId, @UserId, @Title, @Description, @Location, @Contact, " +
-            "@Type, @URL, @Start, @End, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
         public static string CountryUpdateQuery => "UPDATE country SET " +
                  "country = @Country, " +
                  "lastUpdate = NOW(), " +
                  "lastUpdateBy = @LastUpdateBy " +
                  "WHERE countryId = @CountryId";
+
+
         #endregion
         #region City Queries
         public static string CityIdxQuery => "SELECT " +
@@ -91,6 +88,19 @@ namespace C969Jesse.Database
         #endregion
         #endregion
 
+        #region Appointment Queries
+        public static string appointmentInsertQuery = "INSERT INTO appointment " + "" +
+            "(appointmentId, customerId, userId, title, description, location, contact, type, url, " +
+            "start, end, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+            "VALUES (@AppointmentId, @CustomerId, @UserId, @Title, @Description, @Location, @Contact, " +
+            "@Type, @URL, @Start, @End, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
+        public static string appointmentUpdateQuery = "UPDATE appointment SET " +
+            "customerId = @CustomerId, " +
+            "userId = @UserId, title = @Title, " +
+            "description = @Description, location = @Location, contact = @Contact, type = @Type, " +
+            "url = @URL, start = @Start, end = @End, " +
+            "lastUpdate = NOW(), lastUpdateBy = @LastUpdateBy " +
+            "WHERE appointmentId = @AppointmentId;";
         public static string GetAppointmentTableQuery =>
             "SELECT ap.appointmentId, ap.customerId, ap.userId, ap.description, ap.location, " + 
             "ap.type, ap.url, ap.start, ap.end, u.userName, " +
@@ -106,7 +116,7 @@ namespace C969Jesse.Database
             "SELECT start, end FROM appointment WHERE DATE(start) = @Date";
 
         public static string appointmentIdxQuery => "SELECT appointmentId FROM appointment ORDER BY appointmentId DESC LIMIT 1";
-
+        #endregion
 
         public static string GetUsersQuery => "SELECT userId, userName FROM user";
         public static string GetCustomersQuery => "SELECT customerId, customerName FROM customer";

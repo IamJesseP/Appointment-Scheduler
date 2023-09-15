@@ -116,17 +116,17 @@
     <Compile Include="View\AddAppointmentForm.Designer.cs">
       <DependentUpon>AddAppointmentForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\AddCustomerForm.cs">
+    <Compile Include="View\CustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\AddCustomerForm.Designer.cs">
-      <DependentUpon>AddCustomerForm.cs</DependentUpon>
+    <Compile Include="View\CustomerForm.Designer.cs">
+      <DependentUpon>CustomerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\UpdateCustomerForm.cs">
+    <Compile Include="View\UpdateAppointmenForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\UpdateCustomerForm.Designer.cs">
-      <DependentUpon>UpdateCustomerForm.cs</DependentUpon>
+    <Compile Include="View\UpdateAppointmenForm.Designer.cs">
+      <DependentUpon>UpdateAppointmenForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Database\DbManager.cs" />
     <Compile Include="Model\Database\DbConnection.cs" />
@@ -151,8 +151,8 @@
     <EmbeddedResource Include="View\AddAppointmentForm.resx">
       <DependentUpon>AddAppointmentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\AddCustomerForm.resx">
-      <DependentUpon>AddCustomerForm.cs</DependentUpon>
+    <EmbeddedResource Include="View\CustomerForm.resx">
+      <DependentUpon>CustomerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -160,8 +160,8 @@
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\UpdateCustomerForm.resx">
-      <DependentUpon>UpdateCustomerForm.cs</DependentUpon>
+    <EmbeddedResource Include="View\UpdateAppointmenForm.resx">
+      <DependentUpon>UpdateAppointmenForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

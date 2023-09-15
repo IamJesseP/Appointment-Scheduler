@@ -1,5 +1,6 @@
 ﻿using C969Jesse.Components;
 using C969Jesse.Database;
+using C969Jesse.View;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -19,18 +20,20 @@ namespace C969Jesse
     {
         private DbManager dbManager = new DbManager();
 
-        private DataGridViewRow selectedRow = null;
+        private DataGridViewRow selectedRow = null; // Default to customerData
 
-        private string bttnState = "Customers";
+        private string formState = "Customers";
+
+        public bool isUpdate = false;
 
         public MainForm()
         {
             InitializeComponent();
-            this.Controls.Add(mainDataGridView);
 
-            // Default to customerData
-            UpdateButtons(bttnState);
-            RefreshTable(bttnState);
+            this.Controls.Add(mainDataGridView);
+            
+            UpdateButtons(formState);
+            RefreshTable(formState);
             SetupCustomerDGV();
             RefreshTableSettings();
         }
@@ -85,7 +88,7 @@ namespace C969Jesse
                 DeleteBttn.Hide();
                 ViewBttn.Show();
             }
-            bttnState = state;
+            formState = state;
         }
 
         private void SetupCustomerDGV()
@@ -117,7 +120,7 @@ namespace C969Jesse
         public void RefreshTableSettings()
         {
             // Tab color
-            if (bttnState == "Customers")
+            if (formState == "Customers")
             {
                 CustomerTab.ForeColor = Color.Goldenrod;
                 AppointmentsTab.ForeColor = Color.Black;
@@ -168,26 +171,28 @@ namespace C969Jesse
         private void ClickCustomersTab(object sender, EventArgs e)
         {
             UpdateButtons("Customers");
-            RefreshTable(bttnState);
+            RefreshTable(formState);
             RefreshTableSettings();
             SetupCustomerDGV();
         }
         private void ClickAppointmentsTab(object sender, EventArgs e)
         {
             UpdateButtons("Appointments");
-            RefreshTable(bttnState);
+            RefreshTable(formState);
             RefreshTableSettings();
             SetupAppointmentDGV();
         }
         private void AddBttn_Click(object sender, EventArgs e)
         {
-            if (bttnState == "Customers")
+            isUpdate = false;
+            if (formState == "Customers")
             {
-                var addCustomerForm = new AddCustomerForm();
+                var addCustomerForm = new CustomerForm();
+                addCustomerForm.UpdateCustomerFormTitle(isUpdate);
                 addCustomerForm.MainFormInstance = this; // Dependency injection!
                 addCustomerForm.Show();
             }
-            else if (bttnState == "Appointments")
+            else if (formState == "Appointments")
             {
                 var addAppointmentForm = new AddAppointmentForm();
                 addAppointmentForm.MainFormInstance = this; // Dependency injection!
@@ -196,18 +201,27 @@ namespace C969Jesse
         }
         private void UpdateBttn_Click(object sender, EventArgs e)
         {
-
+            isUpdate = true;
             if (selectedRow != null)
             {
-                if (bttnState == "Customers")
+                if (formState == "Customers")
                 {
-                    UpdateCustomerForm updateCustomerForm = new UpdateCustomerForm();
-                    updateCustomerForm.PopulateFields(selectedRow);
-                    updateCustomerForm.MainFormInstance = this;
-                    updateCustomerForm.Show();
-                }
-                //TODO add appointments update form
+                    // UpdateCustomerForm updateCustomerForm = new UpdateCustomerForm();
+                    // updateCustomerForm.PopulateFields(selectedRow);
+                    //updateCustomerForm.MainFormInstance = this;
+                    //updateCustomerForm.Show();
 
+                    var addCustomerForm = new CustomerForm();
+                    addCustomerForm.PopulateFields(selectedRow);
+                    addCustomerForm.UpdateCustomerFormTitle(isUpdate);
+                    addCustomerForm.MainFormInstance = this;
+                    addCustomerForm.Show();
+                }
+                else if (formState == "Appointments")
+                {
+                    UpdateAppointmenForm updateAppointmenForm = new UpdateAppointmenForm();
+                    
+                }
             }
             else
             {
@@ -224,7 +238,7 @@ namespace C969Jesse
                 var selectedRow = mainDataGridView.SelectedRows[0];
                 int customerId = Convert.ToInt32(selectedRow.Cells["customerId"].Value);
                 dbManager.DeleteCustomer(customerId);
-                RefreshTable(bttnState);
+                RefreshTable(formState);
                 RefreshTableSettings();
 
                 errorProvider.Clear();

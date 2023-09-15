@@ -130,6 +130,7 @@ namespace C969Jesse.Database
             return bookedSlots;
         }
         #endregion
+
         #region Add/Update/Delete Customer
         public void DeleteCustomer(int customerId)
         {
@@ -192,7 +193,7 @@ namespace C969Jesse.Database
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "test");
             }
             finally
             {
@@ -330,6 +331,8 @@ namespace C969Jesse.Database
             }
         }
         #endregion
+
+        #region Add/Update/Delete Appointment
         public void SaveAppointment(Dictionary<string, string> appointmentData, Dictionary<string, DateTime> startEndTime, bool isUpdate)
         {
             try
@@ -397,5 +400,6 @@ namespace C969Jesse.Database
                 appointmentInsertCMD.ExecuteNonQuery();
             }
         }
+        #endregion
     }
 }
