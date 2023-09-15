@@ -1,5 +1,6 @@
 ﻿using C969Jesse.Controller;
 using C969Jesse.Database;
+using C969Jesse.Model;
 using C969Jesse.Model.Enums;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using System.Windows.Forms;
 
 namespace C969Jesse.Components
 {
-    public partial class AddAppointmentForm : Form
+    public partial class AppointmentForm : Form
     {
         private DbManager dbManager = new DbManager();
 
@@ -23,7 +24,8 @@ namespace C969Jesse.Components
 
         private bool isUpdate = true;
 
-        public AddAppointmentForm()
+        private string appointmentId;
+        public AppointmentForm()
         {
             InitializeComponent();
             LoadForm();
@@ -67,15 +69,58 @@ namespace C969Jesse.Components
                 { "Description", txtDescription.Text },
                 { "Location", comboBoxLocations.Text },
                 { "VisitType", comboBoxVisitTypes.Text },
-                { "AppointmentTime", comboBoxAppointmentTime.Text },
+                { "AppointmentId", appointmentId }
             };
             var startEndTime = appointmentController.ConvertStringToDateTime(selectedDate, selectedTimeStr);
 
-            dbManager.SaveAppointment(appointmentData, startEndTime, !isUpdate);
-            MainFormInstance?.RefreshTable("Appointment");
+            if (MainFormInstance.isUpdate)
+            {
+                dbManager.SaveAppointment(appointmentData, startEndTime, MainFormInstance.isUpdate);
+            }
+            else
+            {
+                dbManager.SaveAppointment(appointmentData, startEndTime, MainFormInstance.isUpdate);
+            }
+            MainFormInstance?.RefreshTable("Appointments");
             MainFormInstance?.RefreshTableSettings();
-            MainFormInstance?.GiveUserFeedBack(!isUpdate);
+            MainFormInstance?.GiveUserFeedBack(MainFormInstance.isUpdate);
             this.Hide();
+        }
+
+        public void PopulateFields(DataGridViewRow row)
+        {
+            // Bug: users original appointment does not show due to getbookedslots logic
+            var customerKeyValuePair = new KeyValuePair<int, string>
+            (
+            Convert.ToInt32(row.Cells[1].Value),
+            row.Cells[10].Value.ToString()
+            );
+
+            var userKeyValuePair = new KeyValuePair<int, string>
+            (
+                Convert.ToInt32(row.Cells[2].Value),
+                row.Cells[9].Value.ToString()
+            );
+
+            comboBoxCustomers.SelectedItem = customerKeyValuePair;
+            comboBoxUsers.SelectedItem = userKeyValuePair;
+            txtDescription.Text = row.Cells[3].Value.ToString();
+            comboBoxLocations.Text = row.Cells[4].Value.ToString();
+            comboBoxVisitTypes.Text = row.Cells[5].Value.ToString();
+            comboBoxAppointmentTime.Text = row.Cells[8].Value.ToString();
+            
+            
+            DateTime appointmentDate = Convert.ToDateTime(row.Cells[8].Value);
+            dateTimePicker1.Value = appointmentDate;
+
+    
+            appointmentId = row.Cells[0].Value.ToString();
+        }
+
+        public void UpdateAppointmentFormTitle(bool isUpdate)
+        {
+            appointmentFormTitle.Text = isUpdate ? "Update Appointment" : "Add Appointment";
+            lblAppointmentTime.Text = isUpdate ? "NEW Appointment Time" : "Appointment Time";
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)

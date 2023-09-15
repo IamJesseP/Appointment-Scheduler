@@ -348,7 +348,7 @@ namespace C969Jesse.Database
                             if (isUpdate)
                             {
                                 appointmentId = int.Parse(appointmentData["AppointmentId"]);
-                                query = Queries.appointmentInsertQuery;
+                                query = Queries.appointmentUpdateQuery;
                             }
                             else
                             {

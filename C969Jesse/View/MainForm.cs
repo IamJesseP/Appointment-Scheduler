@@ -1,6 +1,6 @@
 ﻿using C969Jesse.Components;
 using C969Jesse.Database;
-using C969Jesse.View;
+
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -20,9 +20,9 @@ namespace C969Jesse
     {
         private DbManager dbManager = new DbManager();
 
-        private DataGridViewRow selectedRow = null; // Default to customerData
+        private DataGridViewRow selectedRow = null; 
 
-        private string formState = "Customers";
+        private string formState = "Customers"; // Default to customerData
 
         public bool isUpdate = false;
 
@@ -194,7 +194,7 @@ namespace C969Jesse
             }
             else if (formState == "Appointments")
             {
-                var addAppointmentForm = new AddAppointmentForm();
+                var addAppointmentForm = new AppointmentForm();
                 addAppointmentForm.MainFormInstance = this; // Dependency injection!
                 addAppointmentForm.Show();
             }
@@ -219,7 +219,11 @@ namespace C969Jesse
                 }
                 else if (formState == "Appointments")
                 {
-                    UpdateAppointmenForm updateAppointmenForm = new UpdateAppointmenForm();
+                    var addAppointmentForm = new AppointmentForm();
+                    addAppointmentForm.MainFormInstance = this;
+                    addAppointmentForm.PopulateFields(selectedRow);
+                    addAppointmentForm.UpdateAppointmentFormTitle(isUpdate);
+                    addAppointmentForm.Show();
                     
                 }
             }

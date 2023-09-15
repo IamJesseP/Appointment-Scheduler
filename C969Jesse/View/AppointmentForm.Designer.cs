@@ -1,6 +1,6 @@
 ﻿namespace C969Jesse.Components
 {
-    partial class AddAppointmentForm
+    partial class AppointmentForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.lblPostal = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.appointmentFormTitle = new System.Windows.Forms.Label();
+            this.lblAppointmentTime = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -56,24 +56,24 @@
             this.lblPostal.TabIndex = 29;
             this.lblPostal.Text = "Visit Type";
             // 
-            // label6
+            // appointmentFormTitle
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(173, 27);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(159, 16);
-            this.label6.TabIndex = 27;
-            this.label6.Text = "Add New Appointment";
+            this.appointmentFormTitle.AutoSize = true;
+            this.appointmentFormTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.appointmentFormTitle.Location = new System.Drawing.Point(173, 27);
+            this.appointmentFormTitle.Name = "appointmentFormTitle";
+            this.appointmentFormTitle.Size = new System.Drawing.Size(159, 16);
+            this.appointmentFormTitle.TabIndex = 27;
+            this.appointmentFormTitle.Text = "Add New Appointment";
             // 
-            // label5
+            // lblAppointmentTime
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(132, 312);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(92, 13);
-            this.label5.TabIndex = 26;
-            this.label5.Text = "Appointment Time";
+            this.lblAppointmentTime.AutoSize = true;
+            this.lblAppointmentTime.Location = new System.Drawing.Point(132, 312);
+            this.lblAppointmentTime.Name = "lblAppointmentTime";
+            this.lblAppointmentTime.Size = new System.Drawing.Size(92, 13);
+            this.lblAppointmentTime.TabIndex = 26;
+            this.lblAppointmentTime.Text = "Appointment Time";
             // 
             // label4
             // 
@@ -160,7 +160,7 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Location = new System.Drawing.Point(135, 279);
-            this.dateTimePicker1.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker1.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(224, 20);
             this.dateTimePicker1.TabIndex = 34;
@@ -203,7 +203,7 @@
             this.comboBoxVisitTypes.Size = new System.Drawing.Size(97, 21);
             this.comboBoxVisitTypes.TabIndex = 38;
             // 
-            // AddAppointmentForm
+            // AppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -217,8 +217,8 @@
             this.Controls.Add(this.comboBoxUsers);
             this.Controls.Add(this.comboBoxCustomers);
             this.Controls.Add(this.lblPostal);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.appointmentFormTitle);
+            this.Controls.Add(this.lblAppointmentTime);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -226,7 +226,7 @@
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.CancelBttn);
             this.Controls.Add(this.SaveBttn);
-            this.Name = "AddAppointmentForm";
+            this.Name = "AppointmentForm";
             this.Text = "AddAppointmentForm";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -236,8 +236,8 @@
         #endregion
 
         private System.Windows.Forms.Label lblPostal;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label appointmentFormTitle;
+        private System.Windows.Forms.Label lblAppointmentTime;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
