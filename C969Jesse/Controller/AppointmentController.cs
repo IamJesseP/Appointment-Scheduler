@@ -12,6 +12,7 @@ namespace C969Jesse.Controller
     public class AppointmentController
     {
         private DbManager dbManager = new DbManager();
+        
         public List<string> GetAvailableSlots(DateTime date)
         {
             var allSlots = GenerateAllSlots(date);
@@ -28,6 +29,24 @@ namespace C969Jesse.Controller
 
             return availableSlotsString;
         }
+        public Dictionary<string, DateTime> ConvertStringToDateTime(DateTime selectedDate, string selectedTimeStr)
+        {
+            // Split string and Parse
+            string[] times = selectedTimeStr.Split(new[] { " - " }, StringSplitOptions.None);
+            DateTime startTime = DateTime.ParseExact(times[0], "HH:mm", null);
+            DateTime endTime = DateTime.ParseExact(times[1], "HH:mm", null);
+
+            // Combine the date part from selectedDate and the time part from startTime and endTime
+            DateTime startDateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, startTime.Hour, startTime.Minute, 0);
+            DateTime endDateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, endTime.Hour, endTime.Minute, 0);
+
+            return new Dictionary<string, DateTime> { { "StartTime", startDateTime }, {"EndTime", endDateTime } };
+        }
+        private List<string> ConvertSlotsToString(List<Tuple<DateTime, DateTime>> availableSlots)
+        {
+            // Streamline string transformation
+            return availableSlots.Select(slot => $"{slot.Item1:HH:mm} - {slot.Item2:HH:mm}").ToList();
+        }
         private List<Tuple<DateTime, DateTime>> GenerateAllSlots(DateTime date)
         {   
             // Time slots will be from business hours 9-5
@@ -43,32 +62,11 @@ namespace C969Jesse.Controller
 
             return allSlots;
         }
-
-        #region Helper functions
         private bool IsSlotBooked(Tuple<DateTime, DateTime> slot, List<Tuple<DateTime, DateTime>> bookedSlots)
         {
             // Streamline the filtering 
             return bookedSlots.Any(bookedSlot => bookedSlot.Item1 < slot.Item2 && bookedSlot.Item2 > slot.Item1);
-        }
-        private List<string> ConvertSlotsToString(List<Tuple<DateTime, DateTime>> availableSlots)
-        {
-            // Streamline string transformation
-            return availableSlots.Select(slot => $"{slot.Item1:HH:mm} - {slot.Item2:HH:mm}").ToList();
-        }
-        #endregion
+        }     
 
-        public Dictionary<string, DateTime> ConvertStringToDateTime(DateTime selectedDate, string selectedTimeStr)
-        {
-            // Split string and Parse
-            string[] times = selectedTimeStr.Split(new[] { " - " }, StringSplitOptions.None);
-            DateTime startTime = DateTime.ParseExact(times[0], "HH:mm", null);
-            DateTime endTime = DateTime.ParseExact(times[1], "HH:mm", null);
-
-            // Combine the date part from selectedDate and the time part from startTime and endTime
-            DateTime startDateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, startTime.Hour, startTime.Minute, 0);
-            DateTime endDateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, endTime.Hour, endTime.Minute, 0);
-
-            return new Dictionary<string, DateTime> { { "StartTime", startDateTime }, {"EndTime", endDateTime } };
-        }
     }
 }

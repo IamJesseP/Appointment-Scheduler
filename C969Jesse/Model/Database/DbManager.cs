@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using C969Jesse.Utils;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Collections;
 
 namespace C969Jesse.Database
 {
@@ -30,6 +31,53 @@ namespace C969Jesse.Database
                 {
                     adapter.Fill(dataTable);
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+
+            return dataTable;
+        }
+        public DataTable GetFilteredAppointments(string filter)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                DateTime today = DateTime.Now;
+                DateTime startDate = DateTime.MinValue;
+                DateTime endDate = DateTime.MaxValue;
+
+                DbConnection.StartConnection();
+                var conn = DbConnection.conn;
+
+                if (filter == "Weekly")
+                {
+                    // Get current weekly date
+                    int delta = DayOfWeek.Monday - today.DayOfWeek;
+                    startDate = today.AddDays(delta).Date;
+                    endDate = startDate.AddDays(6).AddHours(23).AddMinutes(59).AddSeconds(59);
+                }
+                else if (filter == "Monthly")
+                {
+                    // Get current monthly date
+                    startDate = new DateTime(today.Year, today.Month, 1);
+                    endDate = startDate.AddMonths(1).AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
+                }
+
+                using (MySqlCommand cmd = new MySqlCommand(Queries.GetFilteredAppointmentsQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd HH:mm:ss"));
+
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(dataTable);
+                }
+
             }
             catch (Exception ex)
             {

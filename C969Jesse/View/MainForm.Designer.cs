@@ -45,6 +45,7 @@
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.feedbackLabel = new System.Windows.Forms.Label();
             this.successProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.appointmentFilter = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -183,11 +184,26 @@
             this.successProvider.ContainerControl = this;
             this.successProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("successProvider.Icon")));
             // 
+            // appointmentFilter
+            // 
+            this.appointmentFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.appointmentFilter.FormattingEnabled = true;
+            this.appointmentFilter.Items.AddRange(new object[] {
+            "All",
+            "Weekly",
+            "Monthly"});
+            this.appointmentFilter.Location = new System.Drawing.Point(1015, 218);
+            this.appointmentFilter.Name = "appointmentFilter";
+            this.appointmentFilter.Size = new System.Drawing.Size(227, 21);
+            this.appointmentFilter.TabIndex = 9;
+            this.appointmentFilter.SelectedIndexChanged += new System.EventHandler(this.appointmentFilter_SelectedIndexChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1260, 567);
+            this.Controls.Add(this.appointmentFilter);
             this.Controls.Add(this.feedbackLabel);
             this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.ViewBttn);
@@ -226,5 +242,6 @@
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Label feedbackLabel;
         private System.Windows.Forms.ErrorProvider successProvider;
+        private System.Windows.Forms.ComboBox appointmentFilter;
     }
 }

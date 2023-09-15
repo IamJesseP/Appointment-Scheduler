@@ -1,4 +1,5 @@
 ﻿using C969Jesse.Components;
+using C969Jesse.Controller;
 using C969Jesse.Database;
 
 using MySql.Data.MySqlClient;
@@ -20,9 +21,11 @@ namespace C969Jesse
     {
         private DbManager dbManager = new DbManager();
 
-        private DataGridViewRow selectedRow = null; 
+        private DataGridViewRow selectedRow = null;
 
         private string formState = "Customers"; // Default to customers
+
+        private string appointmentFilterState = "All";
 
         public bool isUpdate = false;
 
@@ -35,16 +38,125 @@ namespace C969Jesse
             RefreshTableSettings();
         }
 
+        #region Event Handlers
+
+        private void AddBttn_Click(object sender, EventArgs e)
+        {
+            isUpdate = false;
+            if (formState == "Customers")
+            {
+                var addCustomerForm = new CustomerForm();
+                addCustomerForm.UpdateCustomerFormTitle(isUpdate);
+                addCustomerForm.MainFormInstance = this; // Dependency injection!
+                addCustomerForm.Show();
+            }
+            else if (formState == "Appointments")
+            {
+                var addAppointmentForm = new AppointmentForm();
+                addAppointmentForm.MainFormInstance = this; // Dependency injection!
+                addAppointmentForm.Show();
+            }
+        }
+        private void UpdateBttn_Click(object sender, EventArgs e)
+        {
+            isUpdate = true;
+            if (selectedRow != null)
+            {
+                if (formState == "Customers")
+                {
+                    var addCustomerForm = new CustomerForm();
+                    addCustomerForm.PopulateFields(selectedRow);
+                    addCustomerForm.UpdateCustomerFormTitle(isUpdate);
+                    addCustomerForm.MainFormInstance = this;
+                    addCustomerForm.Show();
+                }
+                else if (formState == "Appointments")
+                {
+                    var addAppointmentForm = new AppointmentForm();
+                    addAppointmentForm.MainFormInstance = this;
+                    addAppointmentForm.PopulateFields(selectedRow);
+                    addAppointmentForm.UpdateAppointmentFormTitle(isUpdate);
+                    addAppointmentForm.Show();
+
+                }
+            }
+            else
+            {
+                successProvider.Clear();
+                errorProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Please select a row first.";
+            }
+            selectedRow = null;
+        }
+        private void DeleteBttn_Click(object sender, EventArgs e)
+        {
+            if (selectedRow != null)
+            {
+                if (!ConfirmDeletion()) { return; }
+                if (formState == "Customers")
+                {
+                    int customerId = Convert.ToInt32(selectedRow.Cells[0].Value);
+                    dbManager.DeleteCustomer(customerId);
+                }
+                else if (formState == "Appointments")
+                {
+                    int appointmentId = Convert.ToInt32(selectedRow.Cells["appointmentId"].Value);
+                    dbManager.DeleteAppointment(appointmentId);
+                }
+
+                RefreshTable(formState);
+                RefreshTableSettings();
+
+                errorProvider.Clear();
+                successProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Successfully deleted.";
+            }
+            else
+            {
+                successProvider.Clear();
+                errorProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Please select a row first.";
+            }
+            selectedRow = null;
+        }
+        private void ClickCustomersTab(object sender, EventArgs e)
+        {
+            UpdateButtons("Customers");
+            RefreshTable(formState);
+            RefreshTableSettings();
+            SetupCustomerDGV();
+        }
+        private void ClickAppointmentsTab(object sender, EventArgs e)
+        {
+            UpdateButtons("Appointments");
+            RefreshTable(formState);
+            RefreshTableSettings();
+            SetupAppointmentDGV();
+        }
+        private void mainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int indexSelected = e.RowIndex;
+            if (indexSelected < 0) { return; }//Error handler for clicking header row
+            selectedRow = mainDataGridView.Rows[indexSelected];
+        }
+        private void mainDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            mainDataGridView.ClearSelection();
+        }
+
+        #endregion
+
         #region Helper methods
 
         public void RefreshTable(string state)
         {
             if (state == "Appointments")
             {
-                mainDataGridView.DataSource = dbManager.GetData(Queries.GetAppointmentTableQuery);
+                FilterAppointments();
 
                 mainDataGridView.Columns["appointmentId"].Visible = false;
                 mainDataGridView.Columns["userId"].Visible = false;
+                appointmentFilter.SelectedIndex = 0;
             }
             else if (state == "Customers")
             {
@@ -56,6 +168,19 @@ namespace C969Jesse
             mainDataGridView.Columns["cityId"].Visible = false;
             mainDataGridView.Columns["countryId"].Visible = false;
         }
+
+        private void FilterAppointments()
+        {
+            if (appointmentFilter.Text == "Weekly" || appointmentFilterState == "Monthly")
+            {
+                mainDataGridView.DataSource = dbManager.GetFilteredAppointments(appointmentFilterState);
+            }
+            else
+            {
+                mainDataGridView.DataSource = dbManager.GetData(Queries.GetAppointmentTableQuery);
+            }
+        }
+
         public void RefreshTableSettings()
         {
             // Tab color
@@ -81,6 +206,13 @@ namespace C969Jesse
             successProvider.Clear();
             errorProvider.Clear();
             feedbackLabel.Text = string.Empty;
+        }
+        private bool ConfirmDeletion()
+        {
+            var confirmResult = MessageBox.Show("Are you sure you want to delete this item?",
+                                      "Confirm Deletion",
+                                      MessageBoxButtons.YesNo);
+            return confirmResult == DialogResult.Yes ? true : false;
         }
         public void GiveUserFeedBack(bool isUpdate)
         {
@@ -151,116 +283,27 @@ namespace C969Jesse
             mainDataGridView.Columns["end"].HeaderText = "End";
             mainDataGridView.Columns["phone"].HeaderText = "Phone";
             mainDataGridView.Columns["url"].HeaderText = "Visit Link";
+
         }
 
         #endregion
 
-        #region Event Handlers
-
-        private void ClickCustomersTab(object sender, EventArgs e)
+        private void appointmentFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateButtons("Customers");
-            RefreshTable(formState);
-            RefreshTableSettings();
-            SetupCustomerDGV();
-        }
-        private void ClickAppointmentsTab(object sender, EventArgs e)
-        {
-            UpdateButtons("Appointments");
-            RefreshTable(formState);
-            RefreshTableSettings();
+            if (appointmentFilter.SelectedIndex == 1)
+            {
+                appointmentFilterState = "Weekly";
+            }
+            else if (appointmentFilter.SelectedIndex == 2)
+            {
+                appointmentFilterState = "Monthly";
+            }
+            else
+            {
+                appointmentFilterState = "All";
+            }
+            FilterAppointments();
             SetupAppointmentDGV();
         }
-        private void AddBttn_Click(object sender, EventArgs e)
-        {
-            isUpdate = false;
-            if (formState == "Customers")
-            {
-                var addCustomerForm = new CustomerForm();
-                addCustomerForm.UpdateCustomerFormTitle(isUpdate);
-                addCustomerForm.MainFormInstance = this; // Dependency injection!
-                addCustomerForm.Show();
-            }
-            else if (formState == "Appointments")
-            {
-                var addAppointmentForm = new AppointmentForm();
-                addAppointmentForm.MainFormInstance = this; // Dependency injection!
-                addAppointmentForm.Show();
-            }
-        }
-        private void UpdateBttn_Click(object sender, EventArgs e)
-        {
-            isUpdate = true;
-            if (selectedRow != null)
-            {
-                if (formState == "Customers")
-                {
-                    var addCustomerForm = new CustomerForm();
-                    addCustomerForm.PopulateFields(selectedRow);
-                    addCustomerForm.UpdateCustomerFormTitle(isUpdate);
-                    addCustomerForm.MainFormInstance = this;
-                    addCustomerForm.Show();
-                }
-                else if (formState == "Appointments")
-                {
-                    var addAppointmentForm = new AppointmentForm();
-                    addAppointmentForm.MainFormInstance = this;
-                    addAppointmentForm.PopulateFields(selectedRow);
-                    addAppointmentForm.UpdateAppointmentFormTitle(isUpdate);
-                    addAppointmentForm.Show();
-                    
-                }
-            }
-            else
-            {
-                successProvider.Clear();
-                errorProvider.SetError(feedbackLabel, "!");
-                feedbackLabel.Text = "Please select a row first.";
-            }
-            selectedRow = null;
-        }
-        private void DeleteBttn_Click(object sender, EventArgs e)
-        {
-            if (selectedRow != null)
-            {
-                if (formState == "Customers")
-                {
-                    int customerId = Convert.ToInt32(selectedRow.Cells["customerId"].Value);
-                    dbManager.DeleteCustomer(customerId);
-                }
-                else if (formState == "Appointments")
-                {
-                    int appointmentId = Convert.ToInt32(selectedRow.Cells["appointmentId"].Value);
-                    dbManager.DeleteAppointment(appointmentId);
-                }
-
-                RefreshTable(formState);
-                RefreshTableSettings();
-
-                errorProvider.Clear();
-                successProvider.SetError(feedbackLabel, "!");
-                feedbackLabel.Text = "Successfully deleted.";
-            }
-            else
-            {
-                successProvider.Clear();
-                errorProvider.SetError(feedbackLabel, "!");
-                feedbackLabel.Text = "Please select a row first.";
-            }
-            selectedRow = null;
-        }
-        private void mainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int indexSelected = e.RowIndex;
-            if (indexSelected < 0) { return; }//Error handler for clicking header row
-            selectedRow = mainDataGridView.Rows[indexSelected];
-        }
-        private void mainDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            mainDataGridView.ClearSelection();
-        }
-
-        #endregion
-
     }
 }

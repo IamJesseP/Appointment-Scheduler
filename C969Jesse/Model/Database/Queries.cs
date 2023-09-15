@@ -113,8 +113,20 @@ namespace C969Jesse.Database
             "JOIN country co ON ci.countryId = co.countryId " +
             "JOIN user u ON ap.userId = u.userId " +
             "ORDER BY ap.start";
-        public static string GetAppointmentStartEndQuery => 
-            "SELECT start, end FROM appointment WHERE DATE(start) = @Date";
+        public static string GetAppointmentStartEndQuery => "SELECT start, end FROM appointment WHERE DATE(start) = @Date";
+        public static string GetFilteredAppointmentsQuery =>
+            "SELECT ap.appointmentId, ap.customerId, ap.userId, ap.description, ap.location, " +
+            "ap.type, ap.url, ap.start, ap.end, u.userName, " +
+            "c.customerName, a.phone, a.addressId, a.cityId, ci.countryId " +
+            "FROM appointment ap " +
+            "JOIN customer c ON ap.customerId = c.customerId " +
+            "JOIN address a ON c.addressId = a.addressId " +
+            "JOIN city ci ON a.cityId = ci.cityId " +
+            "JOIN country co ON ci.countryId = co.countryId " +
+            "JOIN user u ON ap.userId = u.userId " +
+            "WHERE start BETWEEN @StartDate AND @EndDate " +
+            "ORDER BY ap.start";
+            
         public static string appointmentIdxQuery => "SELECT appointmentId FROM appointment ORDER BY appointmentId DESC LIMIT 1";
         public static string deleteAppointmentQuery => "DELETE FROM appointment WHERE appointmentId = @AppointmentId";
 
