@@ -22,8 +22,6 @@ namespace C969Jesse.Components
 
         public MainForm MainFormInstance { get; set; }
 
-        private bool isUpdate = true;
-
         private string appointmentId;
         public AppointmentForm()
         {
@@ -89,13 +87,14 @@ namespace C969Jesse.Components
 
         public void PopulateFields(DataGridViewRow row)
         {
-            // Bug: users original appointment does not show due to getbookedslots logic
             var customerKeyValuePair = new KeyValuePair<int, string>
             (
+            //Set Customer ID and Name
             Convert.ToInt32(row.Cells[1].Value),
             row.Cells[10].Value.ToString()
             );
 
+            // Set User ID and Consultant Name
             var userKeyValuePair = new KeyValuePair<int, string>
             (
                 Convert.ToInt32(row.Cells[2].Value),
@@ -108,12 +107,7 @@ namespace C969Jesse.Components
             comboBoxLocations.Text = row.Cells[4].Value.ToString();
             comboBoxVisitTypes.Text = row.Cells[5].Value.ToString();
             comboBoxAppointmentTime.Text = row.Cells[8].Value.ToString();
-            
-            
-            DateTime appointmentDate = Convert.ToDateTime(row.Cells[8].Value);
-            dateTimePicker1.Value = appointmentDate;
 
-    
             appointmentId = row.Cells[0].Value.ToString();
         }
 
@@ -129,6 +123,12 @@ namespace C969Jesse.Components
             var availableSlots = appointmentController.GetAvailableSlots(selectedDate);
             comboBoxAppointmentTime.DataSource = availableSlots;
            
+        }
+
+        private void CancelBttn_Click(object sender, EventArgs e)
+        {
+            MainFormInstance?.RefreshTableSettings();
+            this.Close();
         }
     }
 }

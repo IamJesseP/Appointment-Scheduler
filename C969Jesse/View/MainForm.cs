@@ -239,9 +239,17 @@ namespace C969Jesse
         {
             if (selectedRow != null)
             {
-                var selectedRow = mainDataGridView.SelectedRows[0];
-                int customerId = Convert.ToInt32(selectedRow.Cells["customerId"].Value);
-                dbManager.DeleteCustomer(customerId);
+                if (formState == "Customers")
+                {
+                    int customerId = Convert.ToInt32(selectedRow.Cells["customerId"].Value);
+                    dbManager.DeleteCustomer(customerId);
+                }
+                else if (formState == "Appointments")
+                {
+                    int appointmentId = Convert.ToInt32(selectedRow.Cells["appointmentId"].Value);
+                    dbManager.DeleteAppointment(appointmentId);
+                }
+
                 RefreshTable(formState);
                 RefreshTableSettings();
 

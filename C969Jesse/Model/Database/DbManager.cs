@@ -132,40 +132,6 @@ namespace C969Jesse.Database
         #endregion
 
         #region Add/Update/Delete Customer
-        public void DeleteCustomer(int customerId)
-        {
-            try
-            {
-                DbConnection.StartConnection();
-                var conn = DbConnection.conn;
-                using (var transaction = conn.BeginTransaction())
-                {
-                    try
-                    {
-                        using (var deleteCustomerCMD = new MySqlCommand(Queries.deleteCustomerQuery, DbConnection.conn))
-                        {
-                            deleteCustomerCMD.Parameters.AddWithValue("@CustomerId", customerId);
-                            deleteCustomerCMD.Prepare();
-                            deleteCustomerCMD.ExecuteNonQuery();
-                        }
-                        transaction.Commit(); // Success? Commit
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                DbConnection.CloseConnection();
-            }
-        }
         public void SaveCustomer(Dictionary<string, string> customerData, bool isUpdate)
         {
             try
@@ -330,6 +296,40 @@ namespace C969Jesse.Database
                 customerInsertCommand.ExecuteNonQuery();
             }
         }
+        public void DeleteCustomer(int customerId)
+        {
+            try
+            {
+                DbConnection.StartConnection();
+                var conn = DbConnection.conn;
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (var deleteCustomerCMD = new MySqlCommand(Queries.deleteCustomerQuery, DbConnection.conn))
+                        {
+                            deleteCustomerCMD.Parameters.AddWithValue("@CustomerId", customerId);
+                            deleteCustomerCMD.Prepare();
+                            deleteCustomerCMD.ExecuteNonQuery();
+                        }
+                        transaction.Commit(); // Success? Commit
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+        }
         #endregion
 
         #region Add/Update/Delete Appointment
@@ -377,7 +377,7 @@ namespace C969Jesse.Database
                 DbConnection.CloseConnection();
             }
         }
-        private static void SaveAppointmentData(Dictionary<string, string> appointmentData, Dictionary<string, DateTime> startEndTime, bool isUpdate, MySqlConnection conn, int appointmentId, string query)
+        private void SaveAppointmentData(Dictionary<string, string> appointmentData, Dictionary<string, DateTime> startEndTime, bool isUpdate, MySqlConnection conn, int appointmentId, string query)
         {
             using (var appointmentInsertCMD = new MySqlCommand(query, conn))
             {
@@ -398,6 +398,42 @@ namespace C969Jesse.Database
 
                 appointmentInsertCMD.Prepare();
                 appointmentInsertCMD.ExecuteNonQuery();
+            }
+        }
+
+        
+        public void DeleteAppointment(int appointmentId)
+        {
+            try
+            {
+                DbConnection.StartConnection();
+                var conn = DbConnection.conn;
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (var deleteAppointmentCMD = new MySqlCommand(Queries.deleteAppointmentQuery, DbConnection.conn))
+                        {
+                            deleteAppointmentCMD.Parameters.AddWithValue("@AppointmentId", appointmentId);
+                            deleteAppointmentCMD.Prepare();
+                            deleteAppointmentCMD.ExecuteNonQuery();
+                        }
+                        transaction.Commit(); // Success? Commit
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
             }
         }
         #endregion

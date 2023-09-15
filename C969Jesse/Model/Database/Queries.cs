@@ -20,7 +20,7 @@ namespace C969Jesse.Database
                     "JOIN city ci ON a.cityId = ci.cityId " +
                     "JOIN country co ON ci.countryId = co.countryId";
         #endregion
-        #region Delete Table Queries
+        #region Delete Row Queries
         public static string deleteCustomerQuery => "DELETE FROM customer WHERE customerId = @CustomerId";
         #endregion
         #region Country Queries
@@ -114,8 +114,10 @@ namespace C969Jesse.Database
             "ORDER BY ap.start";
         public static string GetAppointmentStartEndQuery => 
             "SELECT start, end FROM appointment WHERE DATE(start) = @Date";
-
         public static string appointmentIdxQuery => "SELECT appointmentId FROM appointment ORDER BY appointmentId DESC LIMIT 1";
+        public static string deleteAppointmentQuery => "DELETE FROM appointment WHERE appointmentId = @AppointmentId";
+
+
         #endregion
 
         public static string GetUsersQuery => "SELECT userId, userName FROM user";

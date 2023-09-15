@@ -126,6 +126,7 @@
             this.CancelBttn.TabIndex = 16;
             this.CancelBttn.Text = "Cancel";
             this.CancelBttn.UseVisualStyleBackColor = true;
+            this.CancelBttn.Click += new System.EventHandler(this.CancelBttn_Click);
             // 
             // SaveBttn
             // 
