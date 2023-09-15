@@ -22,16 +22,13 @@ namespace C969Jesse
 
         private DataGridViewRow selectedRow = null; 
 
-        private string formState = "Customers"; // Default to customerData
+        private string formState = "Customers"; // Default to customers
 
         public bool isUpdate = false;
 
         public MainForm()
         {
             InitializeComponent();
-
-            this.Controls.Add(mainDataGridView);
-            
             UpdateButtons(formState);
             RefreshTable(formState);
             SetupCustomerDGV();
@@ -39,6 +36,7 @@ namespace C969Jesse
         }
 
         #region Helper methods
+
         public void RefreshTable(string state)
         {
             if (state == "Appointments")
@@ -58,7 +56,47 @@ namespace C969Jesse
             mainDataGridView.Columns["cityId"].Visible = false;
             mainDataGridView.Columns["countryId"].Visible = false;
         }
+        public void RefreshTableSettings()
+        {
+            // Tab color
+            if (formState == "Customers")
+            {
+                CustomerTab.ForeColor = Color.Goldenrod;
+                AppointmentsTab.ForeColor = Color.Black;
+            }
+            else
+            {
+                CustomerTab.ForeColor = Color.Black;
+                AppointmentsTab.ForeColor = Color.Goldenrod;
 
+            }
+            // Resizing columns to fit the current view
+            mainDataGridView.ReadOnly = true;
+            mainDataGridView.MultiSelect = false;
+            mainDataGridView.AllowUserToAddRows = false;
+            mainDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            mainDataGridView.AutoResizeColumns();
+            mainDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            mainDataGridView.ClearSelection();
+            successProvider.Clear();
+            errorProvider.Clear();
+            feedbackLabel.Text = string.Empty;
+        }
+        public void GiveUserFeedBack(bool isUpdate)
+        {
+            if (!isUpdate)
+            {
+                errorProvider.Clear();
+                successProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Successfully added.";
+            }
+            else
+            {
+                errorProvider.Clear();
+                successProvider.SetError(feedbackLabel, "!");
+                feedbackLabel.Text = "Successfully updated.";
+            }
+        }
         private void UpdateButtons(string state)
         {
             if (state == "Customers")
@@ -90,7 +128,6 @@ namespace C969Jesse
             }
             formState = state;
         }
-
         private void SetupCustomerDGV()
         {
             // Setting column titles
@@ -102,7 +139,6 @@ namespace C969Jesse
             mainDataGridView.Columns["country"].HeaderText = "Country";
 
         }
-
         private void SetupAppointmentDGV()
         {
             // Setting column titles
@@ -117,57 +153,10 @@ namespace C969Jesse
             mainDataGridView.Columns["url"].HeaderText = "Visit Link";
         }
 
-        public void RefreshTableSettings()
-        {
-            // Tab color
-            if (formState == "Customers")
-            {
-                CustomerTab.ForeColor = Color.Goldenrod;
-                AppointmentsTab.ForeColor = Color.Black;
-            }
-            else
-            {
-                CustomerTab.ForeColor = Color.Black;
-                AppointmentsTab.ForeColor = Color.Goldenrod;
-
-            }
-            // Resizing columns to fit the current view
-            mainDataGridView.ReadOnly = true;
-            mainDataGridView.MultiSelect = false;
-            mainDataGridView.AllowUserToAddRows = false;
-            mainDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            mainDataGridView.AutoResizeColumns();
-            mainDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            mainDataGridView.ClearSelection();
-            successProvider.Clear();
-            errorProvider.Clear();
-            feedbackLabel.Text = string.Empty;
-        }
-
-        public void GiveUserFeedBack(bool isUpdate)
-        {
-            if (!isUpdate)
-            {
-                errorProvider.Clear();
-                successProvider.SetError(feedbackLabel, "!");
-                feedbackLabel.Text = "Successfully added.";
-            }
-            else
-            {
-                errorProvider.Clear();
-                successProvider.SetError(feedbackLabel, "!");
-                feedbackLabel.Text = "Successfully updated.";
-            }
-        }
         #endregion
 
         #region Event Handlers
-        private void mainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int indexSelected = e.RowIndex;
-            if (indexSelected < 0) { return; }//Error handler for clicking header row
-            selectedRow = mainDataGridView.Rows[indexSelected];
-        }
+
         private void ClickCustomersTab(object sender, EventArgs e)
         {
             UpdateButtons("Customers");
@@ -206,11 +195,6 @@ namespace C969Jesse
             {
                 if (formState == "Customers")
                 {
-                    // UpdateCustomerForm updateCustomerForm = new UpdateCustomerForm();
-                    // updateCustomerForm.PopulateFields(selectedRow);
-                    //updateCustomerForm.MainFormInstance = this;
-                    //updateCustomerForm.Show();
-
                     var addCustomerForm = new CustomerForm();
                     addCustomerForm.PopulateFields(selectedRow);
                     addCustomerForm.UpdateCustomerFormTitle(isUpdate);
@@ -265,10 +249,17 @@ namespace C969Jesse
             }
             selectedRow = null;
         }
+        private void mainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int indexSelected = e.RowIndex;
+            if (indexSelected < 0) { return; }//Error handler for clicking header row
+            selectedRow = mainDataGridView.Rows[indexSelected];
+        }
         private void mainDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             mainDataGridView.ClearSelection();
         }
+
         #endregion
 
     }

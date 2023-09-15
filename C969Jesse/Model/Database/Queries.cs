@@ -8,7 +8,6 @@ namespace C969Jesse.Database
 {
     public static class Queries
     {
-        #region Customer Queries
         #region Get Table Queries
         public static string GetCustomerTableQuery => "SELECT " +
                     "c.customerId, c.customerName, " +
@@ -20,9 +19,7 @@ namespace C969Jesse.Database
                     "JOIN city ci ON a.cityId = ci.cityId " +
                     "JOIN country co ON ci.countryId = co.countryId";
         #endregion
-        #region Delete Row Queries
-        public static string deleteCustomerQuery => "DELETE FROM customer WHERE customerId = @CustomerId";
-        #endregion
+
         #region Country Queries
         public static string CountryIdxQuery => "SELECT " + 
                  "countryId FROM country " + 
@@ -39,6 +36,7 @@ namespace C969Jesse.Database
 
 
         #endregion
+
         #region City Queries
         public static string CityIdxQuery => "SELECT " +
                  "cityId FROM city " +
@@ -54,6 +52,7 @@ namespace C969Jesse.Database
                 "WHERE cityId = @CityId";
 
         #endregion
+
         #region Address Queries
         public static string AddressIdxQuery => "SELECT " +
                 "addressId FROM address " +
@@ -71,6 +70,7 @@ namespace C969Jesse.Database
                 "lastUpdateBy = @LastUpdateBy " +
                 "WHERE addressId = @AddressId";
         #endregion
+
         #region Customer Queries
         public static string CustomerIdxQuery => "SELECT " +
                  "customerId FROM customer " +
@@ -85,7 +85,8 @@ namespace C969Jesse.Database
                 "lastUpdate = NOW(), " +
                 "lastUpdateBy = @LastUpdateBy " +
                 "WHERE customerId = @CustomerId";
-        #endregion
+        public static string deleteCustomerQuery => "DELETE FROM customer WHERE customerId = @CustomerId";
+        public static string GetCustomersQuery => "SELECT customerId, customerName FROM customer";
         #endregion
 
         #region Appointment Queries
@@ -120,8 +121,10 @@ namespace C969Jesse.Database
 
         #endregion
 
+        #region User Queries
         public static string GetUsersQuery => "SELECT userId, userName FROM user";
-        public static string GetCustomersQuery => "SELECT customerId, customerName FROM customer";
+        public static string GetLoggedinUserQuery => "SELECT * FROM user WHERE userName=@username AND password=@password";
+        #endregion
     }
 }
 

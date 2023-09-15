@@ -14,10 +14,9 @@ namespace C969Jesse.Database
 {
     public class DbManager
     {
+        #region Data Getters
         // Requirement G: lambda expression to simplify code for readability
         private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
-
-        #region Data Getters
         public DataTable GetData(string query)
         {
             DataTable dataTable = new DataTable();

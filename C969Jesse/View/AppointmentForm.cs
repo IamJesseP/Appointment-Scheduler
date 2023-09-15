@@ -16,23 +16,25 @@ namespace C969Jesse.Components
 {
     public partial class AppointmentForm : Form
     {
+        public MainForm MainFormInstance { get; set; }
+
         private DbManager dbManager = new DbManager();
 
         private AppointmentController appointmentController = new AppointmentController();
 
-        public MainForm MainFormInstance { get; set; }
-
         private string appointmentId;
+
         public AppointmentForm()
         {
             InitializeComponent();
             LoadForm();
         }
 
+        #region Helper methods
         private void LoadForm()
         {
             // Requirement F: Using combobox picker and dbManager to prevent
-            // invalid customer and user data
+            // invalid customer and user data input
             var customers = dbManager.GetCustomerNames();
             var users = dbManager.GetUserNames();
             comboBoxCustomers.DataSource = new BindingSource(customers, null);
@@ -51,7 +53,39 @@ namespace C969Jesse.Components
             comboBoxLocations.DataSource = Enum.GetNames(typeof(Locations));
             comboBoxVisitTypes.DataSource = Enum.GetNames(typeof(VisitTypes));
         }
+        public void UpdateAppointmentFormTitle(bool isUpdate)
+        {
+            appointmentFormTitle.Text = isUpdate ? "Update Appointment" : "Add Appointment";
+            lblAppointmentTime.Text = isUpdate ? "NEW Appointment Time" : "Appointment Time";
+        }
+        public void PopulateFields(DataGridViewRow row)
+        {
+            var customerKeyValuePair = new KeyValuePair<int, string>
+            (
+            //Set Customer ID and Name
+            Convert.ToInt32(row.Cells[1].Value),
+            row.Cells[10].Value.ToString()
+            );
 
+            // Set User ID and Consultant Name
+            var userKeyValuePair = new KeyValuePair<int, string>
+            (
+                Convert.ToInt32(row.Cells[2].Value),
+                row.Cells[9].Value.ToString()
+            );
+
+            comboBoxCustomers.SelectedItem = customerKeyValuePair;
+            comboBoxUsers.SelectedItem = userKeyValuePair;
+            txtDescription.Text = row.Cells[3].Value.ToString();
+            comboBoxLocations.Text = row.Cells[4].Value.ToString();
+            comboBoxVisitTypes.Text = row.Cells[5].Value.ToString();
+            comboBoxAppointmentTime.Text = row.Cells[8].Value.ToString();
+
+            appointmentId = row.Cells[0].Value.ToString();
+        }
+        #endregion
+
+        #region Event Handlers
         private void SaveBttn_Click(object sender, EventArgs e)
         {
             DateTime selectedDate = dateTimePicker1.Value;
@@ -84,39 +118,11 @@ namespace C969Jesse.Components
             MainFormInstance?.GiveUserFeedBack(MainFormInstance.isUpdate);
             this.Hide();
         }
-
-        public void PopulateFields(DataGridViewRow row)
+        private void CancelBttn_Click(object sender, EventArgs e)
         {
-            var customerKeyValuePair = new KeyValuePair<int, string>
-            (
-            //Set Customer ID and Name
-            Convert.ToInt32(row.Cells[1].Value),
-            row.Cells[10].Value.ToString()
-            );
-
-            // Set User ID and Consultant Name
-            var userKeyValuePair = new KeyValuePair<int, string>
-            (
-                Convert.ToInt32(row.Cells[2].Value),
-                row.Cells[9].Value.ToString()
-            );
-
-            comboBoxCustomers.SelectedItem = customerKeyValuePair;
-            comboBoxUsers.SelectedItem = userKeyValuePair;
-            txtDescription.Text = row.Cells[3].Value.ToString();
-            comboBoxLocations.Text = row.Cells[4].Value.ToString();
-            comboBoxVisitTypes.Text = row.Cells[5].Value.ToString();
-            comboBoxAppointmentTime.Text = row.Cells[8].Value.ToString();
-
-            appointmentId = row.Cells[0].Value.ToString();
+            MainFormInstance?.RefreshTableSettings();
+            this.Close();
         }
-
-        public void UpdateAppointmentFormTitle(bool isUpdate)
-        {
-            appointmentFormTitle.Text = isUpdate ? "Update Appointment" : "Add Appointment";
-            lblAppointmentTime.Text = isUpdate ? "NEW Appointment Time" : "Appointment Time";
-        }
-
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             DateTime selectedDate = dateTimePicker1.Value;
@@ -124,12 +130,7 @@ namespace C969Jesse.Components
             comboBoxAppointmentTime.DataSource = availableSlots;
            
         }
-
-        private void CancelBttn_Click(object sender, EventArgs e)
-        {
-            MainFormInstance?.RefreshTableSettings();
-            this.Close();
-        }
+        #endregion
     }
 }
 

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace C969Jesse.Controller
 {
-    // requirement F
+    // Requirement F
     public class AppointmentController
     {
         private DbManager dbManager = new DbManager();

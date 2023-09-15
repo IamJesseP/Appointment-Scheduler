@@ -17,18 +17,7 @@ namespace C969Jesse
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			try
-			{
-				DbConnection.StartConnection();
-				MessageBox.Show("Connection open");
-			}
-			catch (Exception ex)
-			{
-                MessageBox.Show(ex.Message);
-			}
-
             Application.Run(new Login());
-			DbConnection.CloseConnection();
 		}
 	}
 }

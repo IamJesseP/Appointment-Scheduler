@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using C969Jesse.Controller;
 using C969Jesse.Database;
 using C969Jesse.Utils;
 using MySql.Data.MySqlClient;
@@ -20,6 +21,7 @@ namespace C969Jesse
 {
 	public partial class Login : Form
 	{
+        LoginController loginController = new LoginController();
 		public Login()
 		{
 			InitializeComponent();
@@ -28,59 +30,23 @@ namespace C969Jesse
 		private void BtnLogin_Click(object sender, EventArgs e)
 		{
 			try
-			{
+            {
                 DbConnection.StartConnection();
-				string username = txtUserLogin.Text;
-				string password = txtUserPassword.Text;
-                string query = "SELECT * FROM user WHERE userName=@username AND password=@password";
-                var command = new MySqlCommand(query, DbConnection.conn);
-                command.Parameters.AddWithValue("@username", username);
-                command.Parameters.AddWithValue("@password", password);
-                var reader = command.ExecuteReader();
-
-				if (reader.HasRows)
-                {
-                    LoginSuccessful();
-                    UserActivityLogger.LogUserActivity(username); // Logging user info
-                    UserSession.CurrentUserName = username; // Setting username for logging in other classes
-                    MainForm mainForm = new MainForm();
-                    mainForm.Show();
-                    this.Hide();
-                }
-                else
-                {
-                    LoginFail();
-                }
+                var conn = DbConnection.conn;
+                string username = txtUserLogin.Text;
+                string password = txtUserPassword.Text;
+                loginController.TryLogin(conn, username, password);
+                this.Hide();
             }
-			catch (MySqlException)
+            catch (MySqlException)
 			{
 				MessageBox.Show("Server connection error");
 			}
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
 		}
-
-        private static void LoginFail()
-        {
-            if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "en")
-            {
-                MessageBox.Show("Username or Password is incorrect");
-            }
-            else if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "es")
-            {
-                MessageBox.Show("El nombre de usuario o la contrasena son incorrectos");
-            }
-        }
-
-        private static void LoginSuccessful()
-        {
-            if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "en")
-            {
-                MessageBox.Show("Login successful!");
-            }
-            else if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "es")
-            {
-                MessageBox.Show("Inicio de sesion con exito");
-            }
-        }
 
         private void BtnExit_Click(object sender, EventArgs e)
         {

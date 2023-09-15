@@ -15,8 +15,9 @@ namespace C969Jesse.Components
 {
     public partial class CustomerForm : Form
     {
-        DbManager dbManager = new DbManager();
         public MainForm MainFormInstance { get; set; }
+
+        private DbManager dbManager = new DbManager();
 
         private string addressId;
         private string customerId;
@@ -27,7 +28,8 @@ namespace C969Jesse.Components
         {
             InitializeComponent();
         }
- 
+
+        #region Event Handlers
         private void SaveBttn_Click(object sender, EventArgs e)
         {
             if (!AreAllFieldsValid())
@@ -62,23 +64,18 @@ namespace C969Jesse.Components
             MainFormInstance?.GiveUserFeedBack(MainFormInstance.isUpdate);
             this.Hide();
         }
-
         private void CancelBttn_Click(object sender, EventArgs e)
         {
             MainFormInstance?.RefreshTableSettings();
             this.Close();
         }
+        #endregion
 
-        private bool AreAllFieldsValid()
+        #region Helper Methods
+        public void UpdateCustomerFormTitle(bool isUpdate)
         {
-            return Validation.ValidateTextBox(txtCustomerName, "string", errorProvider)
-                && Validation.ValidateTextBox(txtCustomerAddress, "string", errorProvider)
-                && Validation.ValidateTextBox(txtCustomerCity, "string", errorProvider)
-                && Validation.ValidateTextBox(txtCustomerCountry, "string", errorProvider)
-                && Validation.ValidateTextBox(txtCustomerPhone, "phone", errorProvider)
-                && Validation.ValidateTextBox(txtPostal, "string", errorProvider);
+            customerTitle.Text = isUpdate ? "Update Customer" : "Add Customer";
         }
-
         public void PopulateFields(DataGridViewRow row)
         {
             txtCustomerName.Text = row.Cells[1].Value.ToString();
@@ -94,10 +91,16 @@ namespace C969Jesse.Components
             cityId = row.Cells[7].Value.ToString();
             countryId = row.Cells[9].Value.ToString();
         }
-        public void UpdateCustomerFormTitle(bool isUpdate)
+        private bool AreAllFieldsValid()
         {
-            customerTitle.Text = isUpdate ? "Update Customer" : "Add Customer";
+            return Validation.ValidateTextBox(txtCustomerName, "string", errorProvider)
+                && Validation.ValidateTextBox(txtCustomerAddress, "string", errorProvider)
+                && Validation.ValidateTextBox(txtCustomerCity, "string", errorProvider)
+                && Validation.ValidateTextBox(txtCustomerCountry, "string", errorProvider)
+                && Validation.ValidateTextBox(txtCustomerPhone, "phone", errorProvider)
+                && Validation.ValidateTextBox(txtPostal, "string", errorProvider);
         }
+        #endregion
 
         #region TextChanged Validation
         private void txtAddCustomerName_TextChanged(object sender, EventArgs e)

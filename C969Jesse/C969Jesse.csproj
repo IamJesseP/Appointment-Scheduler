@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AppointmentController.cs" />
+    <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Model\Entities\Address.cs" />
     <Compile Include="Model\Entities\Appointment.cs" />
     <Compile Include="Model\Entities\BaseClass.cs" />
