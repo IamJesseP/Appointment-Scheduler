@@ -1,4 +1,5 @@
-﻿using C969Jesse.Database;
+﻿using C969Jesse.Controller.Utils;
+using C969Jesse.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,23 +37,39 @@ namespace C969Jesse.Controller
             DateTime startTime = DateTime.ParseExact(times[0], "HH:mm", null);
             DateTime endTime = DateTime.ParseExact(times[1], "HH:mm", null);
 
-            // Combine the date part from selectedDate and the time part from startTime and endTime
+            // Combine the date string from selectedDate and the time strings from startTime and endTime
             DateTime startDateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, startTime.Hour, startTime.Minute, 0);
             DateTime endDateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, endTime.Hour, endTime.Minute, 0);
 
-            return new Dictionary<string, DateTime> { { "StartTime", startDateTime }, {"EndTime", endDateTime } };
+            // Requirement E: Convert to UTC for database saving/updating
+            DateTime startDateTimeUTC = startDateTime.ToUniversalTime();
+            DateTime endDateTimeUTC = endDateTime.ToUniversalTime();
+
+            return new Dictionary<string, DateTime> { { "StartTime", startDateTimeUTC }, {"EndTime", endDateTimeUTC } };
         }
         private List<string> ConvertSlotsToString(List<Tuple<DateTime, DateTime>> availableSlots)
         {
-            // Streamline string transformation
-            return availableSlots.Select(slot => $"{slot.Item1:HH:mm} - {slot.Item2:HH:mm}").ToList();
+            TimeZoneInfo localZone = TimeZoneInfo.Local;
+
+            // Requirement E: Convert UTC slots to user's local time zone and then to string for display in Add/Update form
+            return availableSlots.Select(slot =>
+            $"{TimeZoneInfo.ConvertTimeFromUtc(slot.Item1, localZone):HH:mm} - {TimeZoneInfo.ConvertTimeFromUtc(slot.Item2, localZone):HH:mm}")
+            .ToList();
+            
         }
         private List<Tuple<DateTime, DateTime>> GenerateAllSlots(DateTime date)
-        {   
-            // Time slots will be from business hours 9-5
+        {
+            TimeZoneInfo pstZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+            // Requirement F: Time slots will be from business hours 9-5 PST
             var allSlots = new List<Tuple<DateTime, DateTime>>();
-            DateTime startHour = new DateTime(date.Year, date.Month, date.Day, 9, 0, 0);
-            DateTime endHour = new DateTime(date.Year, date.Month, date.Day, 17, 0, 0);
+
+            // Create date with PST time zone
+            DateTime startHourPST = TimeZoneInfo.ConvertTime(new DateTime(date.Year, date.Month, date.Day, 9, 0, 0), pstZone);
+            DateTime endHourPST = TimeZoneInfo.ConvertTime(new DateTime(date.Year, date.Month, date.Day, 17, 0, 0), pstZone);
+
+            // Convert PST time slots to UTC for use in available slot calculations
+            DateTime startHour = TimeZoneInfo.ConvertTimeToUtc(startHourPST, pstZone);
+            DateTime endHour = TimeZoneInfo.ConvertTimeToUtc(endHourPST, pstZone);
 
             while (startHour < endHour)
             {
@@ -64,7 +81,7 @@ namespace C969Jesse.Controller
         }
         private bool IsSlotBooked(Tuple<DateTime, DateTime> slot, List<Tuple<DateTime, DateTime>> bookedSlots)
         {
-            // Streamline the filtering 
+            // Streamline the filtering calculation
             return bookedSlots.Any(bookedSlot => bookedSlot.Item1 < slot.Item2 && bookedSlot.Item2 > slot.Item1);
         }     
 

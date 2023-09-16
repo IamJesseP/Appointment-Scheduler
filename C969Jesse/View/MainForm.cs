@@ -152,7 +152,7 @@ namespace C969Jesse
         {
             if (state == "Appointments")
             {
-                FilterAppointments();
+                mainDataGridView.DataSource = dbManager.GetAppointments(appointmentFilterState);
 
                 mainDataGridView.Columns["appointmentId"].Visible = false;
                 mainDataGridView.Columns["userId"].Visible = false;
@@ -160,25 +160,13 @@ namespace C969Jesse
             }
             else if (state == "Customers")
             {
-                mainDataGridView.DataSource = dbManager.GetData(Queries.GetCustomerTableQuery);
+                mainDataGridView.DataSource = dbManager.GetCustomers(Queries.GetCustomerTableQuery);
             }
 
             mainDataGridView.Columns["customerId"].Visible = false;
             mainDataGridView.Columns["addressId"].Visible = false;
             mainDataGridView.Columns["cityId"].Visible = false;
             mainDataGridView.Columns["countryId"].Visible = false;
-        }
-
-        private void FilterAppointments()
-        {
-            if (appointmentFilter.Text == "Weekly" || appointmentFilterState == "Monthly")
-            {
-                mainDataGridView.DataSource = dbManager.GetFilteredAppointments(appointmentFilterState);
-            }
-            else
-            {
-                mainDataGridView.DataSource = dbManager.GetData(Queries.GetAppointmentTableQuery);
-            }
         }
 
         public void RefreshTableSettings()
@@ -270,6 +258,9 @@ namespace C969Jesse
             mainDataGridView.Columns["city"].HeaderText = "City";   
             mainDataGridView.Columns["country"].HeaderText = "Country";
 
+            lblFilterAppointments.Visible = false;
+            appointmentFilter.Visible = false;
+
         }
         private void SetupAppointmentDGV()
         {
@@ -284,6 +275,8 @@ namespace C969Jesse
             mainDataGridView.Columns["phone"].HeaderText = "Phone";
             mainDataGridView.Columns["url"].HeaderText = "Visit Link";
 
+            lblFilterAppointments.Visible = true;
+            appointmentFilter.Visible = true;
         }
 
         #endregion
@@ -302,7 +295,7 @@ namespace C969Jesse
             {
                 appointmentFilterState = "All";
             }
-            FilterAppointments();
+            mainDataGridView.DataSource = dbManager.GetAppointments(appointmentFilterState);
             SetupAppointmentDGV();
         }
     }

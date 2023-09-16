@@ -41,11 +41,11 @@
             this.UpdateBttn = new System.Windows.Forms.Button();
             this.DeleteBttn = new System.Windows.Forms.Button();
             this.ViewBttn = new System.Windows.Forms.Button();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.feedbackLabel = new System.Windows.Forms.Label();
             this.successProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.appointmentFilter = new System.Windows.Forms.ComboBox();
+            this.lblFilterAppointments = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -60,7 +60,7 @@
             this.reportsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1260, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1040, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -109,7 +109,7 @@
             this.mainDataGridView.AllowUserToResizeRows = false;
             this.mainDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.mainDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.mainDataGridView.Location = new System.Drawing.Point(45, 44);
+            this.mainDataGridView.Location = new System.Drawing.Point(45, 48);
             this.mainDataGridView.MultiSelect = false;
             this.mainDataGridView.Name = "mainDataGridView";
             this.mainDataGridView.Size = new System.Drawing.Size(926, 436);
@@ -160,12 +160,6 @@
             this.ViewBttn.Text = "View Report";
             this.ViewBttn.UseVisualStyleBackColor = false;
             // 
-            // monthCalendar1
-            // 
-            this.monthCalendar1.Location = new System.Drawing.Point(1015, 44);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 6;
-            // 
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
@@ -192,20 +186,29 @@
             "All",
             "Weekly",
             "Monthly"});
-            this.appointmentFilter.Location = new System.Drawing.Point(1015, 218);
+            this.appointmentFilter.Location = new System.Drawing.Point(784, 518);
             this.appointmentFilter.Name = "appointmentFilter";
-            this.appointmentFilter.Size = new System.Drawing.Size(227, 21);
+            this.appointmentFilter.Size = new System.Drawing.Size(187, 21);
             this.appointmentFilter.TabIndex = 9;
             this.appointmentFilter.SelectedIndexChanged += new System.EventHandler(this.appointmentFilter_SelectedIndexChanged);
+            // 
+            // lblFilterAppointments
+            // 
+            this.lblFilterAppointments.AutoSize = true;
+            this.lblFilterAppointments.Location = new System.Drawing.Point(822, 500);
+            this.lblFilterAppointments.Name = "lblFilterAppointments";
+            this.lblFilterAppointments.Size = new System.Drawing.Size(96, 13);
+            this.lblFilterAppointments.TabIndex = 10;
+            this.lblFilterAppointments.Text = "Filter Appointments";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1260, 567);
+            this.ClientSize = new System.Drawing.Size(1040, 567);
+            this.Controls.Add(this.lblFilterAppointments);
             this.Controls.Add(this.appointmentFilter);
             this.Controls.Add(this.feedbackLabel);
-            this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.ViewBttn);
             this.Controls.Add(this.DeleteBttn);
             this.Controls.Add(this.UpdateBttn);
@@ -238,10 +241,10 @@
         private System.Windows.Forms.Button UpdateBttn;
         private System.Windows.Forms.Button DeleteBttn;
         private System.Windows.Forms.Button ViewBttn;
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Label feedbackLabel;
         private System.Windows.Forms.ErrorProvider successProvider;
         private System.Windows.Forms.ComboBox appointmentFilter;
+        private System.Windows.Forms.Label lblFilterAppointments;
     }
 }

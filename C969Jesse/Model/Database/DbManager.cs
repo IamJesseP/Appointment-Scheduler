@@ -18,7 +18,7 @@ namespace C969Jesse.Database
         #region Data Getters
         // Requirement G: lambda expression to simplify code for readability
         private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
-        public DataTable GetData(string query)
+        public DataTable GetCustomers(string query)
         {
             DataTable dataTable = new DataTable();
 
@@ -43,7 +43,7 @@ namespace C969Jesse.Database
 
             return dataTable;
         }
-        public DataTable GetFilteredAppointments(string filter)
+        public DataTable GetAppointments(string filter)
         {
             DataTable dataTable = new DataTable();
             try
@@ -69,15 +69,39 @@ namespace C969Jesse.Database
                     endDate = startDate.AddMonths(1).AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
                 }
 
-                using (MySqlCommand cmd = new MySqlCommand(Queries.GetFilteredAppointmentsQuery, conn))
+                // Requirement D: Get filtered appointments
+                if (filter == "All")
                 {
-                    cmd.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd HH:mm:ss"));
-                    cmd.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd HH:mm:ss"));
-
-                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                    adapter.Fill(dataTable);
+                    using (MySqlCommand cmd = new MySqlCommand(Queries.GetAppointmentTableQuery, DbConnection.conn))
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dataTable);
+                    }
                 }
+                else
+                {
+                    using (MySqlCommand cmd = new MySqlCommand(Queries.GetFilteredAppointmentsQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                        cmd.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
+                        MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                        adapter.Fill(dataTable);
+                    }
+                }
+                // Requirement E: Convert start and end columns to local time
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    if (row["start"] is DateTime startUtc)
+                    {
+                        row["start"] = TimeZoneInfo.ConvertTimeFromUtc(startUtc, TimeZoneInfo.Local);
+                    }
+
+                    if (row["end"] is DateTime endUtc)
+                    {
+                        row["end"] = TimeZoneInfo.ConvertTimeFromUtc(endUtc, TimeZoneInfo.Local);
+                    }
+                }
             }
             catch (Exception ex)
             {
