@@ -129,6 +129,7 @@ namespace C969Jesse.Database
             
         public static string appointmentIdxQuery => "SELECT appointmentId FROM appointment ORDER BY appointmentId DESC LIMIT 1";
         public static string deleteAppointmentQuery => "DELETE FROM appointment WHERE appointmentId = @AppointmentId";
+        public static string upcomingAppointmentQuery => "SELECT COUNT(*) FROM appointment WHERE start BETWEEN @currentTime AND DATE_ADD(@currentTime, INTERVAL 15 MINUTE) AND userId=@userId";
 
 
         #endregion

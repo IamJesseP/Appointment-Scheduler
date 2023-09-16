@@ -23,7 +23,6 @@ namespace C969Jesse
             }
             catch (Exception ex)
             {
-                // Handle any errors that may occur during the file writing process
                 MessageBox.Show($"Error logging user activity: {ex.Message}");
             }
         }

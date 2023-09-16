@@ -1,7 +1,7 @@
 ﻿using C969Jesse.Components;
 using C969Jesse.Controller;
 using C969Jesse.Database;
-
+using C969Jesse.Utils;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -202,6 +202,7 @@ namespace C969Jesse
                                       MessageBoxButtons.YesNo);
             return confirmResult == DialogResult.Yes ? true : false;
         }
+
         public void GiveUserFeedBack(bool isUpdate)
         {
             if (!isUpdate)

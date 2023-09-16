@@ -1,5 +1,6 @@
-﻿using C969Jesse.Controller.Utils;
-using C969Jesse.Database;
+﻿using C969Jesse.Database;
+using C969Jesse.Utils;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,7 +84,37 @@ namespace C969Jesse.Controller
         {
             // Streamline the filtering calculation
             return bookedSlots.Any(bookedSlot => bookedSlot.Item1 < slot.Item2 && bookedSlot.Item2 > slot.Item1);
-        }     
+        }
+        public void CheckUpcomingAppointment()
+        {
+            bool result;
+            try
+            {
+                DbConnection.StartConnection();
+                
+                using (var upcomingAppointmentCMD = new MySqlCommand(Queries.upcomingAppointmentQuery, DbConnection.conn))
+                {
+                    var currentTime = DateTime.UtcNow;
+                    upcomingAppointmentCMD.Parameters.AddWithValue("@userId", UserSession.CurrentUserId);
+                    upcomingAppointmentCMD.Parameters.AddWithValue("@currentTime", currentTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                    int upcomingAppointmentCount = Convert.ToInt32(upcomingAppointmentCMD.ExecuteScalar());
 
+                    result = upcomingAppointmentCount > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+    
+            if (result)
+            {
+                MessageBox.Show("You have an upcoming appointment.");
+            }
+        }
     }
 }

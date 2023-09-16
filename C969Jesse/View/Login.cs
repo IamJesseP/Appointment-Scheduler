@@ -14,14 +14,13 @@ using C969Jesse.Database;
 using C969Jesse.Utils;
 using MySql.Data.MySqlClient;
 
-// TODO: ADD LOGING FILES, CODE ALERTS WITHIN 15MINS OF APPT,
-
 
 namespace C969Jesse
 {
 	public partial class Login : Form
 	{
         LoginController loginController = new LoginController();
+        AppointmentController appointmentController = new AppointmentController();
 		public Login()
 		{
 			InitializeComponent();
@@ -35,7 +34,12 @@ namespace C969Jesse
                 var conn = DbConnection.conn;
                 string username = txtUserLogin.Text;
                 string password = txtUserPassword.Text;
-                loginController.TryLogin(conn, username, password);
+                var loginAttempt = loginController.TryLogin(conn, username, password);
+                if(loginAttempt)
+                {
+                    // Requirement H: Check for appointments within 15mins
+                    appointmentController.CheckUpcomingAppointment();
+                }
                 this.Hide();
             }
             catch (MySqlException)

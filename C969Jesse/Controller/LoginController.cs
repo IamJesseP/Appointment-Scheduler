@@ -25,8 +25,13 @@ namespace C969Jesse.Controller
             if (reader.HasRows)
             {
                 LoginSuccessful();
-                UserActivityLogger.LogUserActivity(username); // Logging user info
+                UserActivityLogger.LogUserActivity(username); // Requirement J: Logging user info
                 UserSession.CurrentUserName = username; // Setting username for data logging
+                while (reader.Read())
+                {
+                    int userId = reader.GetInt32("UserId"); 
+                    UserSession.CurrentUserId = userId;
+                }
                 MainForm mainForm = new MainForm();
                 mainForm.Show();
                 return true;
