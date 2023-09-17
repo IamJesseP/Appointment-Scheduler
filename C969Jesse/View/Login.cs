@@ -39,8 +39,8 @@ namespace C969Jesse
                 {
                     // Requirement H: Check for appointments within 15mins
                     appointmentController.CheckUpcomingAppointment();
+                    this.Hide();
                 }
-                this.Hide();
             }
             catch (MySqlException)
 			{
