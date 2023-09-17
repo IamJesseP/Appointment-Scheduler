@@ -1,4 +1,5 @@
 ﻿using C969Jesse.Controller;
+using C969Jesse.Controller.Utils;
 using C969Jesse.Database;
 using C969Jesse.Model;
 using C969Jesse.Model.Enums;
@@ -18,9 +19,11 @@ namespace C969Jesse.Components
     {
         public Appointment MainFormInstance { get; set; }
 
-        private DbManager dbManager = new DbManager();
-
         private AppointmentController appointmentController = new AppointmentController();
+
+        private CustomerController customerController = new CustomerController();
+
+        private UserController userController = new UserController();
 
         private string appointmentId;
 
@@ -35,8 +38,8 @@ namespace C969Jesse.Components
         {
             // Requirement F: Using combobox picker and dbManager to prevent
             // invalid customer and user data input
-            var customers = dbManager.GetCustomerNames();
-            var users = dbManager.GetUserNames();
+            var customers = customerController.GetCustomerNames();
+            var users = userController.GetUserNames();
             comboBoxUsers.DataSource = new BindingSource(users, null);
             comboBoxCustomers.DataSource = new BindingSource(customers, null);
             comboBoxCustomers.DisplayMember = "Value";
@@ -106,11 +109,11 @@ namespace C969Jesse.Components
 
             if (MainFormInstance.isUpdate)
             {
-                dbManager.SaveAppointment(appointmentData, startEndTime, MainFormInstance.isUpdate);
+                appointmentController.SaveAppointment(appointmentData, startEndTime, MainFormInstance.isUpdate);
             }
             else
             {
-                dbManager.SaveAppointment(appointmentData, startEndTime, MainFormInstance.isUpdate);
+                appointmentController.SaveAppointment(appointmentData, startEndTime, MainFormInstance.isUpdate);
             }
             MainFormInstance?.RefreshTable("Appointments");
             MainFormInstance?.RefreshTableSettings();

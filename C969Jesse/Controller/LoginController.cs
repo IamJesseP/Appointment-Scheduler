@@ -42,6 +42,8 @@ namespace C969Jesse.Controller
                 return false;
             }
         }
+
+        // Requirement A: Two Languages
         private void LoginFail()
         {
             if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "en")

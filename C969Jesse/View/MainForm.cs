@@ -1,5 +1,6 @@
 ﻿using C969Jesse.Components;
 using C969Jesse.Controller;
+using C969Jesse.Controller.Utils;
 using C969Jesse.Database;
 using C969Jesse.Utils;
 using MySql.Data.MySqlClient;
@@ -19,9 +20,12 @@ namespace C969Jesse
 {
     public partial class Appointment : Form
     {
-        private DbManager dbManager = new DbManager();
 
         private AppointmentController appointmentController = new AppointmentController();
+
+        private UserController userController = new UserController();
+
+        private CustomerController customerController = new CustomerController();
 
         private DataGridViewRow selectedRow = null;
 
@@ -106,12 +110,12 @@ namespace C969Jesse
                 if (formState == "Customers")
                 {
                     int customerId = Convert.ToInt32(selectedRow.Cells[0].Value);
-                    dbManager.DeleteCustomer(customerId);
+                    customerController.DeleteCustomer(customerId);
                 }
                 else if (formState == "Appointments")
                 {
                     int appointmentId = Convert.ToInt32(selectedRow.Cells["appointmentId"].Value);
-                    dbManager.DeleteAppointment(appointmentId);
+                    appointmentController.DeleteAppointment(appointmentId);
                 }
 
                 RefreshTable(formState);
@@ -166,7 +170,7 @@ namespace C969Jesse
             UpdateButtons("Consultants");
             RefreshTableSettings();
 
-            mainDataGridView.DataSource = dbManager.GetConsultantSchedule(selectedUserName, selectedUserId);
+            mainDataGridView.DataSource = userController.GetConsultantSchedule(selectedUserName, selectedUserId);
             SetupAppointmentDGV();
         }
         private void comboBoxMonths_SelectedIndexChanged(object sender, EventArgs e)
@@ -187,7 +191,7 @@ namespace C969Jesse
             {
                 appointmentFilterState = "All";
             }
-            mainDataGridView.DataSource = dbManager.GetAppointments(appointmentFilterState);
+            mainDataGridView.DataSource = appointmentController.GetAppointments(appointmentFilterState);
             SetupAppointmentDGV();
         }
         private void comboConsultants_SelectedIndexChanged(object sender, EventArgs e)
@@ -203,7 +207,7 @@ namespace C969Jesse
             }
             else if (formState == "Consultants")
             {
-                mainDataGridView.DataSource = dbManager.GetConsultantSchedule(selectedUserName, selectedUserId);
+                mainDataGridView.DataSource = userController.GetConsultantSchedule(selectedUserName, selectedUserId);
                 SetupAppointmentDGV();
             }
         }
@@ -216,12 +220,12 @@ namespace C969Jesse
         {
             if (state == "Appointments")
             {
-                mainDataGridView.DataSource = dbManager.GetAppointments(appointmentFilterState);
+                mainDataGridView.DataSource = appointmentController.GetAppointments(appointmentFilterState);
                 SetupAppointmentDGV();
             }
             else if (state == "Customers")
             {
-                mainDataGridView.DataSource = dbManager.GetCustomers(Queries.GetCustomerTableQuery);
+                mainDataGridView.DataSource = customerController.GetCustomers(Queries.GetCustomerTableQuery);
                 SetupCustomerDGV();
             }
         }
@@ -325,7 +329,7 @@ namespace C969Jesse
                     {
                         comboConsultants.Visible = true;
                         lblConsultants.Visible = true;
-                        var users = dbManager.GetUserNames();
+                        var users = userController.GetUserNames();
                         comboConsultants.DataSource = new BindingSource(users, null);
                     }
                     // extra report here

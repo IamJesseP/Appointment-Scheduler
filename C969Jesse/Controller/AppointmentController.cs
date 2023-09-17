@@ -9,26 +9,145 @@ using System.Windows.Forms;
 
 namespace C969Jesse.Controller
 {
-    // Requirement F
     public class AppointmentController
     {
-        private DbManager dbManager = new DbManager();
-        
-        public List<string> GetAvailableSlots(DateTime date)
-        {
-            var allSlots = GenerateAllSlots(date);
-            var bookedSlots = dbManager.GetBookedSlots(date);
-            if (bookedSlots == null)
-            {
-                // Create an empty list instead of null, if all appointment times are open
-                bookedSlots = new List<Tuple<DateTime, DateTime>>(); 
-            }
-            // Requirement G: using lambda expressions here to streamline the filtering and
-            // transformation of the available slots list
-            var availableSlots = allSlots.Where(slot => !IsSlotBooked(slot, bookedSlots)).ToList();
-            var availableSlotsString = ConvertSlotsToString(availableSlots);
+        // Requirement C
+        #region Add/Update/Delete Appointment
 
-            return availableSlotsString;
+        public void SaveAppointment(Dictionary<string, string> appointmentData, Dictionary<string, DateTime> startEndTime, bool isUpdate)
+        {
+            try
+            {
+                DbConnection.StartConnection();
+                var conn = DbConnection.conn;
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        int appointmentId;
+                        string query;
+                        if (isUpdate)
+                        {
+                            appointmentId = int.Parse(appointmentData["AppointmentId"]);
+                            query = Queries.appointmentUpdateQuery;
+                        }
+                        else
+                        {
+                            using (var countryIndexCmd = new MySqlCommand(Queries.CountryIdxQuery, conn))
+                            {
+                                appointmentId = GetNewId(Queries.appointmentIdxQuery, conn);
+                                query = Queries.appointmentInsertQuery;
+                            }
+                        }
+                        SaveAppointmentData(appointmentData, startEndTime, isUpdate, conn, appointmentId, query);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+        }
+        private void SaveAppointmentData(Dictionary<string, string> appointmentData, Dictionary<string, DateTime> startEndTime, bool isUpdate, MySqlConnection conn, int appointmentId, string query)
+        {
+            using (var appointmentInsertCMD = new MySqlCommand(query, conn))
+            {
+                appointmentInsertCMD.Parameters.AddWithValue("@AppointmentId", appointmentId);
+                appointmentInsertCMD.Parameters.AddWithValue("@CustomerId", appointmentData["CustomerId"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@UserId", appointmentData["UserId"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@Title", "not needed");
+                appointmentInsertCMD.Parameters.AddWithValue("@Description", appointmentData["Description"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@Location", appointmentData["Location"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@Contact", appointmentData["ConsultantName"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@Type", appointmentData["VisitType"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@URL", "not needed");
+                appointmentInsertCMD.Parameters.AddWithValue("@Start", startEndTime["StartTime"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@End", startEndTime["EndTime"]);
+                appointmentInsertCMD.Parameters.AddWithValue("@LastUpdateBy", UserSession.CurrentUserName);
+
+                if (!isUpdate) { appointmentInsertCMD.Parameters.AddWithValue("@CreatedBy", UserSession.CurrentUserName); }
+
+                appointmentInsertCMD.Prepare();
+                appointmentInsertCMD.ExecuteNonQuery();
+            }
+        }
+        public void DeleteAppointment(int appointmentId)
+        {
+            try
+            {
+                DbConnection.StartConnection();
+                var conn = DbConnection.conn;
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (var deleteAppointmentCMD = new MySqlCommand(Queries.deleteAppointmentQuery, DbConnection.conn))
+                        {
+                            deleteAppointmentCMD.Parameters.AddWithValue("@AppointmentId", appointmentId);
+                            deleteAppointmentCMD.Prepare();
+                            deleteAppointmentCMD.ExecuteNonQuery();
+                        }
+                        transaction.Commit(); // Success? Commit
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+        }
+        #endregion
+
+        #region Helper Methods
+        public void CheckUpcomingAppointment()
+        {
+            bool result;
+            try
+            {
+                DbConnection.StartConnection();
+                
+                using (var upcomingAppointmentCMD = new MySqlCommand(Queries.upcomingAppointmentQuery, DbConnection.conn))
+                {
+                    var currentTime = DateTime.UtcNow;
+                    upcomingAppointmentCMD.Parameters.AddWithValue("@userId", UserSession.CurrentUserId);
+                    upcomingAppointmentCMD.Parameters.AddWithValue("@currentTime", currentTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                    int upcomingAppointmentCount = Convert.ToInt32(upcomingAppointmentCMD.ExecuteScalar());
+
+                    result = upcomingAppointmentCount > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+    
+            if (result)
+            {
+                MessageBox.Show("You have an upcoming appointment.");
+            }
         }
         public Dictionary<string, DateTime> ConvertStringToDateTime(DateTime selectedDate, string selectedTimeStr)
         {
@@ -79,42 +198,19 @@ namespace C969Jesse.Controller
 
             return allSlots;
         }
+
+        // Requirement G: lambda expression to simplify code for readability
+        private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
         private bool IsSlotBooked(Tuple<DateTime, DateTime> slot, List<Tuple<DateTime, DateTime>> bookedSlots)
         {
             // Streamline the filtering calculation
             return bookedSlots.Any(bookedSlot => bookedSlot.Item1 < slot.Item2 && bookedSlot.Item2 > slot.Item1);
         }
-        public void CheckUpcomingAppointment()
-        {
-            bool result;
-            try
-            {
-                DbConnection.StartConnection();
-                
-                using (var upcomingAppointmentCMD = new MySqlCommand(Queries.upcomingAppointmentQuery, DbConnection.conn))
-                {
-                    var currentTime = DateTime.UtcNow;
-                    upcomingAppointmentCMD.Parameters.AddWithValue("@userId", UserSession.CurrentUserId);
-                    upcomingAppointmentCMD.Parameters.AddWithValue("@currentTime", currentTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                    int upcomingAppointmentCount = Convert.ToInt32(upcomingAppointmentCMD.ExecuteScalar());
 
-                    result = upcomingAppointmentCount > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                DbConnection.CloseConnection();
-            }
-    
-            if (result)
-            {
-                MessageBox.Show("You have an upcoming appointment.");
-            }
-        }
+        #endregion
+
+        #region Data Getters
+
         public DataTable GetAppointmentTypesByMonthReport(int month, int year)
         {
             DbConnection.StartConnection();
@@ -141,6 +237,125 @@ namespace C969Jesse.Controller
             finally { DbConnection.CloseConnection(); }
             return dataTable;
         }
+        public List<string> GetAvailableSlots(DateTime date)
+        {
+            var allSlots = GenerateAllSlots(date);
+            var bookedSlots = GetBookedSlots(date);
+            if (bookedSlots == null)
+            {
+                // Create an empty list instead of null, if all appointment times are open
+                bookedSlots = new List<Tuple<DateTime, DateTime>>(); 
+            }
+            // Requirement G: using lambda expressions here to streamline the filtering and
+            // transformation of the available slots list
+            var availableSlots = allSlots.Where(slot => !IsSlotBooked(slot, bookedSlots)).ToList();
+            var availableSlotsString = ConvertSlotsToString(availableSlots);
 
+            return availableSlotsString;
+        }
+        public DataTable GetAppointments(string filter)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                DateTime today = DateTime.Now;
+                DateTime startDate = DateTime.MinValue;
+                DateTime endDate = DateTime.MaxValue;
+
+                DbConnection.StartConnection();
+                var conn = DbConnection.conn;
+
+                if (filter == "Weekly")
+                {
+                    // Get current weekly date
+                    int delta = DayOfWeek.Monday - today.DayOfWeek;
+                    startDate = today.AddDays(delta).Date;
+                    endDate = startDate.AddDays(6).AddHours(23).AddMinutes(59).AddSeconds(59);
+                }
+                else if (filter == "Monthly")
+                {
+                    // Get current monthly date
+                    startDate = new DateTime(today.Year, today.Month, 1);
+                    endDate = startDate.AddMonths(1).AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
+                }
+
+                // Requirement D: Get filtered appointments
+                if (filter == "All")
+                {
+                    using (MySqlCommand cmd = new MySqlCommand(Queries.GetAppointmentTableQuery, DbConnection.conn))
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dataTable);
+                    }
+                }
+                else
+                {
+                    using (MySqlCommand cmd = new MySqlCommand(Queries.GetFilteredAppointmentsQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                        cmd.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd HH:mm:ss"));
+
+                        MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                        adapter.Fill(dataTable);
+                    }
+                }
+                // Requirement E: Convert start and end columns to local time
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    if (row["start"] is DateTime startUtc)
+                    {
+                        row["start"] = TimeZoneInfo.ConvertTimeFromUtc(startUtc, TimeZoneInfo.Local);
+                    }
+
+                    if (row["end"] is DateTime endUtc)
+                    {
+                        row["end"] = TimeZoneInfo.ConvertTimeFromUtc(endUtc, TimeZoneInfo.Local);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+
+            return dataTable;
+        }
+        public List<Tuple<DateTime, DateTime>> GetBookedSlots(DateTime date)
+        {
+            var bookedSlots = new List<Tuple<DateTime, DateTime>>();
+            try
+            {
+                DbConnection.StartConnection();
+                using (var cmd = new MySqlCommand(Queries.GetAppointmentStartEndQuery, DbConnection.conn))
+                {
+                    cmd.Parameters.AddWithValue("@Date", date.Date);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var start = reader.GetDateTime("start");
+                            var end = reader.GetDateTime("end");
+                            bookedSlots.Add(new Tuple<DateTime, DateTime>(start, end));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+
+            return bookedSlots;
+        }
+
+        #endregion
     }
 }

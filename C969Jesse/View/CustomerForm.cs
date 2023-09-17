@@ -1,4 +1,5 @@
-﻿using C969Jesse.Database;
+﻿using C969Jesse.Controller;
+using C969Jesse.Database;
 using C969Jesse.Model;
 using C969Jesse.Utils;
 using System;
@@ -17,7 +18,7 @@ namespace C969Jesse.Components
     {
         public Appointment MainFormInstance { get; set; }
 
-        private DbManager dbManager = new DbManager();
+        private CustomerController customerController = new CustomerController();
 
         private string addressId;
         private string customerId;
@@ -53,11 +54,11 @@ namespace C969Jesse.Components
       
             if (MainFormInstance.isUpdate)
             {
-                dbManager.SaveCustomer(customerData, MainFormInstance.isUpdate);
+                customerController.SaveCustomer(customerData, MainFormInstance.isUpdate);
             }
             else
             {
-                dbManager.SaveCustomer(customerData, MainFormInstance.isUpdate);
+                customerController.SaveCustomer(customerData, MainFormInstance.isUpdate);
             }
             MainFormInstance?.RefreshTable("Customers");
             MainFormInstance?.RefreshTableSettings();

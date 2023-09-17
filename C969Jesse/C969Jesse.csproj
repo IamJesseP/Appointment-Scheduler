@@ -102,7 +102,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AppointmentController.cs" />
+    <Compile Include="Controller\CustomerController.cs" />
     <Compile Include="Controller\LoginController.cs" />
+    <Compile Include="Controller\UserController.cs" />
     <Compile Include="Model\Entities\Address.cs" />
     <Compile Include="Model\Entities\Appointment.cs" />
     <Compile Include="Model\Entities\BaseClass.cs" />
@@ -123,7 +125,6 @@
     <Compile Include="View\CustomerForm.Designer.cs">
       <DependentUpon>CustomerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Database\DbManager.cs" />
     <Compile Include="Model\Database\DbConnection.cs" />
     <Compile Include="View\Login.cs">
       <SubType>Form</SubType>
