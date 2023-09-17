@@ -3,9 +3,8 @@ using C969Jesse.Utils;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace C969Jesse.Controller
@@ -116,5 +115,33 @@ namespace C969Jesse.Controller
                 MessageBox.Show("You have an upcoming appointment.");
             }
         }
+
+        public DataTable GetAppointmentTypesByMonthReport(int month, int year)
+        {
+            DbConnection.StartConnection();
+
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand(Queries.appointmentTypeByMonthQuery, DbConnection.conn))
+                {
+                     cmd.Parameters.AddWithValue("@month", month);
+                     cmd.Parameters.AddWithValue("@year", year);
+
+                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                     {
+                         adapter.Fill(dataTable);
+                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally { DbConnection.CloseConnection(); }
+            return dataTable;
+        }
+
     }
 }

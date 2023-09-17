@@ -40,12 +40,16 @@
             this.AddBttn = new System.Windows.Forms.Button();
             this.UpdateBttn = new System.Windows.Forms.Button();
             this.DeleteBttn = new System.Windows.Forms.Button();
-            this.ViewBttn = new System.Windows.Forms.Button();
+            this.ViewReportBttn = new System.Windows.Forms.Button();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.feedbackLabel = new System.Windows.Forms.Label();
             this.successProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.appointmentFilter = new System.Windows.Forms.ComboBox();
+            this.comboBoxAppointmentFilter = new System.Windows.Forms.ComboBox();
             this.lblFilterAppointments = new System.Windows.Forms.Label();
+            this.lblMonth = new System.Windows.Forms.Label();
+            this.comboBoxMonths = new System.Windows.Forms.ComboBox();
+            this.lblConsultants = new System.Windows.Forms.Label();
+            this.comboConsultants = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -94,12 +98,14 @@
             this.appointmentTypesPerMonthToolStripMenuItem.Name = "appointmentTypesPerMonthToolStripMenuItem";
             this.appointmentTypesPerMonthToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.appointmentTypesPerMonthToolStripMenuItem.Text = "Appointment Types Per Month";
+            this.appointmentTypesPerMonthToolStripMenuItem.Click += new System.EventHandler(this.appointmentTypesPerMonthToolStripMenuItem_Click);
             // 
             // consultantSchedulesToolStripMenuItem
             // 
             this.consultantSchedulesToolStripMenuItem.Name = "consultantSchedulesToolStripMenuItem";
             this.consultantSchedulesToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.consultantSchedulesToolStripMenuItem.Text = "Consultant Schedules";
+            this.consultantSchedulesToolStripMenuItem.Click += new System.EventHandler(this.consultantSchedulesToolStripMenuItem_Click);
             // 
             // mainDataGridView
             // 
@@ -150,15 +156,16 @@
             this.DeleteBttn.UseVisualStyleBackColor = false;
             this.DeleteBttn.Click += new System.EventHandler(this.DeleteBttn_Click);
             // 
-            // ViewBttn
+            // ViewReportBttn
             // 
-            this.ViewBttn.BackColor = System.Drawing.SystemColors.Control;
-            this.ViewBttn.Location = new System.Drawing.Point(867, 500);
-            this.ViewBttn.Name = "ViewBttn";
-            this.ViewBttn.Size = new System.Drawing.Size(104, 39);
-            this.ViewBttn.TabIndex = 5;
-            this.ViewBttn.Text = "View Report";
-            this.ViewBttn.UseVisualStyleBackColor = false;
+            this.ViewReportBttn.BackColor = System.Drawing.SystemColors.Control;
+            this.ViewReportBttn.Location = new System.Drawing.Point(45, 500);
+            this.ViewReportBttn.Name = "ViewReportBttn";
+            this.ViewReportBttn.Size = new System.Drawing.Size(104, 39);
+            this.ViewReportBttn.TabIndex = 5;
+            this.ViewReportBttn.Text = "View Report";
+            this.ViewReportBttn.UseVisualStyleBackColor = false;
+            this.ViewReportBttn.Click += new System.EventHandler(this.ViewReportBttn_Click);
             // 
             // errorProvider
             // 
@@ -178,19 +185,19 @@
             this.successProvider.ContainerControl = this;
             this.successProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("successProvider.Icon")));
             // 
-            // appointmentFilter
+            // comboBoxAppointmentFilter
             // 
-            this.appointmentFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.appointmentFilter.FormattingEnabled = true;
-            this.appointmentFilter.Items.AddRange(new object[] {
+            this.comboBoxAppointmentFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAppointmentFilter.FormattingEnabled = true;
+            this.comboBoxAppointmentFilter.Items.AddRange(new object[] {
             "All",
             "Weekly",
             "Monthly"});
-            this.appointmentFilter.Location = new System.Drawing.Point(784, 518);
-            this.appointmentFilter.Name = "appointmentFilter";
-            this.appointmentFilter.Size = new System.Drawing.Size(187, 21);
-            this.appointmentFilter.TabIndex = 9;
-            this.appointmentFilter.SelectedIndexChanged += new System.EventHandler(this.appointmentFilter_SelectedIndexChanged);
+            this.comboBoxAppointmentFilter.Location = new System.Drawing.Point(784, 518);
+            this.comboBoxAppointmentFilter.Name = "comboBoxAppointmentFilter";
+            this.comboBoxAppointmentFilter.Size = new System.Drawing.Size(187, 21);
+            this.comboBoxAppointmentFilter.TabIndex = 9;
+            this.comboBoxAppointmentFilter.SelectedIndexChanged += new System.EventHandler(this.appointmentFilter_SelectedIndexChanged);
             // 
             // lblFilterAppointments
             // 
@@ -201,15 +208,83 @@
             this.lblFilterAppointments.TabIndex = 10;
             this.lblFilterAppointments.Text = "Filter Appointments";
             // 
+            // lblMonth
+            // 
+            this.lblMonth.AutoSize = true;
+            this.lblMonth.Location = new System.Drawing.Point(854, 500);
+            this.lblMonth.Name = "lblMonth";
+            this.lblMonth.Size = new System.Drawing.Size(37, 13);
+            this.lblMonth.TabIndex = 12;
+            this.lblMonth.Text = "Month";
+            // 
+            // comboBoxMonths
+            // 
+            this.comboBoxMonths.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMonths.FormattingEnabled = true;
+            this.comboBoxMonths.Items.AddRange(new object[] {
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"});
+            this.comboBoxMonths.Location = new System.Drawing.Point(784, 518);
+            this.comboBoxMonths.Name = "comboBoxMonths";
+            this.comboBoxMonths.Size = new System.Drawing.Size(187, 21);
+            this.comboBoxMonths.TabIndex = 11;
+            this.comboBoxMonths.SelectedIndexChanged += new System.EventHandler(this.comboBoxMonths_SelectedIndexChanged);
+            // 
+            // lblConsultants
+            // 
+            this.lblConsultants.AutoSize = true;
+            this.lblConsultants.Location = new System.Drawing.Point(838, 498);
+            this.lblConsultants.Name = "lblConsultants";
+            this.lblConsultants.Size = new System.Drawing.Size(57, 13);
+            this.lblConsultants.TabIndex = 14;
+            this.lblConsultants.Text = "Consultant";
+            // 
+            // comboConsultants
+            // 
+            this.comboConsultants.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboConsultants.FormattingEnabled = true;
+            this.comboConsultants.Items.AddRange(new object[] {
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"});
+            this.comboConsultants.Location = new System.Drawing.Point(784, 516);
+            this.comboConsultants.Name = "comboConsultants";
+            this.comboConsultants.Size = new System.Drawing.Size(187, 21);
+            this.comboConsultants.TabIndex = 13;
+            this.comboConsultants.SelectedIndexChanged += new System.EventHandler(this.comboConsultants_SelectedIndexChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1040, 567);
+            this.Controls.Add(this.lblConsultants);
+            this.Controls.Add(this.comboConsultants);
+            this.Controls.Add(this.lblMonth);
+            this.Controls.Add(this.comboBoxMonths);
             this.Controls.Add(this.lblFilterAppointments);
-            this.Controls.Add(this.appointmentFilter);
+            this.Controls.Add(this.comboBoxAppointmentFilter);
             this.Controls.Add(this.feedbackLabel);
-            this.Controls.Add(this.ViewBttn);
+            this.Controls.Add(this.ViewReportBttn);
             this.Controls.Add(this.DeleteBttn);
             this.Controls.Add(this.UpdateBttn);
             this.Controls.Add(this.AddBttn);
@@ -240,11 +315,15 @@
         private System.Windows.Forms.Button AddBttn;
         private System.Windows.Forms.Button UpdateBttn;
         private System.Windows.Forms.Button DeleteBttn;
-        private System.Windows.Forms.Button ViewBttn;
+        private System.Windows.Forms.Button ViewReportBttn;
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Label feedbackLabel;
         private System.Windows.Forms.ErrorProvider successProvider;
-        private System.Windows.Forms.ComboBox appointmentFilter;
+        private System.Windows.Forms.ComboBox comboBoxAppointmentFilter;
         private System.Windows.Forms.Label lblFilterAppointments;
+        private System.Windows.Forms.Label lblMonth;
+        private System.Windows.Forms.ComboBox comboBoxMonths;
+        private System.Windows.Forms.Label lblConsultants;
+        private System.Windows.Forms.ComboBox comboConsultants;
     }
 }

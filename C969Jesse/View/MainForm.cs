@@ -21,11 +21,17 @@ namespace C969Jesse
     {
         private DbManager dbManager = new DbManager();
 
+        private AppointmentController appointmentController = new AppointmentController();
+
         private DataGridViewRow selectedRow = null;
+
+        private string appointmentFilterState = "All";
 
         private string formState = "Customers"; // Default to customers
 
-        private string appointmentFilterState = "All";
+        private int selectedMonth = DateTime.Now.Month; // Default to the current month
+
+        private int selectedYear = DateTime.Now.Year;   // and year
 
         public bool isUpdate = false;
 
@@ -156,7 +162,7 @@ namespace C969Jesse
 
                 mainDataGridView.Columns["appointmentId"].Visible = false;
                 mainDataGridView.Columns["userId"].Visible = false;
-                appointmentFilter.SelectedIndex = 0;
+                comboBoxAppointmentFilter.SelectedIndex = 0;
             }
             else if (state == "Customers")
             {
@@ -176,12 +182,19 @@ namespace C969Jesse
             {
                 CustomerTab.ForeColor = Color.Goldenrod;
                 AppointmentsTab.ForeColor = Color.Black;
+                reportsToolStripMenuItem.ForeColor = Color.Black;
             }
-            else
+            else if (formState == "Appointments")
             {
                 CustomerTab.ForeColor = Color.Black;
                 AppointmentsTab.ForeColor = Color.Goldenrod;
+                reportsToolStripMenuItem.ForeColor = Color.Black;
 
+            } else
+            {
+                CustomerTab.ForeColor = Color.Black;
+                AppointmentsTab.ForeColor = Color.Black;
+                reportsToolStripMenuItem.ForeColor = Color.Goldenrod;
             }
             // Resizing columns to fit the current view
             mainDataGridView.ReadOnly = true;
@@ -220,33 +233,54 @@ namespace C969Jesse
         }
         private void UpdateButtons(string state)
         {
-            if (state == "Customers")
+            AddBttn.Show();
+            UpdateBttn.Show();
+            DeleteBttn.Show();
+            ViewReportBttn.Hide();
+
+            lblFilterAppointments.Visible = false;
+            lblConsultants.Visible = false;
+            lblMonth.Visible = false;
+
+            comboBoxAppointmentFilter.Visible = false;
+            comboBoxMonths.Visible = false;
+            comboConsultants.Visible = false;
+
+            switch (state)
             {
-                AddBttn.Show();
-                UpdateBttn.Show();
-                DeleteBttn.Show();
-                ViewBttn.Hide();
-                AddBttn.Text = "Add Customer";
-                UpdateBttn.Text = "Update Customer";
-                DeleteBttn.Text = "Delete Customer";
+                case "Customers":
+                    AddBttn.Text = "Add Customer";
+                    UpdateBttn.Text = "Update Customer";
+                    DeleteBttn.Text = "Delete Customer";
+                    break;
+
+                case "Appointments":
+                    AddBttn.Text = "Add \nAppointment";
+                    UpdateBttn.Text = "Update Appointment";
+                    DeleteBttn.Text = "Delete Appointment";
+                    break;
+
+                default:
+                    AddBttn.Hide();
+                    UpdateBttn.Hide();
+                    DeleteBttn.Hide();
+                    ViewReportBttn.Show();
+                    mainDataGridView.DataSource = null;
+
+                    if (state == "Month/Type")
+                    {
+                        comboBoxMonths.Visible = true;
+                        lblMonth.Visible = true;
+                    }
+                    else if (state == "Consultants")
+                    {
+                        comboConsultants.Visible = true;
+                        lblConsultants.Visible = true;
+                    }
+                    // extra report here
+                    break;
             }
-            else if (state == "Appointments")
-            {
-                AddBttn.Show();
-                UpdateBttn.Show();
-                DeleteBttn.Show();
-                ViewBttn.Hide();
-                AddBttn.Text = "Add \nAppointment";
-                UpdateBttn.Text = "Update Appointment";
-                DeleteBttn.Text = "Delete Appointment";
-            }
-            else
-            {
-                AddBttn.Hide();
-                UpdateBttn.Hide();
-                DeleteBttn.Hide();
-                ViewBttn.Show();
-            }
+
             formState = state;
         }
         private void SetupCustomerDGV()
@@ -258,10 +292,6 @@ namespace C969Jesse
             mainDataGridView.Columns["phone"].HeaderText = "Phone";
             mainDataGridView.Columns["city"].HeaderText = "City";   
             mainDataGridView.Columns["country"].HeaderText = "Country";
-
-            lblFilterAppointments.Visible = false;
-            appointmentFilter.Visible = false;
-
         }
         private void SetupAppointmentDGV()
         {
@@ -275,20 +305,37 @@ namespace C969Jesse
             mainDataGridView.Columns["end"].HeaderText = "End";
             mainDataGridView.Columns["phone"].HeaderText = "Phone";
             mainDataGridView.Columns["url"].HeaderText = "Visit Link";
-
-            lblFilterAppointments.Visible = true;
-            appointmentFilter.Visible = true;
         }
 
         #endregion
 
+
+
+        private void appointmentTypesPerMonthToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateButtons("Month/Type");
+            RefreshTableSettings();
+
+            comboBoxMonths.SelectedIndex = selectedMonth - 1;
+            mainDataGridView.DataSource = appointmentController.GetAppointmentTypesByMonthReport(selectedMonth, selectedYear);
+        }
+        private void consultantSchedulesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateButtons("Consultants");
+            RefreshTableSettings();
+        }
+
+        private void comboBoxMonths_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedMonth = comboBoxMonths.SelectedIndex + 1; 
+        }
         private void appointmentFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (appointmentFilter.SelectedIndex == 1)
+            if (comboBoxAppointmentFilter.SelectedIndex == 1)
             {
                 appointmentFilterState = "Weekly";
             }
-            else if (appointmentFilter.SelectedIndex == 2)
+            else if (comboBoxAppointmentFilter.SelectedIndex == 2)
             {
                 appointmentFilterState = "Monthly";
             }
@@ -298,6 +345,16 @@ namespace C969Jesse
             }
             mainDataGridView.DataSource = dbManager.GetAppointments(appointmentFilterState);
             SetupAppointmentDGV();
+        }
+        private void comboConsultants_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void ViewReportBttn_Click(object sender, EventArgs e)
+        {
+            mainDataGridView.DataSource = appointmentController.GetAppointmentTypesByMonthReport(selectedMonth, selectedYear);
         }
     }
 }

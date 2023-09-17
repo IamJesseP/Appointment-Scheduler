@@ -138,6 +138,15 @@ namespace C969Jesse.Database
         public static string GetUsersQuery => "SELECT userId, userName FROM user";
         public static string GetLoggedinUserQuery => "SELECT * FROM user WHERE userName=@username AND password=@password";
         #endregion
+
+        #region Report Queries
+        public static string appointmentTypeByMonthQuery => @"SELECT type AS 'Appointment Type', 
+                COUNT(type) AS 'Number of Appointments'
+                FROM  appointment
+                WHERE  MONTH(start) = @month AND YEAR(start) = @year
+                GROUP BY type
+                HAVING COUNT(type) > 0";
+        #endregion
     }
 }
 

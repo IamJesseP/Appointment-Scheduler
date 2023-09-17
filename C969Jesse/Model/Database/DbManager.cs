@@ -43,6 +43,33 @@ namespace C969Jesse.Database
 
             return dataTable;
         }
+        public Dictionary<int, string> GetCustomerNames()
+        {
+            Dictionary<int, string> customerNames = new Dictionary<int, string>();
+            try
+            {
+                DbConnection.StartConnection();
+                using (MySqlCommand cmd = new MySqlCommand(Queries.GetCustomersQuery, DbConnection.conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            customerNames.Add(reader.GetInt32("customerId"), reader.GetString("customerName"));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+            return customerNames;
+        }
         public DataTable GetAppointments(string filter)
         {
             DataTable dataTable = new DataTable();
@@ -113,33 +140,6 @@ namespace C969Jesse.Database
             }
 
             return dataTable;
-        }
-        public Dictionary<int, string> GetCustomerNames()
-        {
-            Dictionary<int, string> customerNames = new Dictionary<int, string>();
-            try
-            {
-                DbConnection.StartConnection();
-                using (MySqlCommand cmd = new MySqlCommand(Queries.GetCustomersQuery, DbConnection.conn))
-                {
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            customerNames.Add(reader.GetInt32("customerId"), reader.GetString("customerName"));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                DbConnection.CloseConnection();
-            }
-            return customerNames;
         }
         public Dictionary<int, string> GetUserNames()
         {
