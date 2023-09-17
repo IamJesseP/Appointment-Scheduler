@@ -43,12 +43,12 @@ namespace C969Jesse
             this.txtUserLogin.Name = "txtUserLogin";
             this.txtUserLogin.Size = new System.Drawing.Size(188, 20);
             this.txtUserLogin.TabIndex = 0;
-            
             // 
             // txtUserPassword
             // 
             this.txtUserPassword.Location = new System.Drawing.Point(141, 251);
             this.txtUserPassword.Name = "txtUserPassword";
+            this.txtUserPassword.PasswordChar = '*';
             this.txtUserPassword.Size = new System.Drawing.Size(188, 20);
             this.txtUserPassword.TabIndex = 1;
             // 

@@ -48,7 +48,6 @@ namespace C969Jesse.Components
             // filters only available appointment times and 9-5pm business hours
             DateTime selectedDate = dateTimePicker1.Value;
             var availableSlots = appointmentController.GetAvailableSlots(selectedDate);
-            
             comboBoxAppointmentTime.DataSource = availableSlots;
             comboBoxLocations.DataSource = Enum.GetNames(typeof(Locations));
             comboBoxVisitTypes.DataSource = Enum.GetNames(typeof(VisitTypes));
@@ -126,6 +125,12 @@ namespace C969Jesse.Components
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             DateTime selectedDate = dateTimePicker1.Value;
+            // Requirement F: Picking appointments on days before current day is invalid
+            if (selectedDate < DateTime.Now.Date)
+            {
+                MessageBox.Show("Appointment date cannot be before today's date.");
+                selectedDate = DateTime.Now.Date;
+            }
             var availableSlots = appointmentController.GetAvailableSlots(selectedDate);
             comboBoxAppointmentTime.DataSource = availableSlots;
            
