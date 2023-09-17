@@ -104,31 +104,31 @@ namespace C969Jesse.Components
         #endregion
 
         #region TextChanged Validation
-        private void txtAddCustomerName_TextChanged(object sender, EventArgs e)
+        private void TxtAddCustomerName_TextChanged(object sender, EventArgs e)
         {
             SaveBttn.Enabled = Validation.ValidateTextBox(txtCustomerName, "string", errorProvider);
         }
 
-        private void txtAddCustomerAddress_TextChanged(object sender, EventArgs e)
+        private void TxtAddCustomerAddress_TextChanged(object sender, EventArgs e)
         {
             SaveBttn.Enabled = Validation.ValidateTextBox(txtCustomerAddress, "string", errorProvider);
         }
 
-        private void txtAddCustomerCity_TextChanged(object sender, EventArgs e)
+        private void TxtAddCustomerCity_TextChanged(object sender, EventArgs e)
         {
             SaveBttn.Enabled = Validation.ValidateTextBox(txtCustomerCity, "string", errorProvider);
         }
 
-        private void txtCustomerAddCountry_TextChanged(object sender, EventArgs e)
+        private void TxtCustomerAddCountry_TextChanged(object sender, EventArgs e)
         {
              SaveBttn.Enabled = Validation.ValidateTextBox(txtCustomerCountry, "string", errorProvider);
         }
 
-        private void txtAddCustomerPhone_TextChanged(object sender, EventArgs e)
+        private void TxtAddCustomerPhone_TextChanged(object sender, EventArgs e)
         {
             SaveBttn.Enabled = Validation.ValidateTextBox(txtCustomerPhone, "string", errorProvider);
         }
-        private void txtPostal_TextChanged(object sender, EventArgs e)
+        private void TxtPostal_TextChanged(object sender, EventArgs e)
         {
             SaveBttn.Enabled = Validation.ValidateTextBox(txtPostal, "string", errorProvider);
         }

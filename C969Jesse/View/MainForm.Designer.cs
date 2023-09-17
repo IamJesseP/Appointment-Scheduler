@@ -99,14 +99,14 @@
             this.appointmentTypesPerMonthToolStripMenuItem.Name = "appointmentTypesPerMonthToolStripMenuItem";
             this.appointmentTypesPerMonthToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.appointmentTypesPerMonthToolStripMenuItem.Text = "Appointment Types Per Month";
-            this.appointmentTypesPerMonthToolStripMenuItem.Click += new System.EventHandler(this.appointmentTypesPerMonthToolStripMenuItem_Click);
+            this.appointmentTypesPerMonthToolStripMenuItem.Click += new System.EventHandler(this.AppointmentTypesPerMonthToolStripMenuItem_Click);
             // 
             // consultantSchedulesToolStripMenuItem
             // 
             this.consultantSchedulesToolStripMenuItem.Name = "consultantSchedulesToolStripMenuItem";
             this.consultantSchedulesToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.consultantSchedulesToolStripMenuItem.Text = "Consultant Schedules";
-            this.consultantSchedulesToolStripMenuItem.Click += new System.EventHandler(this.consultantSchedulesToolStripMenuItem_Click);
+            this.consultantSchedulesToolStripMenuItem.Click += new System.EventHandler(this.ConsultantSchedulesToolStripMenuItem_Click);
             // 
             // mainDataGridView
             // 
@@ -121,8 +121,8 @@
             this.mainDataGridView.Name = "mainDataGridView";
             this.mainDataGridView.Size = new System.Drawing.Size(926, 436);
             this.mainDataGridView.TabIndex = 1;
-            this.mainDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mainDataGridView_CellClick);
-            this.mainDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.mainDataGridView_DataBindingComplete);
+            this.mainDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MainDataGridView_CellClick);
+            this.mainDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.MainDataGridView_DataBindingComplete);
             // 
             // AddBttn
             // 
@@ -198,7 +198,7 @@
             this.comboBoxAppointmentFilter.Name = "comboBoxAppointmentFilter";
             this.comboBoxAppointmentFilter.Size = new System.Drawing.Size(187, 21);
             this.comboBoxAppointmentFilter.TabIndex = 9;
-            this.comboBoxAppointmentFilter.SelectedIndexChanged += new System.EventHandler(this.appointmentFilter_SelectedIndexChanged);
+            this.comboBoxAppointmentFilter.SelectedIndexChanged += new System.EventHandler(this.AppointmentFilter_SelectedIndexChanged);
             // 
             // lblFilterAppointments
             // 
@@ -239,7 +239,7 @@
             this.comboBoxMonths.Name = "comboBoxMonths";
             this.comboBoxMonths.Size = new System.Drawing.Size(187, 21);
             this.comboBoxMonths.TabIndex = 11;
-            this.comboBoxMonths.SelectedIndexChanged += new System.EventHandler(this.comboBoxMonths_SelectedIndexChanged);
+            this.comboBoxMonths.SelectedIndexChanged += new System.EventHandler(this.ComboBoxMonths_SelectedIndexChanged);
             // 
             // lblConsultants
             // 
@@ -271,7 +271,7 @@
             this.comboConsultants.Name = "comboConsultants";
             this.comboConsultants.Size = new System.Drawing.Size(187, 21);
             this.comboConsultants.TabIndex = 13;
-            this.comboConsultants.SelectedIndexChanged += new System.EventHandler(this.comboConsultants_SelectedIndexChanged);
+            this.comboConsultants.SelectedIndexChanged += new System.EventHandler(this.ComboConsultants_SelectedIndexChanged);
             // 
             // Appointment
             // 

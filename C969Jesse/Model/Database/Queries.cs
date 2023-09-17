@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace C969Jesse.Database
+﻿namespace C969Jesse.Database
 {
     public static class Queries
     {
@@ -21,11 +15,11 @@ namespace C969Jesse.Database
         #endregion
 
         #region Country Queries
-        public static string CountryIdxQuery => "SELECT " + 
-                 "countryId FROM country " + 
+        public static string CountryIdxQuery => "SELECT " +
+                 "countryId FROM country " +
                  "ORDER BY countryId DESC LIMIT 1";
-        public static string CountryInsertQuery => "INSERT INTO country " + 
-                 "(countryId, country, createDate, createdBy, lastUpdate, lastUpdateBy) " + 
+        public static string CountryInsertQuery => "INSERT INTO country " +
+                 "(countryId, country, createDate, createdBy, lastUpdate, lastUpdateBy) " +
                  "VALUES (@CountryId, @Country, NOW(), @CreatedBy, NOW(), @LastUpdateBy)";
 
         public static string CountryUpdateQuery => "UPDATE country SET " +
@@ -86,8 +80,8 @@ namespace C969Jesse.Database
                 "lastUpdateBy = @LastUpdateBy " +
                 "WHERE customerId = @CustomerId";
 
-        public static string deleteCustomerAppointmentsQuery => "DELETE FROM appointment WHERE customerId = @CustomerId";
-        public static string deleteCustomerQuery => "DELETE FROM customer WHERE customerId = @CustomerId";
+        public static string DeleteCustomerAppointmentsQuery => "DELETE FROM appointment WHERE customerId = @CustomerId";
+        public static string DeleteCustomerQuery => "DELETE FROM customer WHERE customerId = @CustomerId";
         public static string GetCustomersQuery => "SELECT customerId, customerName FROM customer";
         #endregion
 
@@ -105,7 +99,7 @@ namespace C969Jesse.Database
             "lastUpdate = NOW(), lastUpdateBy = @LastUpdateBy " +
             "WHERE appointmentId = @AppointmentId;";
         public static string GetAppointmentTableQuery =>
-            "SELECT ap.appointmentId, ap.customerId, ap.userId, ap.description, ap.location, " + 
+            "SELECT ap.appointmentId, ap.customerId, ap.userId, ap.description, ap.location, " +
             "ap.type, ap.url, ap.start, ap.end, u.userName, " +
             "c.customerName, a.phone, a.addressId, a.cityId, ci.countryId " +
             "FROM appointment ap " +
@@ -128,10 +122,10 @@ namespace C969Jesse.Database
             "JOIN user u ON ap.userId = u.userId " +
             "WHERE start BETWEEN @StartDate AND @EndDate " +
             "ORDER BY ap.start";
-            
-        public static string appointmentIdxQuery => "SELECT appointmentId FROM appointment ORDER BY appointmentId DESC LIMIT 1";
-        public static string deleteAppointmentQuery => "DELETE FROM appointment WHERE appointmentId = @AppointmentId";
-        public static string upcomingAppointmentQuery => "SELECT COUNT(*) FROM appointment WHERE start BETWEEN @currentTime AND DATE_ADD(@currentTime, INTERVAL 15 MINUTE) AND userId=@userId";
+
+        public static string AppointmentIdxQuery => "SELECT appointmentId FROM appointment ORDER BY appointmentId DESC LIMIT 1";
+        public static string DeleteAppointmentQuery => "DELETE FROM appointment WHERE appointmentId = @AppointmentId";
+        public static string UpcomingAppointmentQuery => "SELECT COUNT(*) FROM appointment WHERE start BETWEEN @currentTime AND DATE_ADD(@currentTime, INTERVAL 15 MINUTE) AND userId=@userId";
 
         #endregion
 
@@ -141,7 +135,7 @@ namespace C969Jesse.Database
         #endregion
 
         #region Report Queries
-        public static string appointmentTypeByMonthQuery => @"SELECT type AS 'Appointment Type', 
+        public static string AppointmentTypeByMonthQuery => @"SELECT type AS 'Appointment Type', 
                 COUNT(type) AS 'Number of Appointments'
                 FROM  appointment
                 WHERE  MONTH(start) = @month AND YEAR(start) = @year

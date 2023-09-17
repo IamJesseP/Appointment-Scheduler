@@ -35,7 +35,7 @@ namespace C969Jesse.Controller
                         {
                             using (var countryIndexCmd = new MySqlCommand(Queries.CountryIdxQuery, conn))
                             {
-                                appointmentId = GetNewId(Queries.appointmentIdxQuery, conn);
+                                appointmentId = GetNewId(Queries.AppointmentIdxQuery, conn);
                                 query = Queries.appointmentInsertQuery;
                             }
                         }
@@ -91,7 +91,7 @@ namespace C969Jesse.Controller
                 {
                     try
                     {
-                        using (var deleteAppointmentCMD = new MySqlCommand(Queries.deleteAppointmentQuery, DbConnection.conn))
+                        using (var deleteAppointmentCMD = new MySqlCommand(Queries.DeleteAppointmentQuery, DbConnection.conn))
                         {
                             deleteAppointmentCMD.Parameters.AddWithValue("@AppointmentId", appointmentId);
                             deleteAppointmentCMD.Prepare();
@@ -125,7 +125,7 @@ namespace C969Jesse.Controller
             {
                 DbConnection.StartConnection();
                 
-                using (var upcomingAppointmentCMD = new MySqlCommand(Queries.upcomingAppointmentQuery, DbConnection.conn))
+                using (var upcomingAppointmentCMD = new MySqlCommand(Queries.UpcomingAppointmentQuery, DbConnection.conn))
                 {
                     var currentTime = DateTime.UtcNow;
                     upcomingAppointmentCMD.Parameters.AddWithValue("@userId", UserSession.CurrentUserId);
@@ -219,7 +219,7 @@ namespace C969Jesse.Controller
 
             try
             {
-                using (MySqlCommand cmd = new MySqlCommand(Queries.appointmentTypeByMonthQuery, DbConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(Queries.AppointmentTypeByMonthQuery, DbConnection.conn))
                 {
                      cmd.Parameters.AddWithValue("@month", month);
                      cmd.Parameters.AddWithValue("@year", year);

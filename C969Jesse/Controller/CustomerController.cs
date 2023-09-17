@@ -191,13 +191,13 @@ namespace C969Jesse.Controller
                 {
                     try
                     {
-                        using (var deleteAppointmentsCMD = new MySqlCommand(Queries.deleteCustomerAppointmentsQuery, conn))
+                        using (var deleteAppointmentsCMD = new MySqlCommand(Queries.DeleteCustomerAppointmentsQuery, conn))
                         {
                             deleteAppointmentsCMD.Parameters.AddWithValue("@CustomerId", customerId);
                             deleteAppointmentsCMD.ExecuteNonQuery();
                         }
 
-                        using (var deleteCustomerCMD = new MySqlCommand(Queries.deleteCustomerQuery, DbConnection.conn))
+                        using (var deleteCustomerCMD = new MySqlCommand(Queries.DeleteCustomerQuery, DbConnection.conn))
                         {
                             deleteCustomerCMD.Parameters.AddWithValue("@CustomerId", customerId);
                             deleteCustomerCMD.Prepare();

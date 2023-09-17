@@ -125,7 +125,7 @@ namespace C969Jesse.Components
             MainFormInstance?.RefreshTableSettings();
             this.Close();
         }
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             DateTime selectedDate = dateTimePicker1.Value;
             // Requirement F: Picking appointments on days before current day is invalid

@@ -18,7 +18,7 @@ namespace C969Jesse
             {
                 using (StreamWriter sw = new StreamWriter(logFilePath, true))
                 {
-                    sw.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - User '{userName}' logged in.");
+                    sw.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - User '{userName}' logged in.");
                 }
             }
             catch (Exception ex)

@@ -74,7 +74,7 @@
             this.txtCustomerCountry.Name = "txtCustomerCountry";
             this.txtCustomerCountry.Size = new System.Drawing.Size(117, 20);
             this.txtCustomerCountry.TabIndex = 10;
-            this.txtCustomerCountry.TextChanged += new System.EventHandler(this.txtCustomerAddCountry_TextChanged);
+            this.txtCustomerCountry.TextChanged += new System.EventHandler(this.TxtCustomerAddCountry_TextChanged);
             // 
             // label5
             // 
@@ -100,7 +100,7 @@
             this.txtCustomerPhone.Name = "txtCustomerPhone";
             this.txtCustomerPhone.Size = new System.Drawing.Size(119, 20);
             this.txtCustomerPhone.TabIndex = 5;
-            this.txtCustomerPhone.TextChanged += new System.EventHandler(this.txtAddCustomerPhone_TextChanged);
+            this.txtCustomerPhone.TextChanged += new System.EventHandler(this.TxtAddCustomerPhone_TextChanged);
             // 
             // txtCustomerCity
             // 
@@ -108,7 +108,7 @@
             this.txtCustomerCity.Name = "txtCustomerCity";
             this.txtCustomerCity.Size = new System.Drawing.Size(117, 20);
             this.txtCustomerCity.TabIndex = 4;
-            this.txtCustomerCity.TextChanged += new System.EventHandler(this.txtAddCustomerCity_TextChanged);
+            this.txtCustomerCity.TextChanged += new System.EventHandler(this.TxtAddCustomerCity_TextChanged);
             // 
             // txtCustomerName
             // 
@@ -117,7 +117,7 @@
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.Size = new System.Drawing.Size(226, 20);
             this.txtCustomerName.TabIndex = 2;
-            this.txtCustomerName.TextChanged += new System.EventHandler(this.txtAddCustomerName_TextChanged);
+            this.txtCustomerName.TextChanged += new System.EventHandler(this.TxtAddCustomerName_TextChanged);
             // 
             // label3
             // 
@@ -143,7 +143,7 @@
             this.txtCustomerAddress.Name = "txtCustomerAddress";
             this.txtCustomerAddress.Size = new System.Drawing.Size(226, 20);
             this.txtCustomerAddress.TabIndex = 3;
-            this.txtCustomerAddress.TextChanged += new System.EventHandler(this.txtAddCustomerAddress_TextChanged);
+            this.txtCustomerAddress.TextChanged += new System.EventHandler(this.TxtAddCustomerAddress_TextChanged);
             // 
             // label1
             // 
@@ -174,7 +174,7 @@
             this.txtPostal.Name = "txtPostal";
             this.txtPostal.Size = new System.Drawing.Size(103, 20);
             this.txtPostal.TabIndex = 13;
-            this.txtPostal.TextChanged += new System.EventHandler(this.txtPostal_TextChanged);
+            this.txtPostal.TextChanged += new System.EventHandler(this.TxtPostal_TextChanged);
             // 
             // lblPostal
             // 

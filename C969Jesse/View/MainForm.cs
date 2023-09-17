@@ -150,17 +150,17 @@ namespace C969Jesse
             RefreshTableSettings();
             SetupAppointmentDGV();
         }
-        private void mainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void MainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int indexSelected = e.RowIndex;
             if (indexSelected < 0) { return; }//Error handler for clicking header row
             selectedRow = mainDataGridView.Rows[indexSelected];
         }
-        private void mainDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        private void MainDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             mainDataGridView.ClearSelection();
         }
-        private void appointmentTypesPerMonthToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AppointmentTypesPerMonthToolStripMenuItem_Click(object sender, EventArgs e)
         {
             formState = FormState.TypePerMonth;
             UpdateButtons();
@@ -169,7 +169,7 @@ namespace C969Jesse
             comboBoxMonths.SelectedIndex = selectedMonth - 1;
             mainDataGridView.DataSource = appointmentController.GetAppointmentTypesByMonthReport(selectedMonth, selectedYear);
         }
-        private void consultantSchedulesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ConsultantSchedulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             formState = FormState.Consultants;
             UpdateButtons();
@@ -178,11 +178,11 @@ namespace C969Jesse
             mainDataGridView.DataSource = userController.GetConsultantSchedule(selectedUserName, selectedUserId);
             SetupAppointmentDGV();
         }
-        private void comboBoxMonths_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxMonths_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedMonth = comboBoxMonths.SelectedIndex + 1;
         }
-        private void appointmentFilter_SelectedIndexChanged(object sender, EventArgs e)
+        private void AppointmentFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxAppointmentFilter.SelectedIndex == 1)
             {
@@ -199,7 +199,7 @@ namespace C969Jesse
             mainDataGridView.DataSource = appointmentController.GetAppointments(appointmentFilterState);
             SetupAppointmentDGV();
         }
-        private void comboConsultants_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboConsultants_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedUserId = ((KeyValuePair<int, string>)comboConsultants.SelectedItem).Key.ToString();
             selectedUserName = ((KeyValuePair<int, string>)comboConsultants.SelectedItem).Value;
