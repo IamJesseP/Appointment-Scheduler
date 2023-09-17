@@ -400,6 +400,12 @@ namespace C969Jesse.Database
                 {
                     try
                     {
+                        using (var deleteAppointmentsCMD = new MySqlCommand(Queries.deleteCustomerAppointmentsQuery, conn))
+                        {
+                            deleteAppointmentsCMD.Parameters.AddWithValue("@CustomerId", customerId);
+                            deleteAppointmentsCMD.ExecuteNonQuery();
+                        }
+
                         using (var deleteCustomerCMD = new MySqlCommand(Queries.deleteCustomerQuery, DbConnection.conn))
                         {
                             deleteCustomerCMD.Parameters.AddWithValue("@CustomerId", customerId);

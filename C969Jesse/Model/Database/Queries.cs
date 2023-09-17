@@ -85,6 +85,8 @@ namespace C969Jesse.Database
                 "lastUpdate = NOW(), " +
                 "lastUpdateBy = @LastUpdateBy " +
                 "WHERE customerId = @CustomerId";
+
+        public static string deleteCustomerAppointmentsQuery => "DELETE FROM appointment WHERE customerId = @CustomerId";
         public static string deleteCustomerQuery => "DELETE FROM customer WHERE customerId = @CustomerId";
         public static string GetCustomersQuery => "SELECT customerId, customerName FROM customer";
         #endregion
@@ -130,7 +132,6 @@ namespace C969Jesse.Database
         public static string appointmentIdxQuery => "SELECT appointmentId FROM appointment ORDER BY appointmentId DESC LIMIT 1";
         public static string deleteAppointmentQuery => "DELETE FROM appointment WHERE appointmentId = @AppointmentId";
         public static string upcomingAppointmentQuery => "SELECT COUNT(*) FROM appointment WHERE start BETWEEN @currentTime AND DATE_ADD(@currentTime, INTERVAL 15 MINUTE) AND userId=@userId";
-
 
         #endregion
 
