@@ -146,6 +146,19 @@ namespace C969Jesse.Database
                 WHERE  MONTH(start) = @month AND YEAR(start) = @year
                 GROUP BY type
                 HAVING COUNT(type) > 0";
+
+        public static string GetUserScheduleQuery =>
+            "SELECT ap.appointmentId, ap.customerId, ap.userId, ap.description, ap.location, " +
+            "ap.type, ap.url, ap.start, ap.end, u.userName, " +
+            "c.customerName, a.phone, a.addressId, a.cityId, ci.countryId " +
+            "FROM appointment ap " +
+            "JOIN customer c ON ap.customerId = c.customerId " +
+            "JOIN address a ON c.addressId = a.addressId " +
+            "JOIN city ci ON a.cityId = ci.cityId " +
+            "JOIN country co ON ci.countryId = co.countryId " +
+            "JOIN user u ON ap.userId = u.userId " +
+            "WHERE u.userName = @UserName AND u.userId = @UserId " +
+            "ORDER BY ap.start";
         #endregion
     }
 }

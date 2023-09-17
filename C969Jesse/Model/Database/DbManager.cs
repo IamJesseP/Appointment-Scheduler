@@ -200,6 +200,29 @@ namespace C969Jesse.Database
 
             return bookedSlots;
         }
+        public DataTable GetConsultantSchedule(string userName, string userId)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                DbConnection.StartConnection();
+                using (MySqlCommand consultantCMD = new MySqlCommand(Queries.GetUserScheduleQuery, DbConnection.conn))
+                {
+                     consultantCMD.Parameters.AddWithValue("@UserName", userName);
+                     consultantCMD.Parameters.AddWithValue("@UserId", userId);
+                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(consultantCMD))
+                     {
+                         adapter.Fill(dataTable);
+                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "Error ID: 12121");
+            }
+            return dataTable;
+        }
+
         #endregion
 
         #region Add/Update/Delete Customer

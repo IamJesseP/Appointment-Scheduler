@@ -37,8 +37,8 @@ namespace C969Jesse.Components
             // invalid customer and user data input
             var customers = dbManager.GetCustomerNames();
             var users = dbManager.GetUserNames();
-            comboBoxCustomers.DataSource = new BindingSource(customers, null);
             comboBoxUsers.DataSource = new BindingSource(users, null);
+            comboBoxCustomers.DataSource = new BindingSource(customers, null);
             comboBoxCustomers.DisplayMember = "Value";
             comboBoxCustomers.ValueMember = "Key";
             comboBoxUsers.DisplayMember = "Value";

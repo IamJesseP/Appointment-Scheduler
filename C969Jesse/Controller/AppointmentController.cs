@@ -115,7 +115,6 @@ namespace C969Jesse.Controller
                 MessageBox.Show("You have an upcoming appointment.");
             }
         }
-
         public DataTable GetAppointmentTypesByMonthReport(int month, int year)
         {
             DbConnection.StartConnection();
