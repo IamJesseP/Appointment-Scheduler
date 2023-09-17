@@ -60,7 +60,7 @@ namespace C969Jesse.Components
             {
                 customerController.SaveCustomer(customerData, MainFormInstance.isUpdate);
             }
-            MainFormInstance?.RefreshTable("Customers");
+            MainFormInstance?.RefreshTable();
             MainFormInstance?.RefreshTableSettings();
             MainFormInstance?.GiveUserFeedBack(MainFormInstance.isUpdate);
             this.Hide();

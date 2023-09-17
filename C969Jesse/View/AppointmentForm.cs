@@ -115,7 +115,7 @@ namespace C969Jesse.Components
             {
                 appointmentController.SaveAppointment(appointmentData, startEndTime, MainFormInstance.isUpdate);
             }
-            MainFormInstance?.RefreshTable("Appointments");
+            MainFormInstance?.RefreshTable();
             MainFormInstance?.RefreshTableSettings();
             MainFormInstance?.GiveUserFeedBack(MainFormInstance.isUpdate);
             this.Hide();

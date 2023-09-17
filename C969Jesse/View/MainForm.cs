@@ -2,6 +2,7 @@
 using C969Jesse.Controller;
 using C969Jesse.Controller.Utils;
 using C969Jesse.Database;
+using C969Jesse.Model.Enums;
 using C969Jesse.Utils;
 using MySql.Data.MySqlClient;
 using System;
@@ -31,7 +32,7 @@ namespace C969Jesse
 
         private string appointmentFilterState = "All";
 
-        private string formState = "Customers"; // Default to customers
+        private FormState formState = FormState.Customers; // Default to customers
 
         private int selectedMonth = DateTime.Now.Month; // Default to the current month
 
@@ -46,8 +47,8 @@ namespace C969Jesse
         public Appointment()
         {
             InitializeComponent();
-            UpdateButtons(formState);
-            RefreshTable(formState);
+            UpdateButtons();
+            RefreshTable();
             SetupCustomerDGV();
             RefreshTableSettings();
         }
@@ -57,14 +58,14 @@ namespace C969Jesse
         private void AddBttn_Click(object sender, EventArgs e)
         {
             isUpdate = false;
-            if (formState == "Customers")
+            if (formState == FormState.Customers)
             {
                 var addCustomerForm = new CustomerForm();
                 addCustomerForm.UpdateCustomerFormTitle(isUpdate);
                 addCustomerForm.MainFormInstance = this; // Dependency injection!
                 addCustomerForm.Show();
             }
-            else if (formState == "Appointments")
+            else if (formState == FormState.Appointments)
             {
                 var addAppointmentForm = new AppointmentForm();
                 addAppointmentForm.MainFormInstance = this; // Dependency injection!
@@ -76,7 +77,7 @@ namespace C969Jesse
             isUpdate = true;
             if (selectedRow != null)
             {
-                if (formState == "Customers")
+                if (formState == FormState.Customers)
                 {
                     var addCustomerForm = new CustomerForm();
                     addCustomerForm.PopulateFields(selectedRow);
@@ -84,7 +85,7 @@ namespace C969Jesse
                     addCustomerForm.MainFormInstance = this;
                     addCustomerForm.Show();
                 }
-                else if (formState == "Appointments")
+                else if (formState == FormState.Appointments)
                 {
                     var addAppointmentForm = new AppointmentForm();
                     addAppointmentForm.MainFormInstance = this;
@@ -107,18 +108,18 @@ namespace C969Jesse
             if (selectedRow != null)
             {
                 if (!ConfirmDeletion()) { return; }
-                if (formState == "Customers")
+                if (formState == FormState.Customers)
                 {
                     int customerId = Convert.ToInt32(selectedRow.Cells[0].Value);
                     customerController.DeleteCustomer(customerId);
                 }
-                else if (formState == "Appointments")
+                else if (formState == FormState.Appointments)
                 {
                     int appointmentId = Convert.ToInt32(selectedRow.Cells["appointmentId"].Value);
                     appointmentController.DeleteAppointment(appointmentId);
                 }
 
-                RefreshTable(formState);
+                RefreshTable();
                 RefreshTableSettings();
 
                 errorProvider.Clear();
@@ -135,15 +136,17 @@ namespace C969Jesse
         }
         private void ClickCustomersTab(object sender, EventArgs e)
         {
-            UpdateButtons("Customers");
-            RefreshTable(formState);
+            formState = FormState.Customers;
+            UpdateButtons();
+            RefreshTable();
             RefreshTableSettings();
             SetupCustomerDGV();
         }
         private void ClickAppointmentsTab(object sender, EventArgs e)
         {
-            UpdateButtons("Appointments");
-            RefreshTable(formState);
+            formState = FormState.Appointments;
+            UpdateButtons();
+            RefreshTable();
             RefreshTableSettings();
             SetupAppointmentDGV();
         }
@@ -159,7 +162,8 @@ namespace C969Jesse
         }
         private void appointmentTypesPerMonthToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UpdateButtons("Month/Type");
+            formState = FormState.TypePerMonth;
+            UpdateButtons();
             RefreshTableSettings();
 
             comboBoxMonths.SelectedIndex = selectedMonth - 1;
@@ -167,7 +171,8 @@ namespace C969Jesse
         }
         private void consultantSchedulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UpdateButtons("Consultants");
+            formState = FormState.Consultants;
+            UpdateButtons();
             RefreshTableSettings();
 
             mainDataGridView.DataSource = userController.GetConsultantSchedule(selectedUserName, selectedUserId);
@@ -201,11 +206,11 @@ namespace C969Jesse
         }
         private void ViewReportBttn_Click(object sender, EventArgs e)
         {
-            if (formState == "Month/Type")
+            if (formState == FormState.TypePerMonth)
             {
                 mainDataGridView.DataSource = appointmentController.GetAppointmentTypesByMonthReport(selectedMonth, selectedYear);
             }
-            else if (formState == "Consultants")
+            else if (formState == FormState.Consultants)
             {
                 mainDataGridView.DataSource = userController.GetConsultantSchedule(selectedUserName, selectedUserId);
                 SetupAppointmentDGV();
@@ -216,14 +221,14 @@ namespace C969Jesse
 
         #region Helper methods
 
-        public void RefreshTable(string state)
+        public void RefreshTable()
         {
-            if (state == "Appointments")
+            if (formState == FormState.Appointments)
             {
                 mainDataGridView.DataSource = appointmentController.GetAppointments(appointmentFilterState);
                 SetupAppointmentDGV();
             }
-            else if (state == "Customers")
+            else if (formState == FormState.Customers)
             {
                 mainDataGridView.DataSource = customerController.GetCustomers(Queries.GetCustomerTableQuery);
                 SetupCustomerDGV();
@@ -232,13 +237,13 @@ namespace C969Jesse
         public void RefreshTableSettings()
         {
             // Tab color
-            if (formState == "Customers")
+            if (formState == FormState.Customers)
             {
                 CustomerTab.ForeColor = Color.Goldenrod;
                 AppointmentsTab.ForeColor = Color.Black;
                 reportsToolStripMenuItem.ForeColor = Color.Black;
             }
-            else if (formState == "Appointments")
+            else if (formState == FormState.Appointments)
             {
                 CustomerTab.ForeColor = Color.Black;
                 AppointmentsTab.ForeColor = Color.Goldenrod;
@@ -284,7 +289,7 @@ namespace C969Jesse
                 feedbackLabel.Text = "Successfully updated.";
             }
         }
-        private void UpdateButtons(string state)
+        private void UpdateButtons()
         {
             AddBttn.Show();
             UpdateBttn.Show();
@@ -299,15 +304,15 @@ namespace C969Jesse
             comboBoxMonths.Visible = false;
             comboConsultants.Visible = false;
 
-            switch (state)
+            switch (formState)
             {
-                case "Customers":
+                case FormState.Customers:
                     AddBttn.Text = "Add Customer";
                     UpdateBttn.Text = "Update Customer";
                     DeleteBttn.Text = "Delete Customer";
                     break;
 
-                case "Appointments":
+                case FormState.Appointments:
                     AddBttn.Text = "Add \nAppointment";
                     UpdateBttn.Text = "Update Appointment";
                     DeleteBttn.Text = "Delete Appointment";
@@ -320,12 +325,12 @@ namespace C969Jesse
                     ViewReportBttn.Show();
                     mainDataGridView.DataSource = null;
 
-                    if (state == "Month/Type")
+                    if (formState == FormState.TypePerMonth)
                     {
                         comboBoxMonths.Visible = true;
                         lblMonth.Visible = true;
                     }
-                    else if (state == "Consultants")
+                    else if (formState == FormState.Consultants)
                     {
                         comboConsultants.Visible = true;
                         lblConsultants.Visible = true;
@@ -335,8 +340,6 @@ namespace C969Jesse
                     // extra report here
                     break;
             }
-
-            formState = state;
         }
         private void SetupCustomerDGV()
         {

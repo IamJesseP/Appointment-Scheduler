@@ -111,6 +111,7 @@
     <Compile Include="Model\Entities\City.cs" />
     <Compile Include="Model\Entities\Country.cs" />
     <Compile Include="Model\Entities\Customer.cs" />
+    <Compile Include="Model\Enums\FormState.cs" />
     <Compile Include="Model\Enums\Locations.cs" />
     <Compile Include="Model\Enums\VisitTypes.cs" />
     <Compile Include="View\AppointmentForm.cs">
