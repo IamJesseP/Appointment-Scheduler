@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace C969Jesse
 {
-    public partial class MainForm : Form
+    public partial class Appointment : Form
     {
         private DbManager dbManager = new DbManager();
 
@@ -39,7 +39,7 @@ namespace C969Jesse
 
         public bool isUpdate = false;
 
-        public MainForm()
+        public Appointment()
         {
             InitializeComponent();
             UpdateButtons(formState);

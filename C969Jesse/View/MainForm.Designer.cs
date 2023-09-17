@@ -1,6 +1,6 @@
 ﻿namespace C969Jesse
 {
-    partial class MainForm
+    partial class Appointment
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Appointment));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.CustomerTab = new System.Windows.Forms.ToolStripMenuItem();
             this.AppointmentsTab = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,6 +58,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CustomerTab,
             this.AppointmentsTab,
@@ -70,7 +71,7 @@
             // 
             // CustomerTab
             // 
-            this.CustomerTab.BackColor = System.Drawing.SystemColors.Control;
+            this.CustomerTab.BackColor = System.Drawing.SystemColors.ControlLight;
             this.CustomerTab.ForeColor = System.Drawing.SystemColors.ControlText;
             this.CustomerTab.Name = "CustomerTab";
             this.CustomerTab.Size = new System.Drawing.Size(76, 20);
@@ -113,7 +114,7 @@
             this.mainDataGridView.AllowUserToDeleteRows = false;
             this.mainDataGridView.AllowUserToResizeColumns = false;
             this.mainDataGridView.AllowUserToResizeRows = false;
-            this.mainDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.mainDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.mainDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainDataGridView.Location = new System.Drawing.Point(45, 48);
             this.mainDataGridView.MultiSelect = false;
@@ -266,13 +267,13 @@
             "October",
             "November",
             "December"});
-            this.comboConsultants.Location = new System.Drawing.Point(784, 516);
+            this.comboConsultants.Location = new System.Drawing.Point(784, 517);
             this.comboConsultants.Name = "comboConsultants";
             this.comboConsultants.Size = new System.Drawing.Size(187, 21);
             this.comboConsultants.TabIndex = 13;
             this.comboConsultants.SelectedIndexChanged += new System.EventHandler(this.comboConsultants_SelectedIndexChanged);
             // 
-            // MainForm
+            // Appointment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -291,7 +292,7 @@
             this.Controls.Add(this.mainDataGridView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "MainForm";
+            this.Name = "Appointment";
             this.Text = "MainForm";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -32,7 +32,7 @@ namespace C969Jesse.Controller
                     int userId = reader.GetInt32("UserId"); 
                     UserSession.CurrentUserId = userId;
                 }
-                MainForm mainForm = new MainForm();
+                Appointment mainForm = new Appointment();
                 mainForm.Show();
                 return true;
             }

@@ -15,7 +15,7 @@ namespace C969Jesse.Components
 {
     public partial class CustomerForm : Form
     {
-        public MainForm MainFormInstance { get; set; }
+        public Appointment MainFormInstance { get; set; }
 
         private DbManager dbManager = new DbManager();
 
