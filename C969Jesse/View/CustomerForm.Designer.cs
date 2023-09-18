@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerForm));
             this.SaveBttn = new System.Windows.Forms.Button();
             this.CancelBttn = new System.Windows.Forms.Button();
             this.txtCustomerCountry = new System.Windows.Forms.TextBox();
@@ -205,8 +206,9 @@
             this.Controls.Add(this.txtCustomerName);
             this.Controls.Add(this.CancelBttn);
             this.Controls.Add(this.SaveBttn);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CustomerForm";
-            this.Text = "Add Customer";
+            this.Text = "Customer Form";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

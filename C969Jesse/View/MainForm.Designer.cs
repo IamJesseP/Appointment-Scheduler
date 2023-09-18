@@ -235,7 +235,7 @@
             "October",
             "November",
             "December"});
-            this.comboBoxMonths.Location = new System.Drawing.Point(591, 518);
+            this.comboBoxMonths.Location = new System.Drawing.Point(784, 518);
             this.comboBoxMonths.Name = "comboBoxMonths";
             this.comboBoxMonths.Size = new System.Drawing.Size(187, 21);
             this.comboBoxMonths.TabIndex = 11;
@@ -267,7 +267,7 @@
             "October",
             "November",
             "December"});
-            this.comboConsultants.Location = new System.Drawing.Point(591, 518);
+            this.comboConsultants.Location = new System.Drawing.Point(784, 518);
             this.comboConsultants.Name = "comboConsultants";
             this.comboConsultants.Size = new System.Drawing.Size(187, 21);
             this.comboConsultants.TabIndex = 13;
@@ -291,9 +291,10 @@
             this.Controls.Add(this.AddBttn);
             this.Controls.Add(this.mainDataGridView);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Appointment";
-            this.Text = "MainForm";
+            this.Text = "Scheduler";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).EndInit();

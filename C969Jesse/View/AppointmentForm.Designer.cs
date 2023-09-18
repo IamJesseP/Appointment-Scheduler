@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppointmentForm));
             this.lblPostal = new System.Windows.Forms.Label();
             this.appointmentFormTitle = new System.Windows.Forms.Label();
             this.lblAppointmentTime = new System.Windows.Forms.Label();
@@ -227,8 +228,9 @@
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.CancelBttn);
             this.Controls.Add(this.SaveBttn);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AppointmentForm";
-            this.Text = "AddAppointmentForm";
+            this.Text = "Appointment Form";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -29,6 +29,7 @@ namespace C969Jesse
 		/// </summary>
 		private void InitializeComponent()
 		{
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.txtUserLogin = new System.Windows.Forms.TextBox();
             this.txtUserPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -104,6 +105,7 @@ namespace C969Jesse
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtUserPassword);
             this.Controls.Add(this.txtUserLogin);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Login";
             this.Text = "Log In";
             this.ResumeLayout(false);
