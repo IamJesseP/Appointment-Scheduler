@@ -33,8 +33,8 @@ namespace C969Jesse
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.txtUserLogin = new System.Windows.Forms.TextBox();
             this.txtUserPassword = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Password = new System.Windows.Forms.Label();
+            this.lblLogin = new System.Windows.Forms.Label();
+            this.lblPassword = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.dbProvider = new System.Windows.Forms.ErrorProvider(this.components);
@@ -57,23 +57,23 @@ namespace C969Jesse
             this.txtUserPassword.Size = new System.Drawing.Size(188, 20);
             this.txtUserPassword.TabIndex = 1;
             // 
-            // label1
+            // lblLogin
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(138, 156);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Username";
+            this.lblLogin.AutoSize = true;
+            this.lblLogin.Location = new System.Drawing.Point(138, 156);
+            this.lblLogin.Name = "lblLogin";
+            this.lblLogin.Size = new System.Drawing.Size(55, 13);
+            this.lblLogin.TabIndex = 2;
+            this.lblLogin.Text = "Username";
             // 
-            // Password
+            // lblPassword
             // 
-            this.Password.AutoSize = true;
-            this.Password.Location = new System.Drawing.Point(138, 224);
-            this.Password.Name = "Password";
-            this.Password.Size = new System.Drawing.Size(53, 13);
-            this.Password.TabIndex = 3;
-            this.Password.Text = "Password";
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Location = new System.Drawing.Point(138, 224);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(53, 13);
+            this.lblPassword.TabIndex = 3;
+            this.lblPassword.Text = "Password";
             // 
             // btnLogin
             // 
@@ -121,8 +121,8 @@ namespace C969Jesse
             this.Controls.Add(this.dbLabel);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnLogin);
-            this.Controls.Add(this.Password);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblPassword);
+            this.Controls.Add(this.lblLogin);
             this.Controls.Add(this.txtUserPassword);
             this.Controls.Add(this.txtUserLogin);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -138,8 +138,8 @@ namespace C969Jesse
 
 		private System.Windows.Forms.TextBox txtUserLogin;
 		private System.Windows.Forms.TextBox txtUserPassword;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label Password;
+		private System.Windows.Forms.Label lblLogin;
+		private System.Windows.Forms.Label lblPassword;
 		private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.ErrorProvider dbProvider;

@@ -22,22 +22,17 @@ namespace C969Jesse
         LoginController loginController = new LoginController();
         AppointmentController appointmentController = new AppointmentController();
 		public Login()
-		{
-			InitializeComponent();
-            bool isDbNew = DbConnection.InitializeDatabase();
-            if (isDbNew)
-            {
-                dbProvider.SetError(dbLabel, "!");
-                dbLabel.Text = "Database initialized";
-            }
-            else
-            {
-                dbProvider.SetError(dbLabel, "!");
-                dbLabel.Text = "Database connected";
-            }
-		}
+        {
+            InitializeComponent();
 
-		private void BtnLogin_Click(object sender, EventArgs e)
+            CheckLabelLanguages();
+
+            CheckIfDbIsNew();
+        }
+
+        #region Event Handlers
+
+        private void BtnLogin_Click(object sender, EventArgs e)
 		{
 			try
             {
@@ -67,5 +62,41 @@ namespace C969Jesse
         {
 			Application.Exit();
         }
+
+        #endregion
+
+        #region Helper Methods
+
+        private void CheckIfDbIsNew()
+        {
+            bool isDbNew = DbConnection.InitializeDatabase();
+            if (isDbNew)
+            {
+                dbProvider.SetError(dbLabel, "!");
+                dbLabel.Text = "Database initialized";
+            }
+            else
+            {
+                dbProvider.SetError(dbLabel, "!");
+                dbLabel.Text = "Database connected";
+            }
+        }
+        private void CheckLabelLanguages()
+        {
+            if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "en")
+            {
+                lblLogin.Text = "Login";
+                lblPassword.Text = "Password";
+            }
+            else if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "es")
+            {
+                lblLogin.Text = "Acceso";
+                lblPassword.Text = "Contraseña";
+            }
+        }
+
+        #endregion
+
+
     }
 }

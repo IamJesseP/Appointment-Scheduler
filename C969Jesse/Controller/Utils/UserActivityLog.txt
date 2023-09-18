@@ -9,3 +9,5 @@
 2023-09-18 13:12:55 - User 'test' logged in.
 2023-09-18 13:16:43 - User 'test' logged in.
 2023-09-18 13:16:53 - User 'test2' logged in.
+2023-09-18 13:38:20 - User 'test' logged in.
+2023-09-18 13:38:31 - User 'test' logged in.
