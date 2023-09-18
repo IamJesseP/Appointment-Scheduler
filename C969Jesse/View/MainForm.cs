@@ -316,6 +316,10 @@ namespace C969Jesse
                     AddBttn.Text = "Add \nAppointment";
                     UpdateBttn.Text = "Update Appointment";
                     DeleteBttn.Text = "Delete Appointment";
+
+                    comboBoxAppointmentFilter.SelectedIndex = 0;
+                    comboBoxAppointmentFilter.Visible = true;
+                    lblFilterAppointments.Visible = true;
                     break;
 
                 default:
@@ -376,7 +380,7 @@ namespace C969Jesse
 
             mainDataGridView.Columns["appointmentId"].Visible = false;
             mainDataGridView.Columns["userId"].Visible = false;
-            comboBoxAppointmentFilter.SelectedIndex = 0;
+            
         }
 
         #endregion

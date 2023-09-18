@@ -235,7 +235,7 @@
             "October",
             "November",
             "December"});
-            this.comboBoxMonths.Location = new System.Drawing.Point(784, 518);
+            this.comboBoxMonths.Location = new System.Drawing.Point(591, 518);
             this.comboBoxMonths.Name = "comboBoxMonths";
             this.comboBoxMonths.Size = new System.Drawing.Size(187, 21);
             this.comboBoxMonths.TabIndex = 11;
@@ -267,7 +267,7 @@
             "October",
             "November",
             "December"});
-            this.comboConsultants.Location = new System.Drawing.Point(784, 517);
+            this.comboConsultants.Location = new System.Drawing.Point(591, 518);
             this.comboConsultants.Name = "comboConsultants";
             this.comboConsultants.Size = new System.Drawing.Size(187, 21);
             this.comboConsultants.TabIndex = 13;
