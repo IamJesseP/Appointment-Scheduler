@@ -178,6 +178,13 @@ namespace C969Jesse
             mainDataGridView.DataSource = userController.GetConsultantSchedule(selectedUserName, selectedUserId);
             SetupAppointmentDGV();
         }
+        private void AppointmentsPerLocationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            formState = FormState.CountPerLocation;
+            UpdateButtons();
+            RefreshTableSettings();
+            mainDataGridView.DataSource = appointmentController.GetAppointmentCountByLocation();
+        }
         private void ComboBoxMonths_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedMonth = comboBoxMonths.SelectedIndex + 1;
@@ -321,7 +328,6 @@ namespace C969Jesse
                     comboBoxAppointmentFilter.Visible = true;
                     lblFilterAppointments.Visible = true;
                     break;
-
                 default:
                     AddBttn.Hide();
                     UpdateBttn.Hide();
@@ -340,6 +346,14 @@ namespace C969Jesse
                         lblConsultants.Visible = true;
                         var users = userController.GetUserNames();
                         comboConsultants.DataSource = new BindingSource(users, null);
+                    }
+                    else
+                    {
+                        ViewReportBttn.Visible = false;
+                        comboBoxMonths.Visible = false;
+                        comboBoxAppointmentFilter.Visible = false;
+                        lblFilterAppointments.Visible = false;
+                        lblMonth.Visible = false;
                     }
                     // extra report here
                     break;
@@ -384,9 +398,6 @@ namespace C969Jesse
         }
 
         #endregion
-
-
-
 
     }
 }

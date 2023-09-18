@@ -237,6 +237,34 @@ namespace C969Jesse.Controller
             finally { DbConnection.CloseConnection(); }
             return dataTable;
         }
+        public DataTable GetAppointmentCountByLocation()
+        {
+            DbConnection.StartConnection();
+
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand(Queries.AppointmentCountByLocationQuery, DbConnection.conn))
+                {
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dataTable);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                DbConnection.CloseConnection();
+            }
+
+            return dataTable;
+        }
+
         public List<string> GetAvailableSlots(DateTime date)
         {
             var allSlots = GenerateAllSlots(date);

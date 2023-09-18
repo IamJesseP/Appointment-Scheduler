@@ -154,7 +154,13 @@
             "JOIN user u ON ap.userId = u.userId " +
             "WHERE u.userName = @UserName AND u.userId = @UserId " +
             "ORDER BY ap.start";
+
+        public static string AppointmentCountByLocationQuery => "SELECT location, COUNT(*) AS appointment_count FROM appointment GROUP BY location;";
+
         #endregion
+
+
+
     }
 }
 

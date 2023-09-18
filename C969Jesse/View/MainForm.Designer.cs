@@ -50,6 +50,7 @@
             this.comboBoxMonths = new System.Windows.Forms.ComboBox();
             this.lblConsultants = new System.Windows.Forms.Label();
             this.comboConsultants = new System.Windows.Forms.ComboBox();
+            this.appointmentsPerLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -89,6 +90,7 @@
             // 
             this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.appointmentTypesPerMonthToolStripMenuItem,
+            this.appointmentsPerLocationToolStripMenuItem,
             this.consultantSchedulesToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
@@ -273,6 +275,13 @@
             this.comboConsultants.TabIndex = 13;
             this.comboConsultants.SelectedIndexChanged += new System.EventHandler(this.ComboConsultants_SelectedIndexChanged);
             // 
+            // appointmentsPerLocationToolStripMenuItem
+            // 
+            this.appointmentsPerLocationToolStripMenuItem.Name = "appointmentsPerLocationToolStripMenuItem";
+            this.appointmentsPerLocationToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
+            this.appointmentsPerLocationToolStripMenuItem.Text = "Appointments Per Location";
+            this.appointmentsPerLocationToolStripMenuItem.Click += new System.EventHandler(this.AppointmentsPerLocationToolStripMenuItem_Click);
+            // 
             // Appointment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -327,5 +336,6 @@
         private System.Windows.Forms.ComboBox comboBoxMonths;
         private System.Windows.Forms.Label lblConsultants;
         private System.Windows.Forms.ComboBox comboConsultants;
+        private System.Windows.Forms.ToolStripMenuItem appointmentsPerLocationToolStripMenuItem;
     }
 }

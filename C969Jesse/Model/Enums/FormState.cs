@@ -13,5 +13,6 @@ namespace C969Jesse.Model.Enums
         Reports,
         TypePerMonth,
         Consultants,
+        CountPerLocation,
     }
 }
