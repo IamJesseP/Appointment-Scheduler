@@ -24,6 +24,17 @@ namespace C969Jesse
 		public Login()
 		{
 			InitializeComponent();
+            bool isDbNew = DbConnection.InitializeDatabase();
+            if (isDbNew)
+            {
+                dbProvider.SetError(dbLabel, "!");
+                dbLabel.Text = "Database initialized";
+            }
+            else
+            {
+                dbProvider.SetError(dbLabel, "!");
+                dbLabel.Text = "Database connected";
+            }
 		}
 
 		private void BtnLogin_Click(object sender, EventArgs e)

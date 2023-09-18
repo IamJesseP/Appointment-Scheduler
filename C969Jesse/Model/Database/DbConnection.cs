@@ -43,5 +43,38 @@ namespace C969Jesse.Database
 				MessageBox.Show(ex.Message);
 			}
 		}
-	}
+
+        public static bool InitializeDatabase()
+        {
+			bool isNewDb = false;
+            try
+            {
+				StartConnection();
+
+				MySqlCommand tableCMD = new MySqlCommand(Queries.CheckTablesExistQuery, conn);
+                int tableCount = Convert.ToInt32(tableCMD.ExecuteScalar());
+
+                MySqlCommand userCMD = new MySqlCommand(Queries.GetUserCount, conn);
+                int userCount = Convert.ToInt32(userCMD.ExecuteScalar());
+                if (tableCount < 6 || userCount == 0)  // If not all tables exist and no users exist, initialize the database
+                {
+                    MySqlCommand initCmd = new MySqlCommand(Queries.InitializeDatabaseQuery, conn);
+                    initCmd.ExecuteNonQuery();
+					isNewDb = true;
+                }
+				Console.WriteLine("Db exists");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+			return isNewDb;
+        }
+    }
+
+
 }

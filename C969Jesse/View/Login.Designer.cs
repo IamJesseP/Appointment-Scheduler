@@ -29,6 +29,7 @@ namespace C969Jesse
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.txtUserLogin = new System.Windows.Forms.TextBox();
             this.txtUserPassword = new System.Windows.Forms.TextBox();
@@ -36,6 +37,9 @@ namespace C969Jesse
             this.Password = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.dbProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.dbLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dbProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // txtUserLogin
@@ -93,12 +97,28 @@ namespace C969Jesse
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
+            // dbProvider
+            // 
+            this.dbProvider.ContainerControl = this;
+            this.dbProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("dbProvider.Icon")));
+            this.dbProvider.RightToLeft = true;
+            // 
+            // dbLabel
+            // 
+            this.dbLabel.AutoSize = true;
+            this.dbLabel.Location = new System.Drawing.Point(303, 9);
+            this.dbLabel.Name = "dbLabel";
+            this.dbLabel.Size = new System.Drawing.Size(35, 13);
+            this.dbLabel.TabIndex = 7;
+            this.dbLabel.Text = "label2";
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(453, 450);
+            this.Controls.Add(this.dbLabel);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.Password);
@@ -108,6 +128,7 @@ namespace C969Jesse
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Login";
             this.Text = "Log In";
+            ((System.ComponentModel.ISupportInitialize)(this.dbProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -121,6 +142,8 @@ namespace C969Jesse
 		private System.Windows.Forms.Label Password;
 		private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ErrorProvider dbProvider;
+        private System.Windows.Forms.Label dbLabel;
     }
 }
 

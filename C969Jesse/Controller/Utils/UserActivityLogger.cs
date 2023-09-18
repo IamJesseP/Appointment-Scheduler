@@ -10,7 +10,7 @@ namespace C969Jesse
 {
     public static class UserActivityLogger
     {
-        private static string logFilePath = "UserActivityLog.txt";
+        private static string logFilePath = @"..\..\..\C969Jesse\Controller\Utils\UserActivityLog.txt";
 
         public static void LogUserActivity(string userName)
         {
