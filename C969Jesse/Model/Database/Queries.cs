@@ -190,7 +190,7 @@
 
                 -- populate table `user`
                 INSERT INTO `user` VALUES 
-                (1,'test','test',1,'2023-09-17 00:00:00','test','2023-09-17 00:00:00','test');
+                (1,'test','test',1,'2023-09-17 00:00:00','test','2023-09-17 00:00:00','test'),
                 (2,'test2','test2',1,'2023-09-17 00:00:00','test','2023-09-17 00:00:00','test2');
 
                 -- populate table `appointment`
