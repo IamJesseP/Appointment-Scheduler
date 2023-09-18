@@ -106,7 +106,7 @@ namespace C969Jesse
             // dbLabel
             // 
             this.dbLabel.AutoSize = true;
-            this.dbLabel.Location = new System.Drawing.Point(303, 9);
+            this.dbLabel.Location = new System.Drawing.Point(22, 9);
             this.dbLabel.Name = "dbLabel";
             this.dbLabel.Size = new System.Drawing.Size(35, 13);
             this.dbLabel.TabIndex = 7;
