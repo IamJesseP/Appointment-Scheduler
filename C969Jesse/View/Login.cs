@@ -85,18 +85,23 @@ namespace C969Jesse
         {
             if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "en")
             {
-                lblLogin.Text = "Login";
+                lblLogin.Text = "Username";
                 lblPassword.Text = "Password";
+                btnExit.Text = "Exit";
+                btnLogin.Text = "Login";
+                this.Text = "Log In";
             }
             else if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "es")
             {
-                lblLogin.Text = "Acceso";
+                lblLogin.Text = "Nombre de usuario";
                 lblPassword.Text = "Contraseña";
+                btnExit.Text = "Salida";
+                btnLogin.Text = "Acceso";
+                this.Text = "Acceso";
+                
             }
         }
 
         #endregion
-
-
     }
 }
