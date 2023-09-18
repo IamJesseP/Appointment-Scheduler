@@ -35,6 +35,7 @@
             this.AppointmentsTab = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appointmentTypesPerMonthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.appointmentsPerLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultantSchedulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainDataGridView = new System.Windows.Forms.DataGridView();
             this.AddBttn = new System.Windows.Forms.Button();
@@ -50,7 +51,7 @@
             this.comboBoxMonths = new System.Windows.Forms.ComboBox();
             this.lblConsultants = new System.Windows.Forms.Label();
             this.comboConsultants = new System.Windows.Forms.ComboBox();
-            this.appointmentsPerLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -63,7 +64,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CustomerTab,
             this.AppointmentsTab,
-            this.reportsToolStripMenuItem});
+            this.reportsToolStripMenuItem,
+            this.logOutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1040, 24);
@@ -102,6 +104,13 @@
             this.appointmentTypesPerMonthToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.appointmentTypesPerMonthToolStripMenuItem.Text = "Appointment Types Per Month";
             this.appointmentTypesPerMonthToolStripMenuItem.Click += new System.EventHandler(this.AppointmentTypesPerMonthToolStripMenuItem_Click);
+            // 
+            // appointmentsPerLocationToolStripMenuItem
+            // 
+            this.appointmentsPerLocationToolStripMenuItem.Name = "appointmentsPerLocationToolStripMenuItem";
+            this.appointmentsPerLocationToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
+            this.appointmentsPerLocationToolStripMenuItem.Text = "Appointments Per Location";
+            this.appointmentsPerLocationToolStripMenuItem.Click += new System.EventHandler(this.AppointmentsPerLocationToolStripMenuItem_Click);
             // 
             // consultantSchedulesToolStripMenuItem
             // 
@@ -275,12 +284,13 @@
             this.comboConsultants.TabIndex = 13;
             this.comboConsultants.SelectedIndexChanged += new System.EventHandler(this.ComboConsultants_SelectedIndexChanged);
             // 
-            // appointmentsPerLocationToolStripMenuItem
+            // logOutToolStripMenuItem
             // 
-            this.appointmentsPerLocationToolStripMenuItem.Name = "appointmentsPerLocationToolStripMenuItem";
-            this.appointmentsPerLocationToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
-            this.appointmentsPerLocationToolStripMenuItem.Text = "Appointments Per Location";
-            this.appointmentsPerLocationToolStripMenuItem.Click += new System.EventHandler(this.AppointmentsPerLocationToolStripMenuItem_Click);
+            this.logOutToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
+            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.logOutToolStripMenuItem.Text = "Log Out";
+            this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
             // 
             // Appointment
             // 
@@ -337,5 +347,6 @@
         private System.Windows.Forms.Label lblConsultants;
         private System.Windows.Forms.ComboBox comboConsultants;
         private System.Windows.Forms.ToolStripMenuItem appointmentsPerLocationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logOutToolStripMenuItem;
     }
 }

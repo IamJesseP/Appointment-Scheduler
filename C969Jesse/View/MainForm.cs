@@ -399,5 +399,11 @@ namespace C969Jesse
 
         #endregion
 
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var login = new Login();
+            login.Show();
+        }
     }
 }

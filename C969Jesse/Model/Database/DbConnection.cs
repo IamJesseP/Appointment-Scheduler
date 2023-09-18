@@ -56,13 +56,12 @@ namespace C969Jesse.Database
 
                 MySqlCommand userCMD = new MySqlCommand(Queries.GetUserCount, conn);
                 int userCount = Convert.ToInt32(userCMD.ExecuteScalar());
-                if (tableCount < 6 || userCount == 0)  // If not all tables exist and no users exist, initialize the database
+                if (tableCount < 6 || userCount == 0)  // If not all tables exist or no users exist, initialize the database
                 {
                     MySqlCommand initCmd = new MySqlCommand(Queries.InitializeDatabaseQuery, conn);
                     initCmd.ExecuteNonQuery();
 					isNewDb = true;
                 }
-				Console.WriteLine("Db exists");
             }
             catch (Exception ex)
             {
