@@ -225,6 +225,7 @@ namespace C969Jesse.Controller
         #endregion
 
         #region Helper Methods
+
         // Requirement G: lambda expression to simplify code for readability
         private int GetNewId(string query, MySqlConnection conn) => Convert.ToInt32(new MySqlCommand(query, conn).ExecuteScalar()) + 1;
 

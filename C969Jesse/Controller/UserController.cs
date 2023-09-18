@@ -40,6 +40,8 @@ namespace C969Jesse.Controller.Utils
 
             return userNames;
         }
+        
+        //Requirement I: Each consultant schedule
         public DataTable GetConsultantSchedule(string userName, string userId)
         {
             DataTable dataTable = new DataTable();

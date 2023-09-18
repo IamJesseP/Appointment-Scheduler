@@ -52,14 +52,9 @@ namespace C969Jesse.Components
                 { "CountryId", countryId }
             };
       
-            if (MainFormInstance.isUpdate)
-            {
-                customerController.SaveCustomer(customerData, MainFormInstance.isUpdate);
-            }
-            else
-            {
-                customerController.SaveCustomer(customerData, MainFormInstance.isUpdate);
-            }
+            // Requirement B: Add/Update Customer
+            customerController.SaveCustomer(customerData, MainFormInstance.isUpdate);
+            
             MainFormInstance?.RefreshTable();
             MainFormInstance?.RefreshTableSettings();
             MainFormInstance?.GiveUserFeedBack(MainFormInstance.isUpdate);

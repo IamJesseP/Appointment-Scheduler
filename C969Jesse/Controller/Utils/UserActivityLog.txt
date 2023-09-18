@@ -5,3 +5,7 @@
 2023-09-18 12:41:36 - User 'test' logged in.
 2023-09-18 12:44:44 - User 'test' logged in.
 2023-09-18 12:48:52 - User 'test' logged in.
+2023-09-18 12:58:14 - User 'TEST' logged in.
+2023-09-18 13:12:55 - User 'test' logged in.
+2023-09-18 13:16:43 - User 'test' logged in.
+2023-09-18 13:16:53 - User 'test2' logged in.

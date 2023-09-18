@@ -211,6 +211,7 @@ namespace C969Jesse.Controller
 
         #region Data Getters
 
+        // Requirement I: Appointment Types by month, additional report of your choice
         public DataTable GetAppointmentTypesByMonthReport(int month, int year)
         {
             DbConnection.StartConnection();

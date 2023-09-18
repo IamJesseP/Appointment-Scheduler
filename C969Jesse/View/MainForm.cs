@@ -105,6 +105,7 @@ namespace C969Jesse
         }
         private void DeleteBttn_Click(object sender, EventArgs e)
         {
+            // Requirement B + C: Delete customer/appointment
             if (selectedRow != null)
             {
                 if (!ConfirmDeletion()) { return; }
@@ -153,12 +154,12 @@ namespace C969Jesse
         private void MainDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int indexSelected = e.RowIndex;
-            if (indexSelected < 0) { return; }//Error handler for clicking header row
+            if (indexSelected < 0) { return; } //Error handler for clicking header row
             selectedRow = mainDataGridView.Rows[indexSelected];
         }
         private void MainDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            mainDataGridView.ClearSelection();
+            mainDataGridView.ClearSelection(); // clears selected row after intial data binding
         }
         private void AppointmentTypesPerMonthToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -189,9 +190,9 @@ namespace C969Jesse
         {
             selectedMonth = comboBoxMonths.SelectedIndex + 1;
         }
-        private void AppointmentFilter_SelectedIndexChanged(object sender, EventArgs e)
+        private void AppointmentFilter_SelectedIndexChanged(object sender, EventArgs e) // Requirement D: View calendar by all/month/week
         {
-            if (comboBoxAppointmentFilter.SelectedIndex == 1)
+            if (comboBoxAppointmentFilter.SelectedIndex == 1) // Should switch to enum?
             {
                 appointmentFilterState = "Weekly";
             }
@@ -355,7 +356,6 @@ namespace C969Jesse
                         lblFilterAppointments.Visible = false;
                         lblMonth.Visible = false;
                     }
-                    // extra report here
                     break;
             }
         }
@@ -399,7 +399,7 @@ namespace C969Jesse
 
         #endregion
 
-        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LogOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
             var login = new Login();
