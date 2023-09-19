@@ -10,8 +10,8 @@ namespace C969Jesse
 {
     public static class UserActivityLogger
     {
-        // Requirement J: UserActivityLog should be in Utils folder
-        private static string logFilePath = @"..\..\..\C969Jesse\Controller\Utils\UserActivityLog.txt";
+        // Requirement J: UserActivityLog should be in bin/debug/UserActivityLog.txt
+        private static string logFilePath = "UserActivityLog.txt";
 
         public static void LogUserActivity(string userName)
         {
