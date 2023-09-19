@@ -62,6 +62,18 @@ namespace C969Jesse.Controller.Utils
             {
                 MessageBox.Show(ex.Message + "Error ID: 12121");
             }
+            foreach (DataRow row in dataTable.Rows)
+            {
+                if (row["start"] is DateTime startUtc)
+                {
+                    row["start"] = TimeZoneInfo.ConvertTimeFromUtc(startUtc, TimeZoneInfo.Local);
+                }
+
+                if (row["end"] is DateTime endUtc)
+                {
+                    row["end"] = TimeZoneInfo.ConvertTimeFromUtc(endUtc, TimeZoneInfo.Local);
+                }
+            }
             return dataTable;
         }
     }
