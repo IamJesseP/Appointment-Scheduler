@@ -151,6 +151,8 @@ namespace C969Jesse.Controller
         }
         public Dictionary<string, DateTime> ConvertStringToDateTime(DateTime selectedDate, string selectedTimeStr)
         {
+            TimeZoneInfo userTimeZone = TimeZoneInfo.Local;
+
             // Split string and Parse
             string[] times = selectedTimeStr.Split(new[] { " - " }, StringSplitOptions.None);
             DateTime startTime = DateTime.ParseExact(times[0], "HH:mm", null);
@@ -161,8 +163,8 @@ namespace C969Jesse.Controller
             DateTime endDateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, endTime.Hour, endTime.Minute, 0);
 
             // Requirement E: Convert to UTC for database saving/updating
-            DateTime startDateTimeUTC = startDateTime.ToUniversalTime();
-            DateTime endDateTimeUTC = endDateTime.ToUniversalTime();
+            DateTime startDateTimeUTC = TimeZoneInfo.ConvertTimeToUtc(startDateTime, userTimeZone);
+            DateTime endDateTimeUTC = TimeZoneInfo.ConvertTimeToUtc(endDateTime, userTimeZone);
 
             return new Dictionary<string, DateTime> { { "StartTime", startDateTimeUTC }, {"EndTime", endDateTimeUTC } };
         }
