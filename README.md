@@ -3,7 +3,7 @@ A Windows Forms Application (.NET Framework) appointment + customer scheduling s
 a MySQL database. Using the GUI, users can add/update/delete customers from the database, as well as add/update/delete appointments
 for customers.
 
-
+![](https://github.com/IamJesseP/C969Jesse/blob/master/DemoGif.gif)
 
 ## Demo Video
 <div style="margin:auto;">
