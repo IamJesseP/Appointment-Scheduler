@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C969Jesse", "C969Jesse\C969Jesse.csproj", "{EBD659CD-2DC0-4A63-8004-74EF13DB6E59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointment Manager", "C969Jesse\Appointment Manager.csproj", "{EBD659CD-2DC0-4A63-8004-74EF13DB6E59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
